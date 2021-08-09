@@ -89,7 +89,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
       ]
     };
     this.option.baseOption = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
-    this.option.baseOption.title.text = this.graphGlobal.getTitle('AlertsApiary') + ' ' + this.rucherService.rucher.name;
+    this.option.baseOption.title.text = this.graphGlobal.getTitle('ALERTSAPIARY') + ' ' + this.rucherService.rucher.name;
     this.option.baseOption.calendar.orient = 'vertical';
     //this.option.calendar.top = 70;
     this.option.baseOption.calendar.left = 'center';

@@ -548,6 +548,30 @@
   border: 1px solid rgb(233, 162, 9);
 }
 
+.Generalgood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/hcc/generalgood_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Generalnormal{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/hcc/generalnormal_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
+.Generallow{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: url('../../../../assets/ms-pics/inspects/hcc/generallow_b.svg') center no-repeat;
+  background-size: 35px;
+}
+
 .Egg{
   width: 40px;
   height: 40px;
@@ -599,7 +623,7 @@
   border: 2px solid #4f4f51
 }
 
-.Drone{
+.Dronebrood{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -607,7 +631,7 @@
   background-size: 35px;
 }
 
-.Drone-active{
+.Dronebrood-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -834,6 +858,346 @@
   border-radius: 5px;
   background: url('../../../../assets/ms-pics/inspects/highres_cb.svg') center no-repeat;
   background-size: 35px;
+  border: 2px solid #4f4f51
+}
+
+.Syrupfeed{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/syrupfeed_b.svg') center no-repeat;
+}
+
+.Syrupfeed-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/syrupfeed_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Candifeed{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/candifeed_b.svg') center no-repeat;
+}
+
+.Candifeed-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/candifeed_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.MiteOAVapor{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitevapor_b.svg') center no-repeat;
+}
+
+.MiteOAVapor-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitedribble_b.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.MiteOADribble{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitedribble_b.svg') center no-repeat;
+}
+
+.MiteOADribble-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitedribble_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Queeninsert{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/queeninsert_b.svg') center no-repeat;
+}
+
+.Queeninsert-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/queeninsert_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Queenseen{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/queenseen_b.svg') center no-repeat;
+}
+
+.Queenseen-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/queenseen_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Nectarflow{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/honeydew_b.svg') center no-repeat;
+}
+
+.Nectarflow-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/honeydew_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Division{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/division_b.svg') center no-repeat;
+}
+
+.Division-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/division_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Broodadd{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/broodadd_b.svg') center no-repeat;
+}
+
+.Broodadd-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/broodadd_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Broodremove{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/broodremove_b.svg') center no-repeat;
+}
+
+.Broodremove-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/broodremove_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Sick{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/sick_b.svg') center no-repeat;
+}
+
+.Sick-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/sick_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Mitestripadd{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitestripadd_b.svg') center no-repeat;
+}
+
+.Mitestripadd-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitestripadd_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Mitestripremove{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitestripremove_b.svg') center no-repeat;
+}
+
+.Mitestripremove-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitestripremove_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Buzzinghive{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/buzzinghive_b.svg') center no-repeat;
+}
+
+.Buzzinghive-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/buzzinghive_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Mosaicbrood{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mosaicbrood_b.svg') center no-repeat;
+}
+
+.Mosaicbrood-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mosaicbrood_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Mitecountlounge{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitecountlounge_b.svg') center no-repeat;
+}
+
+.Mitecountlounge-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitecountlounge_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Queenlineage{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/markqueen_b.svg') center no-repeat;
+}
+
+.Queenlineage-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/markqueen_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Mitecountwash{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitecountwash_b.svg') center no-repeat;
+}
+
+.Mitecountwash-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/mitecountwash_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Queencellseen{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/queencellseen_b.svg') center no-repeat;
+}
+
+.Queencellseen-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/queencellseen_cb.svg') center no-repeat;
+  border: 2px solid #4f4f51
+}
+
+.Harvest{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/harvest_b.svg') center no-repeat;
+}
+
+.Harvest-active{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-size: 35px;
+  background: url('../../../../assets/ms-pics/inspects/harvest_cb.svg') center no-repeat;
   border: 2px solid #4f4f51
 }
 
@@ -1382,21 +1746,6 @@
   border: 2px solid #4f4f51;
 }
 
-.hives-mitestripadd-img{
-  background-size: 37px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/inspects/mitestripadd_b.svg');
-  background-position: center;
-}
-
-.hives-mitestripadd-img-active{
-  background-size: 37px;
-  background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/inspects/mitestripadd_cb.svg');
-  background-position: center;
-  border: 2px solid #4f4f51;
-}
-
 .hives-mitestripremove-img{
   background-size: 37px;
   background-repeat: no-repeat;
@@ -1472,7 +1821,7 @@
   border: 2px solid #4f4f51;
 }
 
-/*.hives-mitecountwash-img{
+.hives-mitecountwash-img{
   background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/mitecountwash_b.svg');
@@ -1485,7 +1834,37 @@
   background-image: url('../../../../assets/ms-pics/inspects/mitecountwash_cb.svg');
   background-position: center;
   border: 2px solid #4f4f51;
-}*/
+}
+
+.hives-queencellseen-img{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queencellseen_b.svg');
+  background-position: center;
+}
+
+.hives-queencellseen-img-active{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/queencellseen_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
+
+.hives-harvest-img{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/harvest_b.svg');
+  background-position: center;
+}
+
+.hives-harvest-img-active{
+  background-size: 37px;
+  background-repeat: no-repeat;
+  background-image: url('../../../../assets/ms-pics/inspects/harvest_cb.svg');
+  background-position: center;
+  border: 2px solid #4f4f51;
+}
 
 @media screen and (max-width: 1300px) {
   .table-events{

@@ -180,6 +180,14 @@
             "Ce processus peut prendre un certain temps en fonction de l'historique de vos données.",
             "Vous verrez des données apparaître progressivement au cours des 10 prochaines minutes."],
             "CLOSE_BTN": "Fermer"
+        },
+        "GRAPH":{
+            "ALERTSAPIARY":"Evénements du rucher",
+            "GAIN":"gain",
+            "LOSS":"perte",
+            "BROOD":"Niveau de couvain",
+            "ALERTSHIVE":"Alertes et Evenements",
+            "INCOME":"Productivité"
         }
     },
     "HIVES" : {
@@ -403,6 +411,49 @@
             "CANCEL" : "Annuler"
         }
     },
+    "GRAPH":{
+        "METRIC":{
+            "WEIGHT":"Poids (Kg)",
+            "WEIGHT_GAIN":"Gain (Kg)",
+            "WEIGHT_INCOME":"Productivité (Kg)",
+            "HUMIDITY":"Humidité (%)",
+            "RAIN":"Pluie (mm)",
+            "SNOW":"Neige",
+            "MOON_PHASE":"Phase",
+            "MOON_PERIOD":"Période",
+            "SUNRISE":"Lever du soleil",
+            "SUNSET":"Coucher du soleil",
+            "DAYLENGTH":"Durée du jour",
+            "WEIGHT_INCOME_GAIN":"Gain",
+            "WEIGHT_INCOME_LOSS":"Perte",
+            "WIND":"Vent (km/h)",
+            "BROOD":"Couvain (%)",
+            "TEMP":"Temperature (°C)"
+        },
+        "IMPERIAL":{
+            "WEIGHT":"Poids (lbs)",
+            "WEIGHT_GAIN":"Gain (lbs)",
+            "WEIGHT_INCOME":"Productivité (lbs)",
+            "HUMIDITY":"Humidité (%)",
+            "RAIN":"Pluie (″)",
+            "SNOW":"Neige",
+            "MOON_PHASE":"Phase",
+            "MOON_PERIOD":"Période",
+            "SUNRISE":"Lever du soleil",
+            "SUNSET":"Coucher du soleil",
+            "DAYLENGTH":"Durée du jour",
+            "WEIGHT_INCOME_GAIN":"Gain",
+            "WEIGHT_INCOME_LOSS":"Perte",
+            "WIND":"Vent (mph)",
+            "BROOD":"Couvain (%)",
+            "TEMP":"Temperature (°F)"
+        },
+        "MARKAREA":{
+            "BROOD":"Zone optimale de production",
+            "TEMP":"Zone optimale du couvain",
+            "HUM":"Zone optimale d'humidité"
+        }
+    },
     "MELLICHARTS": {
         "HELP": {
             "HIVE" :["Ici, vous pouvez explorer avec beaucoup de détails toutes les données relatives à une ruche.",
@@ -433,7 +484,11 @@
         "DATE": {
             "START": "Début",
             "END": "Fin",
-            "BTN_APPLY": "Appliquer"
+            "BTN_APPLY": "Appliquer",
+            "DAY": " jour",
+            "WEEK": " semaine",
+            "MONTH": " mois",
+            "YEAR":" année"
         },
         "BROOD": {
             "TITLE": "Evolution journalière du couvain",
@@ -442,6 +497,29 @@
               "DEFAULT":"Default",
               "SUPER+":"Ajout hausse",
               "SUPER-":"Retrait hausse"
+            }
+        },
+        "HIVE":{
+            "CALENDAR":{
+                "WINCOME":"Productivité",
+                "TEMP_EXT_MAX":"Température externe max.",
+                "TEMP_EXT_MIN":"Température externe min.",
+                "TEMP_INT_MAX":"Température interne max.",
+                "TEMP_INT_MIN":"Température interne min.",
+                "HRIN":"Humidité interne max",
+                "BROOD":"Niveau de couvain",
+                "WEIGHT_MAX":"Poids max.",
+                "WEATHER":"Metéo",
+                "MOON":"Calendrier lunaire",
+                "RAIN":"Précipitations",
+                "TEMP_EXT_WEATHER_MAX":"Température externe max.",
+                "TEMP_EXT_WEATHER_MIN":"Température externe min.",
+                "WIND":"Vent",
+                "HEXT_WEATHER_MAX":"Humidité externe max.",
+                "HEXT_WEATHER_MIN":"Humidité externe min.",
+                "ALERT":"Alertes et Evenements",
+                "ALERTSAPIARY":"Evénements du rucher",
+                "FITNESS":"Santé de la ruche"
             }
         },
         "WEIGHT": {
@@ -811,7 +889,7 @@
         "LARVA":"Présence de larves",
         "PUPA":"Présence de couvain operculé",
         "DRONEBROOD":"Présence de couvain de male",
-        "DRONES":"Présence de males",
+        "DRONE":"Présence de males",
         "BUZZINGHIVE":"Bourdonneuse",
         "MOSAICBROOD":"Mosaique couvain",
         "QUEENCELLSEEN":"Présence de cellules royales"
@@ -971,13 +1049,13 @@
         },
         "GRAPH":{
             "TEMP":"Temperature",
-            "TEMP_LEFT":"36%",
+            "TEMP_LEFT":"39%",
             "WIND":"Vent",
-            "WIND_LEFT":"40%",
+            "WIND_LEFT":"42%",
             "RAIN":"Pluie",
-            "RAIN_LEFT":"40%",
+            "RAIN_LEFT":"42%",
             "HUMI":"Humidité",
-            "HUMI_LEFT":"38%"
+            "HUMI_LEFT":"40%"
         },
         "CONFIG":{
             "APIARY":"Rucher",

@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { NgxEchartsModule } from 'ngx-echarts';
+//import { NgxEchartsModule } from 'ngx-echarts';
 /**
  * @author mickael
  * @description Ensemble des requetes pour récupérer les données heure/heure
@@ -439,5 +439,9 @@ export class RecordService {
    */
   getBatIntByHive(hiveId: string, range: Date[]): Observable<any> {
     return this.http.post<any>(CONFIG.URL + 'records/batInt/' + hiveId, range);
+  }
+
+  getRecordsBySensorRefAndDateBetween(sensorRef: string, range: Date[]): Observable<Record[]>{
+    return this.http.post<Record[]>(CONFIG.URL + 'records/sensor/between/' + sensorRef, range, httpOptions);
   }
 }

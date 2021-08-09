@@ -37,7 +37,7 @@ export class HealthHiveComponent implements OnInit, OnDestroy {
             title: {
                 top: 5,
                 left: 'center',
-                text: this.graphGlobal.getTitle("BroodDynamics"),
+                text: this.graphGlobal.getTitle("BROOD"),
                 textStyle: {
                     color: 'black',
                     fontWeight : 'normal',

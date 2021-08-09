@@ -442,6 +442,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   }
 
   setNewEventDate(): void {
+    this.newEventDate = new Date( (<any>this.newEventDate)._d);
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.new_event.opsDate = this.newEventDate;
     if(this.edit){

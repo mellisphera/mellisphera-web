@@ -40,7 +40,7 @@ export class WeightHivesComponent implements OnDestroy{
                 //backgroundColor: 'white',
                 title: {
                     top: 0,
-                    text: this.graphGlobal.getTitle("DailyWeightIncomes"),
+                    text: this.graphGlobal.getTitle("INCOME"),
                     left: 'center',
                     textStyle: {
                         color: 'black',
@@ -74,7 +74,7 @@ export class WeightHivesComponent implements OnDestroy{
                 legend: {
                     top: 30,
                     left: 'center',
-                    data: [this.graphGlobal.getTitle('gain'), this.graphGlobal.getTitle("loss")],
+                    data: [this.graphGlobal.getTitle('GAIN'), this.graphGlobal.getTitle("LOSS")],
                     textStyle: {
                         color: 'black'
                     }

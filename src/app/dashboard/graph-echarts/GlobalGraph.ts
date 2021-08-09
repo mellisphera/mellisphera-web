@@ -260,65 +260,29 @@ export class GraphGlobal {
       { graph: 'Event-apiary', titre: 'Apiary Events'},
       { graph: 'Event-hive', titre: 'Hive Events'}
     ];
-    console.log(this.translateService.currentLang);
+    //console.log(this.translateService.currentLang);
   }
 
 
   setImperial() {
     // If he is French
-    if (this.translateService.currentLang === 'fr') {
-      this.weight.name = 'Poids (lbs)';
-      this.weight.income_name = 'Gain (lbs)';
-      this.weight.norm_name = 'Productivité (lbs)';
-      this.humidity.name = 'Humidité';
-      this.rain.name = 'Pluie (″)';
-      this.weightIncome.gain = 'Gain';
-      this.weightIncome.loss = 'Perte';
-      this.moon.phase = 'Phase';
-      this.moon.period = 'Période';
-      this.moon.sunrise = 'Lever du soleil';
-      this.moon.sunset = 'Coucher du soleil';
-      this.moon.dayLength = 'Durée du jour';
-      this.brood.name = 'Couvain (%)';
-      this.snow.name = 'Neige';
-      this.temp.name = 'Température (°F)';
-      this.wind.name = 'Vent (mph)';
-      // EN
-    } else if (this.translateService.currentLang === 'es') {
-      this.weight.name = 'Peso (lbs)';
-      this.weight.income_name = 'Aumento (lbs)';
-      this.weight.norm_name = 'Productividad (lbs)';
-      this.humidity.name = 'Humedad ';
-      this.rain.name = 'Lluvia (″)';
-      this.snow.name = 'Nieve';
-      this.moon.phase = 'Fase';
-      this.moon.period = 'Período';
-      this.moon.sunrise = 'Amanecer';
-      this.moon.sunset = 'Atardecer';
-      this.moon.dayLength = 'Duración del día';
-      this.weightIncome.gain = 'Ganancia';
-      this.weightIncome.loss = 'Perdida';
-      this.moon.period = 'Periodo';
-      this.wind.name = 'Viento (mph)';
-      this.brood.name = 'Cria (%)';
-    } else {
-      this.weight.name = 'Weight (lbs)';
-      this.weight.income_name = 'Gain (lbs)';
-      this.weight.norm_name = 'Productivity (lbs)';
-      this.humidity.name = 'Humidity ';
-      this.weightIncome.gain = 'Gain';
-      this.weightIncome.loss = 'Loss';
-      this.rain.name = 'Rain (″)';
-      this.moon.phase = 'Phase';
-      this.moon.period = 'Period';
-      this.moon.sunrise = 'Sunrise';
-      this.moon.sunset = 'Sunset';
-      this.moon.dayLength = 'Daylight';
-      this.snow.name = 'Snow';
-      this.temp.name = 'Temperature (°F)';
-      this.wind.name = 'Wind (mph)';
-      this.brood.name = 'Brood (%)';
-    }
+    this.weight.name = this.translateService.instant("GRAPH.IMPERIAL.WEIGHT");
+    this.weight.income_name = this.translateService.instant("GRAPH.IMPERIAL.WEIGHT_GAIN");
+    this.weight.norm_name = this.translateService.instant("GRAPH.IMPERIAL.WEIGHT_INCOME");
+    this.humidity.name = this.translateService.instant("GRAPH.IMPERIAL.HUMIDITY");
+    this.rain.name = this.translateService.instant("GRAPH.IMPERIAL.RAIN");
+    this.weightIncome.gain = this.translateService.instant("GRAPH.IMPERIAL.WEIGHT_INCOME_GAIN");
+    this.weightIncome.loss = this.translateService.instant("GRAPH.IMPERIAL.WEIGHT_INCOME_LOSS");
+    this.moon.phase = this.translateService.instant("GRAPH.IMPERIAL.MOON_PHASE");
+    this.moon.period = this.translateService.instant("GRAPH.IMPERIAL.MOON_PERIOD");
+    this.moon.sunrise = this.translateService.instant("GRAPH.IMPERIAL.SUNRISE");
+    this.moon.sunset = this.translateService.instant("GRAPH.IMPERIAL.SUNSET");
+    this.moon.dayLength = this.translateService.instant("GRAPH.IMPERIAL.DAYLENGTH");
+    this.brood.name = this.translateService.instant("GRAPH.IMPERIAL.BROOD");
+    this.snow.name = this.translateService.instant("GRAPH.IMPERIAL.SNOW");
+    this.temp.name = this.translateService.instant("GRAPH.IMPERIAL.TEMP");
+    this.wind.name = this.translateService.instant("GRAPH.IMPERIAL.WIND");
+      
     this.snow.unitT = '″';
     this.humidity.min = 0;
     this.rain.unitT = '″';
@@ -329,66 +293,31 @@ export class GraphGlobal {
     this.humidity.unitT = '%';
     this.weight.unitW = 'lbs';
     this.weight.interval = 5;
-    // If he is French
+    
     this.temp.min = 0;
     this.temp.unitT = '° F';
     this.temp.max = null;
   }
 
   setMetric() {
-    // If he is French
-    if (this.translateService.currentLang === 'fr') {
-      this.weight.name = 'Poids (Kg)';
-      this.weight.income_name = 'Gain (Kg)';
-      this.weight.norm_name = 'Productivité (Kg)';
-      this.humidity.name = 'Humidité (%)';
-      this.rain.name = 'Pluie (mm)';
-      this.snow.name = 'Neige';
-      this.moon.phase = 'Phase';
-      this.moon.phase = 'Phase';
-      this.moon.period = 'Période';
-      this.moon.sunrise = 'Lever du soleil';
-      this.moon.sunset = 'Coucher du soleil';
-      this.moon.dayLength = 'Durée du jour';
-      this.weightIncome.gain = 'Gain';
-      this.weightIncome.loss = 'Perte';
-      this.moon.period = 'Période';
-      this.wind.name = 'Vent (km/h)';
-      this.brood.name = 'Couvain (%)';
-      // EN
-    }  else if (this.translateService.currentLang === 'es') {
-      this.weight.name = 'Peso (Kg)';
-      this.weight.income_name = 'Aumento (Kg)';
-      this.weight.norm_name = 'Productividad (Kg)';
-      this.humidity.name = 'Humedad (%)';
-      this.rain.name = 'Lluvia (mm)';
-      this.snow.name = 'Nieve';
-      this.moon.phase = 'Fase';
-      this.moon.period = 'Período';
-      this.moon.sunrise = 'Amanecer';
-      this.moon.sunset = 'Atardecer';
-      this.moon.dayLength = 'Duración del día';
-      this.weightIncome.gain = 'Ganancia';
-      this.weightIncome.loss = 'Perdida';
-      this.wind.name = 'Viento (km/h)';
-      this.brood.name = 'Cria (%)';
-    } else {
-      this.weight.name = 'Weight (Kg)';
-      this.weight.income_name = 'Gain (Kg)';
-      this.weight.norm_name = 'Productivity (Kg)';
-      this.humidity.name = 'Humidity (%)';
-      this.wind.name = 'Wind (km/h)';
-      this.weightIncome.gain = 'Gain';
-      this.weightIncome.loss = 'Loss';
-      this.moon.phase = 'Phase';
-      this.moon.period = 'Period';
-      this.moon.sunrise = 'Sunrise';
-      this.moon.sunset = 'Sunset';
-      this.moon.dayLength = 'Daylight';
-      this.rain.name = 'Rain (mm)';
-      this.snow.name = 'Snow';
-      this.brood.name = 'Brood (%)';
-    }
+   
+    this.weight.name = this.translateService.instant("GRAPH.METRIC.WEIGHT");
+    this.weight.income_name = this.translateService.instant("GRAPH.METRIC.WEIGHT_GAIN");
+    this.weight.norm_name = this.translateService.instant("GRAPH.METRIC.WEIGHT_INCOME");
+    this.humidity.name = this.translateService.instant("GRAPH.METRIC.HUMIDITY");
+    this.rain.name = this.translateService.instant("GRAPH.METRIC.RAIN");
+    this.snow.name = this.translateService.instant("GRAPH.METRIC.SNOW");
+    this.moon.phase = this.translateService.instant("GRAPH.METRIC.MOON_PHASE");
+    this.moon.period = this.translateService.instant("GRAPH.METRIC.MOON_PERIOD");
+    this.moon.sunrise = this.translateService.instant("GRAPH.METRIC.SUNRISE");
+    this.moon.sunset = this.translateService.instant("GRAPH.METRIC.SUNSET");
+    this.moon.dayLength = this.translateService.instant("GRAPH.METRIC.DAYLENGTH");
+    this.weightIncome.gain = this.translateService.instant("GRAPH.METRIC.WEIGHT_INCOME_GAIN");
+    this.weightIncome.loss = this.translateService.instant("GRAPH.METRIC.WEIGHT_INCOME_LOSS");
+    this.wind.name = this.translateService.instant("GRAPH.METRIC.WIND");
+    this.brood.name = this.translateService.instant("GRAPH.METRIC.BROOD");
+    this.temp.name = this.translateService.instant("GRAPH.METRIC.TEMP");
+    
     this.rain.unitT = 'mm';
     this.humidity.min = 0;
     this.snow.unitT = 'mm';
@@ -399,13 +328,7 @@ export class GraphGlobal {
     this.weight.unitW = 'Kg';
     this.weight.interval = 10;
     this.weight.max = null;
-    // If he is French
-    if (this.translateService.currentLang === 'fr') {
-      this.temp.name = 'Température (°C)';
-      // EN
-    } else {
-      this.temp.name = 'Temperature (°C)';
-    }
+    
     this.temp.unitT = '° C';
     this.temp.min = 0;
     this.temp.max = null;
@@ -439,7 +362,9 @@ export class GraphGlobal {
    * @memberof GraphGlobal
    */
   getTitle(nomGraphe: String): string {
-    var titre: any;
+    //console.log(nomGraphe);
+    return this.translateService.instant('HOME.GRAPH.'+nomGraphe);
+    /*var titre: any;
     if (this.translateService.currentLang === 'fr') {
       titre = this.titresFR[this.titresFR.map(elt => elt.graph).indexOf(nomGraphe)];
     }  else if (this.translateService.currentLang === 'es') {
@@ -448,27 +373,16 @@ export class GraphGlobal {
       titre = this.titresEN[this.titresEN.map(elt => elt.graph).indexOf(nomGraphe)];
     }
 
-    return titre.titre;
+    return titre.titre;*/
   }
 
   getTooltipByType(type: Tools): string {
-    switch (type.name) {
+    return this.translateService.instant('MELLICHARTS.HIVE.CALENDAR.' + type.name);
+    /*switch (type.name) {
       case 'WINCOME':
-        if (this.translateService.currentLang === 'fr') {
-          return this.titresFR[1].titre;
-        } else if (this.translateService.currentLang === 'es') {
-          return this.titresES[1].titre;
-        } else {
-          return this.titresEN[1].titre;
-        }
+        return this.translateService.instant('MELLICHARTS.HIVE.WINCOME');
       case 'TEMP_EXT_MAX':
-        if (this.translateService.currentLang === 'fr') {
-          return this.titresFR[5].titre + ' max';
-        } else if (this.translateService.currentLang === 'es') {
-          return this.titresES[5].titre + ' max';
-        } else {
-          return this.titresEN[5].titre + ' max';
-        }
+        return this.translateService.instant('MELLICHARTS.HIVE.TEMP_EXT_MAX');
       case 'TEMP_EXT_MIN':
         if (this.translateService.currentLang === 'fr') {
           return this.titresFR[5].titre + ' min';
@@ -615,7 +529,7 @@ export class GraphGlobal {
         }
       default:
         return '';
-    }
+    }*/
   }
 
   /**
@@ -700,12 +614,30 @@ export class GraphGlobal {
     } 
   }
 
+  getWeatherUnitBySerieName(serie: string): string{
+    if (/Temp/g.test(serie)) {
+      return this.temp.unitT;
+    } else if(/Hum/g.test(serie)){
+      return '%';
+    } else if(/Wind/g.test(serie)){
+      return this.wind.unitT;
+    } else if(/Rain/g.test(serie)){
+      return this.rain.unitT;
+    } else if(/Nectar/g.test(serie)){
+      return '%';
+    } else if(/Flight/g.test(serie)){
+      return '%';
+    }
+
+  }
+
   /**
    *
    * @param typeGraph
    */
   getNameZoneByGraph(typeGraph: string): string {
-    if (typeGraph === 'BROOD') {
+    return this.translateService.instant("GRAPH.MARKAREA."+typeGraph);
+    /*if (typeGraph === 'BROOD') {
       if (this.translateService.currentLang === 'fr') {
         return 'Zone optimale de production';
       } else if (this.translateService.currentLang === 'es') {
@@ -729,7 +661,7 @@ export class GraphGlobal {
       }else {
         return 'Optimal area of humidity';
       }
-    }
+    }*/
   }
 
   /**

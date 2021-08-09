@@ -65,7 +65,7 @@ export class AlertsHiveComponent implements OnInit, OnDestroy {
       media: JSON.parse(JSON.stringify(MEDIA_QUERY_MELLIUX))
     };
     this.option.baseOption = JSON.parse(JSON.stringify(BASE_OPTIONS.baseOptionDailyMelliUx));
-    this.option.baseOption.title.text = this.graphGlobal.getTitle('AlertsHive');
+    this.option.baseOption.title.text = this.graphGlobal.getTitle('ALERTSHIVE');
     this.option.baseOption.title.left = 'center'
     this.option.baseOption.calendar.orient = 'vertical';
     this.option.baseOption.calendar.range = MyDate.getRangeForCalendarAlerts();

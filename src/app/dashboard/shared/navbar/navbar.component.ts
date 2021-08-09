@@ -141,8 +141,10 @@ export class NavbarComponent implements OnInit {
         this.cityByZipCode = [];
         if (this.userService.getJwtReponse().lang.indexOf('fr') !== -1) {
             this.translateService.use('fr');
-        }else if(this.userService.getJwtReponse().lang.indexOf('es') !== -1) {
+        } else if(this.userService.getJwtReponse().lang.indexOf('es') !== -1) {
             this.translateService.use('es');
+        } else if(this.userService.getJwtReponse().lang.indexOf('ro') !== -1) {
+            this.translateService.use('ro');
         } else {
             this.translateService.use('en');
         }

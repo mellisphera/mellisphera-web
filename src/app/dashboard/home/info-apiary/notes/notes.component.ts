@@ -456,6 +456,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   }
 
   setNewEventDate(): void {
+    this.newEventDate = new Date( (<any>this.newEventDate)._d);
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.new_event.opsDate = new Date(this.newEventDate);
     if(this.edit){

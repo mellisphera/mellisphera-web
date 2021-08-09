@@ -122,10 +122,14 @@ export class InspectNewComponent implements OnInit {
       () => {}
     );
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
-      _apiaries => { this.user_apiaries = [..._apiaries]; },
+      _apiaries => { 
+        this.user_apiaries = [..._apiaries];
+        this.user_apiaries = this.user_apiaries.filter(apiary => apiary !== null && apiary.userId === this.userService.getIdUserLoged());
+      },
       () => {},
       () => {
         this.user_apiaries.sort(this.compare);
+        console.log(this.user_apiaries);
         this.rucheService.getHivesByApiary(this.user_apiaries[0]._id).subscribe(
           _hives => { this.user_hives = _hives.sort(this.compare); },
           () => {},
@@ -497,7 +501,7 @@ export class InspectNewComponent implements OnInit {
       });
       this.inspService.insertApiaryInsp(this.new_apiary_insp).subscribe(
         _api_insp => {
-          console.log(_api_insp);
+          //console.log(_api_insp);
           inspHivesToPush.forEach(_h => {
             _h.obs.sort((a,b) => {
               return a.code - b.code;
@@ -506,13 +510,14 @@ export class InspectNewComponent implements OnInit {
             _h.createDate = new Date();
           });
           this.inspService.insertHiveInsp(inspHivesToPush).subscribe(
-            _insps => console.log(_insps),
+            _insps => {//console.log(_insps)
+            },
             () => {}, () => {}
           );
         },
         () => {},
         () => {
-          console.log(inspHivesToPush);
+          //console.log(inspHivesToPush);
           $("#saveModal").modal("hide");
           if(this.translateService.currentLang === 'fr') {
             this.notifyService.notify('success', "Votre inspection a été enregistrée");

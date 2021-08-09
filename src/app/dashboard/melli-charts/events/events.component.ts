@@ -273,7 +273,6 @@ export class EventsComponent implements OnInit {
     );
     this.alertService.getAlertsByFilters(hive.apiaryId, [hive._id], this.melliDate.getRangeForReqest(), this.melliFilters.getPictosArrayFilter(), locations).subscribe(
       _alerts => {
-        console.log(_alerts);
         if(this.apiaryLoaded(hive.apiaryId) && this.melliFilters.getFilters().alert){
           let alts = _alerts.filter( _alt => _alt.hiveId != null);
           alts.forEach((_alt,i) => {
@@ -1042,11 +1041,14 @@ export class EventsComponent implements OnInit {
       obsDiv.appendChild(button);
     }
 
-    (<HTMLButtonElement>document.getElementsByClassName('event-brood-none')[0]).classList.remove('event-brood-none-active');
-    (<HTMLButtonElement>document.getElementsByClassName('event-brood-egg')[0]).classList.remove('event-brood-egg-active');
-    (<HTMLButtonElement>document.getElementsByClassName('event-brood-larva')[0]).classList.remove('event-brood-larva-active');
-    (<HTMLButtonElement>document.getElementsByClassName('event-brood-pupa')[0]).classList.remove('event-brood-pupa-active');
-    (<HTMLButtonElement>document.getElementsByClassName('event-brood-drone')[0]).classList.remove('event-brood-drone-active');
+    if(this.eventToEdit.type === 'hive'){
+      (<HTMLButtonElement>document.getElementsByClassName('event-brood-none')[0]).classList.remove('event-brood-none-active');
+      (<HTMLButtonElement>document.getElementsByClassName('event-brood-egg')[0]).classList.remove('event-brood-egg-active');
+      (<HTMLButtonElement>document.getElementsByClassName('event-brood-larva')[0]).classList.remove('event-brood-larva-active');
+      (<HTMLButtonElement>document.getElementsByClassName('event-brood-pupa')[0]).classList.remove('event-brood-pupa-active');
+      (<HTMLButtonElement>document.getElementsByClassName('event-brood-drone')[0]).classList.remove('event-brood-drone-active');
+    }
+    
     
 
     if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Nonebrood') !== -1){
@@ -1081,11 +1083,14 @@ export class EventsComponent implements OnInit {
   }
 
   setNewEventDate(): void {
-    this.newEventDate = new Date(this.newEventDate);
+    this.newEventDate = new Date( (<any>this.newEventDate)._d);
     (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.eventToEdit.opsDate = new Date(this.newEventDate);
     this.newEventDate.setHours( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value ));
     this.newEventDate.setMinutes( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value ));
+    /*console.log(this.newEventDate);
+    console.log((<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value);
+    console.log((<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value);*/
   }
 
   setNewEventHours(evt: Event): void{
@@ -1271,12 +1276,12 @@ export class EventsComponent implements OnInit {
           button = <HTMLButtonElement>document.getElementsByClassName('event-brood-drone')[0];
           if(!button.classList.contains('event-brood-drone-active')){
             button.classList.add('event-brood-drone-active');
-            this.eventToEdit.obs.push({name:'Drone', img:'drone_cb.svg'});
+            this.eventToEdit.obs.push({name:'Dronebrood', img:'dronebrood_cb.svg'});
             console.log(this.eventToEdit.obs);
           }
           else{
             button.classList.remove('event-brood-drone-active');
-            let index = this.eventToEdit.obs.findIndex(_o => _o.name === 'Drone')
+            let index = this.eventToEdit.obs.findIndex(_o => _o.name === 'Dronebrood')
             this.eventToEdit.obs.splice(index, 1);
           }
           break;

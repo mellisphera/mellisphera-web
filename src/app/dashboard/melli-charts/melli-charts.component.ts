@@ -148,7 +148,6 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private unitService: UnitService,
     private inspHiveService: InspHiveService,
     private alertService: AlertsService,
-    private translate: TranslateService,
     public melliFilters: MelliChartsFilterService,
     private inspService: InspectionService,
     private notify: NotifierService,
@@ -486,6 +485,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    * @memberof MelliChartsComponent
    */
   getRangeBYLang(range: DataRange): string {
+    return this.translateService.instant("MELLICHARTS.DATE."+range.type);
     if (this.translateService.currentLang === 'fr') {
       return this.melliChartDate.ranges.filter(_range => _range.type === range.type)[0].typeFr;
     } else if (this.translateService.currentLang === 'es') {
@@ -1041,6 +1041,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   setNewEventDate(): void {
+    this.newEventDate = new Date( (<any>this.newEventDate)._d);
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
     this.new_event.opsDate = this.newEventDate;
     this.newEventDate.setHours( parseInt( (<HTMLInputElement>document.getElementsByClassName('add-event-hours-input')[0]).value ));
@@ -1353,12 +1354,12 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
           button = <HTMLButtonElement>document.getElementsByClassName('brood-drone')[0];
           if(!button.classList.contains('brood-drone-active')){
             button.classList.add('brood-drone-active');
-            this.new_event.obs.push({name:'Drone', img:'drone_cb.svg'});
+            this.new_event.obs.push({name:'Dronebrood', img:'dronebrood_cb.svg'});
             console.log(this.new_event.obs);
           }
           else{
             button.classList.remove('brood-drone-active');
-            let index = this.new_event.obs.findIndex(_o => _o.name === 'Drone')
+            let index = this.new_event.obs.findIndex(_o => _o.name === 'Dronebrood')
             this.new_event.obs.splice(index, 1);
           }
           break;

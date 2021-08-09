@@ -180,6 +180,14 @@
             "Este proceso puede tomar algún tiempo dependiendo de la historia de sus datos. ",
             "Verá que los datos aparecen gradualmente durante los próximos 10 minutos."],
             "CLOSE_BTN": "Cerrar"
+        },
+        "GRAPH":{
+            "ALERTSAPIARY":"Eventos del colmenar",
+            "GAIN":"Disminucion",
+            "LOSS":"Aumento",
+            "BROOD":"Cantidad de cria",
+            "ALERTSHIVE":"Alertas y Eventos",
+            "INCOME":"Productividad"
         }
     },
     "HIVES": {
@@ -403,6 +411,49 @@
             "CANCEL": "Annuler"
         }
     },
+    "GRAPH":{
+        "METRIC":{
+            "WEIGHT":"Peso (Kg)",
+            "WEIGHT_GAIN":"Ganancia (Kg)",
+            "WEIGHT_INCOME":"Productividad (Kg)",
+            "HUMIDITY":"Humedad (%)",
+            "RAIN":"Lluvia (mm)",
+            "SNOW":"Nieve",
+            "MOON_PHASE":"Fase",
+            "MOON_PERIOD":"Período",
+            "SUNRISE":"Amanecer",
+            "SUNSET":"Atardecer",
+            "DAYLENGTH":"Duración del día",
+            "WEIGHT_INCOME_GAIN":"Ganancia",
+            "WEIGHT_INCOME_LOSS":"Perdida",
+            "WIND":"Viento (km/h)",
+            "BROOD":"Cria (%)",
+            "TEMP":"Temperatura (°C)"
+        },
+        "IMPERIAL":{
+            "WEIGHT":"Peso (lbs)",
+            "WEIGHT_GAIN":"Ganancia (lbs)",
+            "WEIGHT_INCOME":"Productividad (lbs)",
+            "HUMIDITY":"Humedad (%)",
+            "RAIN":"Lluvia (″)",
+            "SNOW":"Nieve",
+            "MOON_PHASE":"Fase",
+            "MOON_PERIOD":"Período",
+            "SUNRISE":"Amanecer",
+            "SUNSET":"Atardecer",
+            "DAYLENGTH":"Duración del día",
+            "WEIGHT_INCOME_GAIN":"Ganancia",
+            "WEIGHT_INCOME_LOSS":"Perdida",
+            "WIND":"Viento (mph)",
+            "BROOD":"Cria (%)",
+            "TEMP":"Temperatura (°F)"
+        },
+        "MARKAREA":{
+            "BROOD":"Zona optima de produccion",
+            "TEMP":"Zona optima de cria",
+            "HUM":"Zona optima de humedad"
+        }
+    },
     "MELLICHARTS": {
         "HELP": {
             "HIVE": ["Aquí puede explorar con gran detalle todos los datos relacionados con una colmena.",
@@ -433,7 +484,11 @@
         "DATE": {
             "START": "Inicio",
             "END": "Final",
-            "BTN_APPLY": "Aplicar"
+            "BTN_APPLY": "Aplicar",
+            "DAY": " día",
+            "WEEK": " semana",
+            "MONTH": " mes",
+            "YEAR":" año"
         },
         "BROOD": {
             "TITLE": "Evolucion diaria de la cria",
@@ -442,6 +497,29 @@
               "DEFAULT":"Default",
               "SUPER+":"Añadiendo alza",
               "SUPER-":"Supresión alza"
+            }
+        },
+        "HIVE":{
+            "CALENDAR":{
+                "WINCOME":"Productividad",
+                "TEMP_EXT_MAX":"Temperatura externa max.",
+                "TEMP_EXT_MIN":"Temperatura externa min.",
+                "TEMP_INT_MAX":"Temperatura interna max.",
+                "TEMP_INT_MIN":"Temperatura interna min.",
+                "HRIN":"Humedad interna max",
+                "BROOD":"Cantidad de cria",
+                "WEIGHT_MAX":"Peso max.",
+                "WEATHER":"Meteorologia",
+                "MOON":"Calendario lunar",
+                "RAIN":"Precipitaciones",
+                "TEMP_EXT_WEATHER_MAX":"Temperatura externa max.",
+                "TEMP_EXT_WEATHER_MIN":"Temperatura externa min.",
+                "WIND":"Viento",
+                "HEXT_WEATHER_MAX":"Humedad externa max.",
+                "HEXT_WEATHER_MIN":"Humedad externa min.",
+                "ALERT":"Alertas y Eventos",
+                "ALERTSAPIARY":"Eventos del colmenar",
+                "FITNESS":"Salud de la colmena"
             }
         },
         "WEIGHT": {
@@ -964,13 +1042,13 @@
         },
         "GRAPH":{
             "TEMP":"Temperatura",
-            "TEMP_LEFT":"36%",
+            "TEMP_LEFT":"39%",
             "WIND":"Viento",
-            "WIND_LEFT":"39%",
+            "WIND_LEFT":"41%",
             "RAIN":"Lluvia",
-            "RAIN_LEFT":"39%",
+            "RAIN_LEFT":"41%",
             "HUMI":"Humedad",
-            "HUMI_LEFT":"38%"
+            "HUMI_LEFT":"40%"
         },
         "CONFIG":{
             "APIARY":"Colemnar",

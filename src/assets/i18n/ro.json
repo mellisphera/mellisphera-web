@@ -179,6 +179,14 @@
             "Acest proces poate dura ceva timp, în funcție de istoricul datelor dvs.",
             "Veți vedea date care apar progresiv în următoarele 10 minute."],
             "CLOSE_BTN": "Închide"
+        },
+        "GRAPH":{
+            "ALERTSAPIARY":"Events for the apiary",
+            "GAIN":"gain",
+            "LOSS":"loss",
+            "BROOD":"Brood level",
+            "ALERTSHIVE":"Alerts and Events",
+            "INCOME":"Productivity"
         }
     },
     "HIVES": {
@@ -402,6 +410,44 @@
             "CANCEL": "Annulați"
         }
     },
+    "GRAPH":{
+        "METRIC":{
+            "WEIGHT":"Weight (Kg)",
+            "WEIGHT_GAIN":"Aport (Kg)",
+            "WEIGHT_INCOME":"Productivitate (Kg)",
+            "HUMIDITY":"Humidity (%)",
+            "RAIN":"Rain (mm)",
+            "SNOW":"Snow",
+            "MOON_PHASE":"Phase",
+            "MOON_PERIOD":"Period",
+            "SUNRISE":"Sunrise",
+            "SUNSET":"Sunset",
+            "DAYLENGTH":"Daylight",
+            "WEIGHT_INCOME_GAIN":"Gain",
+            "WEIGHT_INCOME_LOSS":"Loss",
+            "WIND":"Wind (km/h)",
+            "BROOD":"Brood (%)",
+            "TEMP":"Temperature (°C)"
+        },
+        "IMPERIAL":{
+            "WEIGHT":"Weight (lbs)",
+            "WEIGHT_GAIN":"Gain (lbs)",
+            "WEIGHT_INCOME":"Productivity (lbs)",
+            "HUMIDITY":"Humidity (%)",
+            "RAIN":"Rain (″)",
+            "SNOW":"Snow",
+            "MOON_PHASE":"Phase",
+            "MOON_PERIOD":"Period",
+            "SUNRISE":"Sunrise",
+            "SUNSET":"Sunset",
+            "DAYLENGTH":"Daylight",
+            "WEIGHT_INCOME_GAIN":"Gain",
+            "WEIGHT_INCOME_LOSS":"Loss",
+            "WIND":"Wind (mph)",
+            "BROOD":"Brood (%)",
+            "TEMP":"Temperature (°F)"
+        }
+    },
     "MELLICHARTS": {
         "HELP": {
             "HIVE": ["Aici puteți explora in detaliu toate datele legate de un stup.",
@@ -429,10 +475,14 @@
             "EVENTS": "Evenimente",
             "EVENTS_TOOLTIP": "Evenimente"
         },
-        "DATA": {
+        "DATE": {
             "START": "Inceput",
             "END": "Sfârșit",
-            "BTN_APPLY": "Aplică"
+            "BTN_APPLY": "Aplică",
+            "DAY": " days",
+            "WEEK": " week",
+            "MONTH": " month",
+            "YEAR":" year"
         },
         "BROOD": {
             "TITLE": "Progresia zilnică a puietului",
@@ -441,6 +491,29 @@
               "DEFAULT": "Implicit",
               "SUPER +": "Adăugați Magazin",
               "SUPER -": "Eliminați Magazin"
+            }
+        },
+        "HIVE":{
+            "CALENDAR":{
+                "WINCOME":"Productivity",
+                "TEMP_EXT_MAX":"External Temperature max.",
+                "TEMP_EXT_MIN":"External Temperature min.",
+                "TEMP_INT_MAX":"Internal Temperature max.",
+                "TEMP_INT_MIN":"Internal Temperature min.",
+                "HRIN":"Internal humidity max",
+                "BROOD":"Brood level",
+                "WEIGHT_MAX":"Weight max.",
+                "WEATHER":"Weather",
+                "MOON":"Moon calendar",
+                "RAIN":"Precipitation",
+                "TEMP_EXT_WEATHER_MAX":"External Temperature max.",
+                "TEMP_EXT_WEATHER_MIN":"External Temperature min.",
+                "WIND":"Wind",
+                "HEXT_WEATHER_MAX":"External Humidity max.",
+                "HEXT_WEATHER_MIN":"External Humidity min.",
+                "ALERT":"Alerts and Events",
+                "ALERTSAPIARY":"Events for the apiary",
+                "FITNESS":"Hive health"
             }
         },
         "WEIGHT": {
@@ -457,10 +530,10 @@
               "INCOME": "Productivitate",
               "HOURLY": "Orar"
           },
-          "MASA":{
+          "TABLE":{
             "DATE": "Data",
-            "Stup": "Stupi",
-            "BRUT":{
+            "HIVE": "Stupi",
+            "RAW":{
               "T0": "Greutate la data X",
               "7DAYS": "Greutate la Z-7",
               "15DAYS": "Greutate la Z-15"
@@ -809,7 +882,7 @@
         "LARVA": "Prezența larvei",
         "PUPA": "Prezență cu puiet plafonată",
         "DRONEBROOD": "Prezența puietului de trantori",
-        "DRONES": "Prezența trantorilor",
+        "DRONE": "Prezența trantorilor",
         "BUZZINGHIVE": "Stup bezmetic",
         "MOSAICBROOD": "Puiet mozaic",
         "QUEENCELLSEEN":"Queencellseen"
@@ -969,13 +1042,13 @@
         },
         "GRAPH":{
             "TEMP":"Temperature",
-            "TEMP_LEFT":"36%",
+            "TEMP_LEFT":"39%",
             "WIND":"Wind",
-            "WIND_LEFT":"40%",
+            "WIND_LEFT":"42%",
             "RAIN":"Rain",
-            "RAIN_LEFT":"40%",
+            "RAIN_LEFT":"42%",
             "HUMI":"Humidity",
-            "HUMI_LEFT":"38%"
+            "HUMI_LEFT":"40%"
         },
         "CONFIG":{
             "APIARY":"Apiary",

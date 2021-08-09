@@ -19,6 +19,7 @@ export class WeatherOptionService {
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
         this.user_apiaries = [..._apiaries].sort(this.compare);
+        this.user_apiaries = this.user_apiaries.filter(apiary => apiary !== null && apiary.userId === this.userService.getIdUserLoged());
         this.addApiary(this.user_apiaries[0]);
       },
       () => {},

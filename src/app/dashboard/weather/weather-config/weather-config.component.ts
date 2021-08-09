@@ -24,9 +24,10 @@ export class WeatherConfigComponent implements OnInit {
     apiaryName: null,
     userId: null,
     userName: null,
-    begin: new Date(),
+    start: new Date(),
     end: null,
-    source: "WeatherSource",
+    sourceId: "WeatherSource",
+    sourceType: null,
     stationId: null,
     APIKey: null,
     APISecret: null
@@ -59,8 +60,8 @@ export class WeatherConfigComponent implements OnInit {
     } 
     elt.classList.add('apiary-group-weather-config');
 
-    (<HTMLInputElement>document.getElementById("w-begin-h")).value = this.wS.begin.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});;
-    (<HTMLInputElement>document.getElementById("w-begin-m")).value = this.wS.begin.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});;
+    (<HTMLInputElement>document.getElementById("w-begin-h")).value = this.wS.start.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});;
+    (<HTMLInputElement>document.getElementById("w-begin-m")).value = this.wS.start.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});;
 
     this.captService.getCapteursByApiaryId(this.w_o_service.getApiaryConfig()._id).subscribe(
       _captArray => { this.captApiary = _captArray.filter(_c => !_c.sensorRef.includes("_removed")) },
@@ -78,9 +79,10 @@ export class WeatherConfigComponent implements OnInit {
       apiaryName: this.w_o_service.getApiaryConfig().name,
       userId: this.userService.getIdUserLoged(),
       userName: this.userService.getUser(),
-      begin: new Date(),
+      start: new Date(),
       end: null,
-      source: "WeatherSource",
+      sourceId: "WeatherSource",
+      sourceType: null,
       stationId: null,
       APIKey: null,
       APISecret: null,
@@ -105,9 +107,10 @@ export class WeatherConfigComponent implements OnInit {
       apiaryName: apiary.name,
       userId: this.userService.getIdUserLoged(),
       userName: this.userService.getUser(),
-      begin: new Date(),
+      start: new Date(),
       end: null,
-      source: "WeatherSource",
+      sourceId: "WeatherSource",
+      sourceType: null,
       stationId: null,
       APIKey: null,
       APISecret: null,
@@ -124,9 +127,10 @@ export class WeatherConfigComponent implements OnInit {
       apiaryName: this.w_o_service.getApiaryConfig().name,
       userId: this.userService.getIdUserLoged(),
       userName: this.userService.getUser(),
-      begin: new Date(),
+      start: new Date(),
       end: null,
-      source: null,
+      sourceId: null,
+      sourceType: null,
       stationId: null,
       APIKey: null,
       APISecret: null,
@@ -137,8 +141,8 @@ export class WeatherConfigComponent implements OnInit {
 
     let select = <HTMLSelectElement>document.getElementById("sources-select");
     select.selectedIndex = 0;
-    (<HTMLInputElement>document.getElementById("w-begin-h")).value = this.wS.begin.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});
-    (<HTMLInputElement>document.getElementById("w-begin-m")).value = this.wS.begin.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});
+    (<HTMLInputElement>document.getElementById("w-begin-h")).value = this.wS.start.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});
+    (<HTMLInputElement>document.getElementById("w-begin-m")).value = this.wS.start.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});
 
     (<HTMLInputElement>document.getElementById("w-end-h")).value = "";
     (<HTMLInputElement>document.getElementById("w-end-m")).value = "";
@@ -151,6 +155,7 @@ export class WeatherConfigComponent implements OnInit {
   onSourceChange(){
     let select = <HTMLSelectElement>document.getElementById("sources-select");
     this.sourceType = select.value;
+    this.wS.sourceType = select.value;
     switch(select.value){
       case 'TH':
         this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' );
@@ -170,25 +175,25 @@ export class WeatherConfigComponent implements OnInit {
 
   sensorChange(){
     let select = <HTMLSelectElement>document.getElementById("sensors-select");
-    this.wS.source = select.value;
+    this.wS.sourceId = select.value;
   }
 
   beginDate(){
-    console.log(this.wS.begin);
-    this.wS.begin = new Date( (<any>this.wS.begin)._d);
+    console.log(this.wS.start);
+    this.wS.start = new Date( (<any>this.wS.start)._d);
   }
   beginHours(){
     let input = <HTMLInputElement>document.getElementById("w-begin-h");
     if(parseInt(input.value) > 23){
       input.value = '23';
-      this.wS.begin.setHours(23);
+      this.wS.start.setHours(23);
     }
     else if(parseInt(input.value) < 0){
       input.value = '00';
-      this.wS.begin.setHours(0);
+      this.wS.start.setHours(0);
     }
     else{
-      this.wS.begin.setHours( parseInt(input.value) );
+      this.wS.start.setHours( parseInt(input.value) );
       if(parseInt(input.value) < 10){
         input.value = '0' + parseInt(input.value);
       } 
@@ -198,14 +203,14 @@ export class WeatherConfigComponent implements OnInit {
     let input = <HTMLInputElement>document.getElementById("w-begin-m");
     if(parseInt(input.value) > 59){
       input.value = '59';
-      this.wS.begin.setMinutes(59);
+      this.wS.start.setMinutes(59);
     }
     else if(parseInt(input.value) < 0){
       input.value = '00';
-      this.wS.begin.setMinutes(0);
+      this.wS.start.setMinutes(0);
     }
     else{
-      this.wS.begin.setMinutes( parseInt(input.value) );
+      this.wS.start.setMinutes( parseInt(input.value) );
       if(parseInt(input.value) < 10){
         input.value = '0' + parseInt(input.value);
       } 
@@ -229,7 +234,7 @@ export class WeatherConfigComponent implements OnInit {
     (<HTMLInputElement>document.getElementById("end-date")).disabled = false;
     (<HTMLInputElement>document.getElementById("w-end-h")).disabled = false;
     (<HTMLInputElement>document.getElementById("w-end-m")).disabled = false;
-    this.wS.end != null ? new Date(this.wS.end) : new Date();
+    this.wS.end ? new Date(this.wS.end) : new Date();
     (<HTMLInputElement>document.getElementById("w-end-h")).value = this.wS.end.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});;
     (<HTMLInputElement>document.getElementById("w-end-m")).value = this.wS.end.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});;
     
@@ -338,9 +343,10 @@ export class WeatherConfigComponent implements OnInit {
       apiaryName: ws.apiaryName,
       userId: ws.userId,
       userName: ws.userName,
-      begin: new Date(ws.begin),
+      start: new Date(ws.start),
       end: ws.end != null ? new Date(ws.end) : null,
-      source: ws.source,
+      sourceId: ws.sourceId,
+      sourceType: ws.sourceType,
       stationId: ws.stationId,
       APIKey: ws.APIKey,
       APISecret: ws.APISecret,
@@ -349,23 +355,23 @@ export class WeatherConfigComponent implements OnInit {
     this.edit = true;
 
     let select = <HTMLSelectElement>document.getElementById("sources-select");
-    if(ws.source === 'WeatherSource'){
+    if(ws.sourceId === 'WeatherSource'){
       this.sourceType = "WeatherSource";
       select.selectedIndex = 5;
     }
-    if(ws.source.substr(0,2) === '43' || ws.source.substr(0,2) === '49' || ws.source.substr(0,2) === '57' || ws.source.substr(0,2) === '58'){
+    if(ws.sourceId.substr(0,2) === '43' || ws.sourceId.substr(0,2) === '49' || ws.sourceId.substr(0,2) === '57' || ws.sourceId.substr(0,2) === '58'){
       this.sourceType = "Scale";
       select.selectedIndex = 4;
     }
-    if(ws.source.substr(0,2) === '41' || ws.source.substr(0,2) === '47'){
+    if(ws.sourceId.substr(0,2) === '41' || ws.sourceId.substr(0,2) === '47'){
       this.sourceType = "T2";
       select.selectedIndex = 3;
     }
-    if(ws.source.substr(0,2) === '42' || ws.source.substr(0,2) === '56'){
+    if(ws.sourceId.substr(0,2) === '42' || ws.sourceId.substr(0,2) === '56'){
       this.sourceType = "TH";
       select.selectedIndex = 2;
     }
-    if(ws.source === 'Station Davis'){
+    if(ws.sourceId === 'Station Davis'){
       this.sourceType = "Station Davis";
       select.selectedIndex = 1;
     }
@@ -373,8 +379,8 @@ export class WeatherConfigComponent implements OnInit {
     (<HTMLElement>document.getElementById("newSourceModalLabel")).textContent = this.translate.instant('WEATHER.CONFIG.EDIT_SOURCE');
     (<HTMLSpanElement>document.getElementById("source-save-text")).textContent = this.translate.instant('WEATHER.CONFIG.BTN_EDIT');
 
-    (<HTMLInputElement>document.getElementById("w-begin-h")).value = this.wS.begin.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});
-    (<HTMLInputElement>document.getElementById("w-begin-m")).value = this.wS.begin.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});
+    (<HTMLInputElement>document.getElementById("w-begin-h")).value = this.wS.start.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});
+    (<HTMLInputElement>document.getElementById("w-begin-m")).value = this.wS.start.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});
 
     if(this.wS.end != null){
       this.enableEnd();
@@ -387,28 +393,28 @@ export class WeatherConfigComponent implements OnInit {
 
     let sensorSelect = <HTMLSelectElement>document.getElementById("sensors-select");
     let index;
-    if(ws.source === 'WeatherSource'){
+    if(ws.sourceId === 'WeatherSource'){
       sensorSelect.selectedIndex = 0;
     }
-    if(ws.source.substr(0,2) === '43' || ws.source.substr(0,2) === '49' || ws.source.substr(0,2) === '57' || ws.source.substr(0,2) === '58'){
+    if(ws.sourceId.substr(0,2) === '43' || ws.sourceId.substr(0,2) === '49' || ws.sourceId.substr(0,2) === '57' || ws.sourceId.substr(0,2) === '58'){
       this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58');
       index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58')
-                             .findIndex(_c => _c.sensorRef === this.wS.source);
+                             .findIndex(_c => _c.sensorRef === this.wS.sourceId);
       sensorSelect.selectedIndex = index + 1;
     }
-    if(ws.source.substr(0,2) === '41' || ws.source.substr(0,2) === '47'){
+    if(ws.sourceId.substr(0,2) === '41' || ws.sourceId.substr(0,2) === '47'){
       this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' );
       index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' )
-                             .findIndex(_c => _c.sensorRef === this.wS.source);
+                             .findIndex(_c => _c.sensorRef === this.wS.sourceId);
       sensorSelect.selectedIndex = index + 1;
     }
-    if(ws.source.substr(0,2) === '42' || ws.source.substr(0,2) === '56'){
+    if(ws.sourceId.substr(0,2) === '42' || ws.sourceId.substr(0,2) === '56'){
       this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' );
       index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' )
-                             .findIndex(_c => _c.sensorRef === this.wS.source);
+                             .findIndex(_c => _c.sensorRef === this.wS.sourceId);
       sensorSelect.selectedIndex = index + 1;
     }
-    if(ws.source === 'Station Davis'){
+    if(ws.sourceId === 'Station Davis'){
       sensorSelect.selectedIndex = 0;
     }
   }

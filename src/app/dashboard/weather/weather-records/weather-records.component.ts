@@ -8,15 +8,21 @@ import { WeatherDateService } from '../service/weather-date.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RucherService } from '../../service/api/rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
-import { DailyManagerService } from '../../melli-charts/hive/service/daily-manager.service';
 import { WeatherService } from '../../service/api/weather.service';
 import { Observable } from 'rxjs';
 import { SERIES } from '../../melli-charts/charts/SERIES';
-import { Console } from 'console';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
-import { _MatTabMixinBase } from '@angular/material/tabs/typings/tab';
+import { WeatherSource } from '../../../_model/weatherSource';
+import { WeatherSrcsService } from '../../service/api/weather-srcs.service';
+import { RecordService } from '../../service/api/record.service';
+import { Record } from '../../../_model/record';
+import { CurrentIndexService } from '../../service/api/current-index.service';
+import { ForecastIndexService } from '../../service/api/forecast-index.service';
 
-const colors: string[] = ['rgb(20,150,255)', 'green', 'red', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'grey'];
+const colors: any = {
+  local: ['rgb(50,160,210)', 'rgb(0,170,0)', 'rgb(255,0,0)', 'rgb(150,0,255)', 'rgb(220,150,0)', 'rgb(0,0,220)', 'rgb(150,0,150)', 'rgb(120,80,0)', 'rgb(150,150,150)'],
+  ws: ['rgb(140,219,255)', 'rgb(122,223,134)', 'rgb(255,170,170)', 'rgb(200,130,255)', 'rgb(255,210,125)', 'rgb(130,130,255)', 'rgb(240,110,240)', 'rgb(190, 160, 90)', 'rgb(210,210,210)']
+};
 
 @Component({
   selector: 'app-weather-records',
@@ -30,6 +36,8 @@ export class WeatherRecordsComponent implements OnInit {
   private gridIndex: Array<number>;
   public user_apiaries: RucherModel[];
 
+  private currentWSByApiary: WeatherSource[] = [];
+
   private type_graph: string = 'desktop';
 
   constructor(
@@ -38,9 +46,13 @@ export class WeatherRecordsComponent implements OnInit {
     public w_o_service: WeatherOptionService,
     private w_d_service: WeatherDateService,
     private weatherService: WeatherService,
+    private w_srcs_service: WeatherSrcsService,
     private unitService: UnitService,
     private translateService: TranslateService,
     private graphGlobal: GraphGlobal,
+    private recordService: RecordService,
+    private currentIdx: CurrentIndexService,
+    private forecastIdx: ForecastIndexService
   ) { }
 
   ngOnInit() {
@@ -50,28 +62,31 @@ export class WeatherRecordsComponent implements OnInit {
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
         this.user_apiaries = [..._apiaries].sort(this.compare);
+        this.user_apiaries = this.user_apiaries.filter(apiary => apiary !== null && apiary.userId === this.userService.getIdUserLoged());
       },
       () => {},
       () => {
-        const elt = document.getElementsByClassName('apiaryGroup')[0];
-        if (elt.classList.contains('apiary-group-weather-config')) {
-          elt.classList.remove('apiary-group-weather-config');
-        } 
-        elt.classList.add('apiary-group-weather-records');
-        this.w_d_service.today = new Date();
+        this.getUserWeatherSrcs(() => {
+          const elt = document.getElementsByClassName('apiaryGroup')[0];
+          if (elt.classList.contains('apiary-group-weather-config')) {
+            elt.classList.remove('apiary-group-weather-config');
+          } 
+          elt.classList.add('apiary-group-weather-records');
+          this.w_d_service.today = new Date();
 
-        this.options = Object.assign({}, BASE_OPTIONS.baseOptionWeather);
-        this.options.series = [];
-        this.options.yAxis = [];
-        this.options.xAxis = [];
-        this.valueSubjectComplete = 0;
-        this.gridIndex = [0, 1, 2, 3];
-        this.w_o_service.setRecordsChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-weather'),{},{height: '1400px'}));
-        this.setOptionForChart();
-        this.loadAllRecords((options: any) => {
-          this.w_o_service.getRecordsChartInstance().setOption(options, true);
-          this.w_o_service.getRecordsChartInstance().hideLoading();
-        });
+          this.options = Object.assign({}, BASE_OPTIONS.baseOptionWeather);
+          this.options.series = [];
+          this.options.yAxis = [];
+          this.options.xAxis = [];
+          this.valueSubjectComplete = 0;
+          this.gridIndex = [0, 1, 2, 3];
+          this.w_o_service.setRecordsChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-weather'),{},{height: '1400px'}));
+          this.setOptionForChart();
+          this.loadAllRecords((options: any) => {
+            this.w_o_service.getRecordsChartInstance().setOption(options, true);
+            this.w_o_service.getRecordsChartInstance().hideLoading();
+          });
+        })
       }
     );
     
@@ -87,15 +102,72 @@ export class WeatherRecordsComponent implements OnInit {
     return 0;
   }
 
+  getUserWeatherSrcs(next: Function){
+    this.w_srcs_service.requestUserWeatherSrcsWithDateBetween(this.userService.getIdUserLoged(), this.w_d_service.getCurrentRangeForRequest()).subscribe(
+      (_ws: WeatherSource[]) => {
+        console.log(_ws);
+        this.currentWSByApiary = [..._ws];
+      },
+      () => {},
+      () => {
+        next();
+      }
+    )
+  }
+
   setOptionForChart(){
-    this.options.title[0].text = this.translateService.instant('WEATHER.GRAPH.TEMP');
-    this.options.title[0].left = this.translateService.instant('WEATHER.GRAPH.TEMP_LEFT');
-    this.options.title[1].text = this.translateService.instant('WEATHER.GRAPH.RAIN');
-    this.options.title[1].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
-    this.options.title[2].text = this.translateService.instant('WEATHER.GRAPH.HUMI');
-    this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.HUMI_LEFT');
-    this.options.title[3].text = this.translateService.instant('WEATHER.GRAPH.WIND');
-    this.options.title[3].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
+    this.options.title[0].text = 'Index Nectar'
+    this.options.title[0].left = '39%';
+    this.options.title[1].text = 'Index Flight';
+    this.options.title[1].left = '39%'
+    this.options.title[2].text = this.translateService.instant('WEATHER.GRAPH.TEMP');
+    this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.TEMP_LEFT');
+    this.options.title[3].text = this.translateService.instant('WEATHER.GRAPH.RAIN');
+    this.options.title[3].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
+    this.options.title[4].text = this.translateService.instant('WEATHER.GRAPH.HUMI');
+    this.options.title[4].left = this.translateService.instant('WEATHER.GRAPH.HUMI_LEFT');
+    this.options.title[5].text = this.translateService.instant('WEATHER.GRAPH.WIND');
+    this.options.title[5].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
+
+    let yAxisNec = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
+    yAxisNec.name = 'Nectar Index (%)';
+    yAxisNec.min = 0;
+    yAxisNec.max = 110;
+    yAxisNec.gridIndex = 0;
+    yAxisNec.interval = 10;
+    yAxisNec.axisLabel.margin = 5;
+    this.options.yAxis.push(yAxisNec);
+
+    let xAxisNec = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
+    xAxisNec.gridIndex = 0;
+    xAxisNec.max = this.w_d_service.getRangeForRequest()[1];
+    xAxisNec.min = this.w_d_service.getRangeForRequest()[0];
+    xAxisNec.axisLabel.margin = 10;
+    xAxisNec.axisLabel.formatter = (value: number, index: number) => {
+      return this.unitService.getDailyDate(new Date(value));
+    };
+    xAxisNec.axisLabel.fontSize = 12;
+    this.options.xAxis.push(xAxisNec);
+
+    let yAxisFli = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
+    yAxisFli.name = 'Flight Index (%)';
+    yAxisFli.min = 0;
+    yAxisFli.max = 110;
+    yAxisFli.gridIndex = 1;
+    yAxisFli.interval = 10;
+    yAxisFli.axisLabel.margin = 5;
+    this.options.yAxis.push(yAxisFli);
+
+    let xAxisFli = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
+    xAxisFli.gridIndex = 1;
+    xAxisFli.max = this.w_d_service.getRangeForRequest()[1];
+    xAxisFli.min = this.w_d_service.getRangeForRequest()[0];
+    xAxisFli.axisLabel.margin = 10;
+    xAxisFli.axisLabel.formatter = (value: number, index: number) => {
+      return this.unitService.getDailyDate(new Date(value));
+    };
+    xAxisFli.axisLabel.fontSize = 12;
+    this.options.xAxis.push(xAxisFli);
 
     let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisTemp.name = this.graphGlobal.temp.name;
@@ -118,12 +190,12 @@ export class WeatherRecordsComponent implements OnInit {
         return 40;
       }
     };
-    yAxisTemp.gridIndex = 0;
+    yAxisTemp.gridIndex = 2;
     yAxisTemp.axisLabel.margin = 5;
     this.options.yAxis.push(yAxisTemp);
 
     let xAxis = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
-    xAxis.gridIndex = 0;
+    xAxis.gridIndex = 2;
     xAxis.max = this.w_d_service.getRangeForRequest()[1];
     xAxis.min = this.w_d_service.getRangeForRequest()[0];
     xAxis.axisLabel.margin = 10;
@@ -137,13 +209,13 @@ export class WeatherRecordsComponent implements OnInit {
     yAxisRain.name = this.graphGlobal.rain.name;
     yAxisRain.min = 0;
     yAxisRain.max = 10;
-    yAxisRain.gridIndex = 1;
+    yAxisRain.gridIndex = 3;
     yAxisRain.interval = 1;
     yAxisRain.axisLabel.margin = 5;
     this.options.yAxis.push(yAxisRain);
 
     let xAxisRain = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
-    xAxisRain.gridIndex = 1;
+    xAxisRain.gridIndex = 3;
     xAxisRain.max = this.w_d_service.getRangeForRequest()[1];
     xAxisRain.min = this.w_d_service.getRangeForRequest()[0];
     xAxisRain.axisLabel.margin = 10;
@@ -154,7 +226,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.xAxis.push(xAxisRain);
 
     let xAxisHumi = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
-    xAxisHumi.gridIndex = 2;
+    xAxisHumi.gridIndex = 4;
     xAxisHumi.max = this.w_d_service.getRangeForRequest()[1];
     xAxisHumi.min = this.w_d_service.getRangeForRequest()[0];
     xAxisHumi.axisLabel.margin = 10;
@@ -168,7 +240,7 @@ export class WeatherRecordsComponent implements OnInit {
     yAxisHumi.name = this.graphGlobal.humidity.name;
     yAxisHumi.min = 0;
     yAxisHumi.max = 100;
-    yAxisHumi.gridIndex = 2;
+    yAxisHumi.gridIndex = 4;
     yAxisHumi.interval = 10;
     yAxisHumi.axisLabel.margin = 5;
     this.options.yAxis.push(yAxisHumi);
@@ -177,12 +249,12 @@ export class WeatherRecordsComponent implements OnInit {
     yAxisWind.name = this.graphGlobal.wind.name;
     yAxisWind.min = 0;
     yAxisWind.max = 25;
-    yAxisWind.gridIndex = 3;
+    yAxisWind.gridIndex = 5;
     yAxisWind.axisLabel.margin = 5;
     this.options.yAxis.push(yAxisWind);
 
     let xAxisWind = JSON.parse(JSON.stringify(BASE_OPTIONS.xAxis));
-    xAxisWind.gridIndex = 3;
+    xAxisWind.gridIndex = 5;
     xAxisWind.max = this.w_d_service.getRangeForRequest()[1];
     xAxisWind.min = this.w_d_service.getRangeForRequest()[0];
     xAxisWind.axisLabel.margin = 10;
@@ -198,7 +270,8 @@ export class WeatherRecordsComponent implements OnInit {
           {
             name: _elt.seriesName,
             value: this.unitService.getValRound(_elt.data.value[1]),
-            unit:  this.graphGlobal.getUnitBySerieName(_elt.seriesId)
+            unit:  this.graphGlobal.getWeatherUnitBySerieName(_elt.seriesId),
+            sensorRef: _elt.data.value[2]
           }
         ));
       }).join('');
@@ -301,6 +374,44 @@ export class WeatherRecordsComponent implements OnInit {
       yAxisIndex: 3,
       xAxisIndex: 3
     });
+    this.options.series.push({
+      type: 'line',
+      showSymbol: false,
+      data: [],
+      markLine: {
+        data: [ {name: "", xAxis: new Date()} ],
+        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        symbol: ['circle', 'none'],
+        label:{
+          formatter: function(){
+            return '';
+          }
+        },
+        silent: true,
+      },
+      name:"markLine",
+      yAxisIndex: 4,
+      xAxisIndex: 4
+    });
+    this.options.series.push({
+      type: 'line',
+      showSymbol: false,
+      data: [],
+      markLine: {
+        data: [ {name: "", xAxis: new Date()} ],
+        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        symbol: ['circle', 'none'],
+        label:{
+          formatter: function(){
+            return '';
+          }
+        },
+        silent: true,
+      },
+      name:"markLine",
+      yAxisIndex: 5,
+      xAxisIndex: 5
+    });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
   }
 
@@ -367,14 +478,14 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.legend.center = 'center';
     this.options.legend.top = 0;
     this.options.legend.width = '100%';
-    this.options.title[0].top = "5%";
+    this.options.title[0].top = "7%";
     this.options.title.forEach((_t,i) => {
-      _t.top = (5 + i*16) + '%'
+      _t.top = (7 + i*16) + '%'
       _t.left = 'center';
     });
-    this.options.grid[0].top = "7%";
+    this.options.grid[0].top = "9%";
     this.options.grid.forEach((_t,i) => {
-      _t.top = (7+ i*16) + '%';
+      _t.top = (9+ i*16) + '%';
       _t.width = "83%";
       _t.left = "10%";
     });
@@ -397,16 +508,18 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.legend.top = "5%";
     this.options.legend.width = 150;
     delete this.options.legend.center;
-    this.options.title[0].top = "3%";
-    this.options.title.forEach((_t,i) => _t.top = (3 + i*16) + '%');
-    this.options.title[0].left = this.translateService.instant('WEATHER.GRAPH.TEMP_LEFT');
-    this.options.title[1].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
-    this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.HUMI_LEFT');
-    this.options.title[3].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
+    this.options.title[0].top = "1%";
+    this.options.title.forEach((_t,i) => _t.top = (1 + i*16) + '%');
+    this.options.title[0].left = "39%";
+    this.options.title[1].left = "39%";
+    this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.TEMP_LEFT');
+    this.options.title[3].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
+    this.options.title[4].left = this.translateService.instant('WEATHER.GRAPH.HUMI_LEFT');
+    this.options.title[5].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
 
-    this.options.grid[0].top = "5%";
+    this.options.grid[0].top = "3%";
     this.options.grid.forEach((_t,i) => {
-      _t.top = (5 + i*16) + '%';
+      _t.top = (3 + i*16) + '%';
       _t.width = "75%";
       _t.left = "6%";
     });
@@ -415,7 +528,7 @@ export class WeatherRecordsComponent implements OnInit {
       _a.axisLabel.fontSize = 12;
       _a.nameGap = 25;
       _a.nameTextStyle = {
-        fontSize : 16
+        fontSize : 12
       }
     });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
@@ -430,25 +543,43 @@ export class WeatherRecordsComponent implements OnInit {
    * @returns {string}
    * @memberof StackComponent
    */
-   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
+  getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
     let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';
     let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
-      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' +  _serie.name.split('|')[1]);
+      let sensor = _serie.name.split('|')[1] === 'WeatherS' ? 'WeatherS' : _serie.sensorRef;
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' + sensor);
     }).join('');
 
     return tooltipGlobal;
   }
 
   loadAllRecords(next: Function){
+    this.options.series = [];
     if(this.w_o_service.getRecordsChartInstance().getOption().series.findIndex(_s => _s.name === "markLine") === -1){
       if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
         this.insertMarklines();
       }
     }
-    let temp: any[], rain: any[], wind: any[], humi: any[];
     this.w_o_service.getRecordsChartInstance().showLoading();
+    this.loadAllWithWeatherSource((options:any) => {
+        //this.w_o_service.getRecordsChartInstance().setOption(options, true);
+        //this.w_o_service.getRecordsChartInstance().hideLoading();
+        
+        if(this.currentWSByApiary.length > 0){
+          this.loadAllWithChosenSource((options:any) => {
+            next(options);
+          });
+        }
+        else{
+          next(options);
+        }
+    });
+  }
+
+  loadAllWithWeatherSource(next: Function){
+    let temp: any[], rain: any[], wind: any[], humi: any[];
     let obsArray = [];
     obsArray = this.w_o_service.getApiariesSelected().map(_a => {
       return [
@@ -491,11 +622,12 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].temp ? _elt.value[0].temp : null , sensorRef: _elt.sensorRef, type: "temp" }
             }) ), obsArray[index].name, (serieComplete: any) => {
               
-              serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 0;
-              serieComplete.xAxisIndex = 0;
+              serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.yAxisIndex = 2;
+              serieComplete.xAxisIndex = 2;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -514,11 +646,11 @@ export class WeatherRecordsComponent implements OnInit {
             }) ), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.type = 'bar';
-              serieComplete.id = "Rain " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 1;
-              serieComplete.xAxisIndex = 1;
+              serieComplete.id = "Rain " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.yAxisIndex = 3;
+              serieComplete.xAxisIndex = 3;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -536,11 +668,12 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: _elt.sensorRef, type: "humi" }
             }) ), obsArray[index].name, (serieComplete: any) => {
 
-              serieComplete.id = "Hum " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 2;
-              serieComplete.xAxisIndex = 2;
+              serieComplete.id = "Hum " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.yAxisIndex = 4;
+              serieComplete.xAxisIndex = 4;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -558,11 +691,12 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[1].speed ? _elt.value[1].speed : null , sensorRef: _elt.sensorRef, type: "wind" }
             }) ), obsArray[index].name, (serieComplete: any) => {
 
-              serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 3;
-              serieComplete.xAxisIndex = 3;
+              serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
+              serieComplete.yAxisIndex = 5;
+              serieComplete.xAxisIndex = 5;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -582,9 +716,263 @@ export class WeatherRecordsComponent implements OnInit {
       () => {},
       () => {
         //console.log(this.options.series);
-        next(this.options);
+        this.loadAllIndexesWeatherSource((options)=> {
+          next(this.options);
+        })
       }
     );
+  }
+
+  loadAllIndexesWeatherSource(next: Function){
+    let nec: any[] = [], fli: any[] = [];
+    let obsArray = [];
+    obsArray = this.w_o_service.getApiariesSelected().map(_a => {
+      return [
+        { apiary: _a,
+          name: _a.name,
+          obs: this.currentIdx.getCurrentIndexByApiaryAndDateBetweenWS(_a._id, this.w_d_service.getCurrentRangeForRequest())
+        },
+        { apiary: _a,
+          name: _a.name,
+          obs: this.forecastIdx.getForecastIndexByApiaryAndDateBetween(_a._id, this.w_d_service.getForecastRangeForRequest()) 
+        },    
+      ];
+    }).flat();
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      _indexes => {
+        //console.log(_indexes);
+        _indexes.forEach((_apiIdx: any[], index) => {
+          if(index % 2 === 0){
+            nec = [];
+            fli = [];
+            nec = _apiIdx.map(_elt => {
+              return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+            });
+            fli = _apiIdx.map(_elt => {
+              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+            });
+          }
+          else{
+            //ADD NECTAR TO GRAPH
+            this.getSerieByData(nec.concat( _apiIdx.map(_elt => { 
+              return { date: _elt.date, value: _elt.nectarIdx*100, sensorRef:'WeatherSource', type: "nec" }
+            }) ), obsArray[index].name, (serieComplete: any) => {
+              
+              serieComplete.type = 'bar';
+
+              serieComplete.id = "Nectar " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.yAxisIndex = 0;
+              serieComplete.xAxisIndex = 0;
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') ,
+              };
+              /*this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
+                _xAxe.max = this.w_d_service.getRangeForRequest()[1];
+              });*/
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series[indexSerie] = Object.assign({}, serieComplete);
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+              }
+            });
+
+            //ADD FLIGHT TO GRAPH
+            this.getSerieByData(fli.concat( _apiIdx.map(_elt => { 
+              return { date: _elt.date, value: _elt.flightIdx*100, sensorRef:'WeatherSource', type: "nec" }
+            }) ), obsArray[index].name, (serieComplete: any) => {
+              
+              serieComplete.type = 'bar';
+              serieComplete.id = "Flight " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.yAxisIndex = 1;
+              serieComplete.xAxisIndex = 1;
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') ,
+              };
+              /*this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
+                _xAxe.max = this.w_d_service.getRangeForRequest()[1];
+              });*/
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series[indexSerie] = Object.assign({}, serieComplete);
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+              }
+            });
+          }
+        });
+      },
+      () => {},
+      () => {
+        next(this.options);
+      }
+    )
+  }
+
+  loadAllWithChosenSource(next: Function){
+    let temp: any[], rain: any[], wind: any[], humi: any[];
+    let recordsArr: any[][] = [];
+    let obsArray = [];
+    obsArray = this.currentWSByApiary.filter(_ws => this.w_o_service.getApiariesSelected().some(_a => _a._id === _ws.apiaryId)).map(_ws => {
+      let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
+      let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
+      return [
+        { apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
+          ws: _ws,
+          name: _ws.apiaryName,
+          obs: this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
+        },
+      ];
+    }).flat();
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      _sensorRecords => {
+        //console.log(_sensorRecords);
+        _sensorRecords.forEach((_arr: any[],i) => {
+          // Faire passer a 0minutes
+          _arr.forEach( (_r) => {
+            _r.recordDate = _r.recordDate.substr(0, 14) + '00:00.000+0000';
+            //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
+            //console.log(_r.recordDate.substr(14, 27));
+          });
+          // Retirer doublons meme date
+          _arr = _arr.filter((_r, i, self) =>
+            i === self.findIndex((t) => (
+              t.recordDate === _r.recordDate
+            ))
+          )
+          temp = _arr.map(_elt =>{
+            return { date:_elt.recordDate, value: _elt.temp_int , sensorRef: _elt.sensorRef, type: "temp" }
+          });
+          this.getSerieByData(temp, obsArray[i].name, (serieComplete) => {
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 2;
+              serieComplete.xAxisIndex = 2;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
+
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+          });
+          if(obsArray[i].ws.sourceType === "TH" || obsArray[i].ws.sourceType === "Station Davis"){
+            humi = _arr.map(_elt =>{
+              return { date: _elt.recordDate, value: _elt.humidity_int , sensorRef: _elt.sensorRef, type: "humi" }
+            });
+            this.getSerieByData(humi, obsArray[i].name, (serieComplete) => {
+              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 4;
+              serieComplete.xAxisIndex = 4;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
+
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+            });
+          }
+          /*if(obsArray[i].ws.sourceType === "Station Davis"){
+            wind = _arr.map(_elt =>{
+              return { date: _elt.recordDate, value: _elt.humidity_int , sensorRef: _elt.sensorRef, type: "humi" }
+            });
+          }*/
+        });
+      },
+      () => {},
+      () => {
+        this.loadAllIndexesChosenSource((options) => {
+          next(this.options);
+        }) 
+      }
+    );
+  }
+
+  loadAllIndexesChosenSource(next: Function){
+    let nec: any[] = [], fli: any[] = [];
+    let obsArray = [];
+    obsArray = this.currentWSByApiary.filter(_ws => this.w_o_service.getApiariesSelected().some(_a => _a._id === _ws.apiaryId)).map(_ws => {
+      let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
+      let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
+      return [
+        { apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
+          ws: _ws,
+          name: _ws.apiaryName,
+          obs: this.currentIdx.getCurrentIndexByApiaryAndSensorRefAndDateBetweenLocal(_ws.apiaryId, _ws.sourceId, [start, end])
+        },
+      ];
+    }).flat();
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      _indexes => {
+        //console.log(_indexes);
+        _indexes.forEach((_arr: any[], i) => {
+          _arr.forEach( (_r) => {
+            _r.date = _r.date.substr(0, 11) + '00:00:00.000+0000';
+            //console.log(_r.recordDate.substr(14, 27));
+          });
+          nec = _arr.map( _elt => {
+            return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: _elt.sensorRef, type: "nec" }
+          });
+          this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
+            serieComplete.type = 'bar';
+            serieComplete.id = "Nectar " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+            serieComplete.yAxisIndex = 0;
+            serieComplete.xAxisIndex = 0;
+            //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+            serieComplete.itemStyle = {
+              color: this.getColor(obsArray[i].apiary, 'Local') 
+            };
+
+            const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+            if (indexSerie !== -1) {
+              this.options.series.push(Object.assign({}, serieComplete));
+            } else {
+              this.options.series.push(Object.assign({}, serieComplete));
+              this.options.legend.data.push(serieComplete.name);
+            }
+          });
+          if(obsArray[i].ws.sourceType === "Station Davis"){
+            fli = _arr.map( _elt => {
+              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: _elt.sensorRef, type: "fli" }
+            });
+            this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
+              serieComplete.type = 'bar';
+              serieComplete.id = "Flight " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 1;
+              serieComplete.xAxisIndex = 1;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
+  
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+            });
+          }
+        })
+      },
+      () => {},
+      () => {
+        next(this.options);
+      }
+    )
   }
 
   loadRecords(apiary: RucherModel){
@@ -593,8 +981,25 @@ export class WeatherRecordsComponent implements OnInit {
         this.insertMarklines();
       }
     }
-    let temp: any[], rain: any[], wind: any[], humi: any[];
     this.w_o_service.getRecordsChartInstance().showLoading();
+    let ws = this.currentWSByApiary.filter(_ws => _ws.apiaryId === apiary._id);
+    this.loadWithWeatherSource(apiary, ws, (options:any) => {
+      if(ws.length > 0){
+        this.loadWithChosenSource(apiary, ws, (options) => {
+          this.w_o_service.getRecordsChartInstance().setOption(options, true);
+          this.w_o_service.getRecordsChartInstance().hideLoading();
+        })
+      }
+      else{
+        this.w_o_service.getRecordsChartInstance().setOption(options, true);
+        this.w_o_service.getRecordsChartInstance().hideLoading();
+      }
+    });
+  }
+
+
+  loadWithWeatherSource(apiary: RucherModel, ws:WeatherSource[], next: Function){
+    let temp: any[], rain: any[], wind: any[], humi: any[];
     let obsArray = [];
     obsArray = [
         { apiary: apiary,
@@ -635,10 +1040,11 @@ export class WeatherRecordsComponent implements OnInit {
             }) ), obsArray[index].name, (serieComplete: any) => {
               
               serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 0;
-              serieComplete.xAxisIndex = 0;
+              serieComplete.yAxisIndex = 2;
+              serieComplete.xAxisIndex = 2;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
@@ -658,13 +1064,14 @@ export class WeatherRecordsComponent implements OnInit {
             this.getSerieByData(rain.concat( _apiRec.map(_elt => { 
               return { date: _elt.date, value: _elt.value[2]["1h"] ? _elt.value[2]["1h"] : null , sensorRef: _elt.sensorRef, type: "rain" }
             }) ), obsArray[index].name, (serieComplete: any) => {
-
+              console.log(rain);
               serieComplete.type = 'bar';
               serieComplete.id = "Rain " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 1;
-              serieComplete.xAxisIndex = 1;
+              serieComplete.yAxisIndex = 3;
+              serieComplete.xAxisIndex = 3;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -685,10 +1092,11 @@ export class WeatherRecordsComponent implements OnInit {
             }) ), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.id = "Hum " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 2;
-              serieComplete.xAxisIndex = 2;
+              serieComplete.yAxisIndex = 4;
+              serieComplete.xAxisIndex = 4;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -709,10 +1117,11 @@ export class WeatherRecordsComponent implements OnInit {
             }) ), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5);
-              serieComplete.yAxisIndex = 3;
-              serieComplete.xAxisIndex = 3;
+              serieComplete.yAxisIndex = 5;
+              serieComplete.xAxisIndex = 5;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary)
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
               };
               this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -737,10 +1146,254 @@ export class WeatherRecordsComponent implements OnInit {
           _x.max = this.w_d_service.getRangeForRequest()[1];
           _x.min = this.w_d_service.getRangeForRequest()[0];
         });
-        this.w_o_service.getRecordsChartInstance().setOption(this.options, true);
-        this.w_o_service.getRecordsChartInstance().hideLoading();
+        this.loadIndexWithWeatherSource(apiary, ws, (options) => {
+          next(this.options);
+        }); 
       }
     );
+  }
+
+  loadIndexWithWeatherSource(apiary: RucherModel, ws: WeatherSource[], next:Function){
+    let nec: any[] = [], fli: any[] = [];
+    let obsArray: any[] = [];
+    obsArray = [
+      { apiary: apiary,
+        name: apiary.name,
+        obs: this.currentIdx.getCurrentIndexByApiaryAndDateBetweenWS(apiary._id, this.w_d_service.getCurrentRangeForRequest())
+      },
+      { apiary: apiary,
+        name: apiary.name,
+        obs: this.forecastIdx.getForecastIndexByApiaryAndDateBetween(apiary._id, this.w_d_service.getForecastRangeForRequest()) 
+      },    
+    ];
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      _indexes => {
+        _indexes.forEach((_apiIdx: any[], i) => {
+          if(i % 2 === 0){
+            nec = [];
+            fli = [];
+            nec = _apiIdx.map(_elt => {
+              return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+            });
+            fli = _apiIdx.map(_elt => {
+              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+            });
+          }
+          else{
+            //ADD NECTAR TO GRAPH
+            this.getSerieByData(nec.concat( _apiIdx.map(_elt => { 
+              return { date: _elt.date, value: _elt.nectarIdx*100, sensorRef:'WeatherSource', type: "nec" }
+            }) ), obsArray[i].name, (serieComplete: any) => {
+              
+              serieComplete.type = 'bar';
+
+              serieComplete.id = "Nectar " + obsArray[i].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.yAxisIndex = 0;
+              serieComplete.xAxisIndex = 0;
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'WeatherSource') ,
+              };
+              /*this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
+                _xAxe.max = this.w_d_service.getRangeForRequest()[1];
+              });*/
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series[indexSerie] = Object.assign({}, serieComplete);
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+              }
+            });
+
+            //ADD FLIGHT TO GRAPH
+            this.getSerieByData(fli.concat( _apiIdx.map(_elt => { 
+              return { date: _elt.date, value: _elt.flightIdx*100, sensorRef:'WeatherSource', type: "nec" }
+            }) ), obsArray[i].name, (serieComplete: any) => {
+              
+              serieComplete.type = 'bar';
+              serieComplete.id = "Flight " + obsArray[i].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.yAxisIndex = 1;
+              serieComplete.xAxisIndex = 1;
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'WeatherSource') ,
+              };
+              /*this.options.xAxis.forEach(_xAxe => {
+                _xAxe.min = this.w_d_service.getRangeForRequest()[0];
+                _xAxe.max = this.w_d_service.getRangeForRequest()[1];
+              });*/
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series[indexSerie] = Object.assign({}, serieComplete);
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+              }
+            });
+          }
+        })
+      },
+      () => {},
+      () => {
+        next(this.options);
+      }
+    )
+  }
+
+  loadWithChosenSource(apiary: RucherModel, ws: WeatherSource[], next:Function){
+    let temp: any[], rain: any[], wind: any[], humi: any[];
+    let obsArray = ws.map( _ws => {
+      let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
+      let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
+      return [
+        { 
+          apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
+          ws: _ws,
+          name: _ws.apiaryName,
+          obs: this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
+        },
+      ];
+    }).flat();
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      _records => {
+        //console.log(_records);
+        _records.forEach((_arr: any[],i) => {
+          _arr.forEach( _r => {
+            _r.recordDate = _r.recordDate.substr(0, 14) + '00:00.000+0000';
+            //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
+            //console.log(_r.recordDate.substr(14, 27));
+          });
+          // Retirer doublons meme date
+          _arr = _arr.filter((_r, i, self) =>
+            i === self.findIndex((t) => (
+              t.recordDate === _r.recordDate
+            ))
+          )
+          temp = _arr.map(_elt =>{
+            return { date:_elt.recordDate, value: _elt.temp_int , sensorRef: _elt.sensorRef, type: "temp" }
+          });
+          this.getSerieByData(temp, obsArray[i].name, (serieComplete) => {
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 2;
+              serieComplete.xAxisIndex = 2;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
+
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+          });
+          if(obsArray[i].ws.sourceType === "TH" || obsArray[i].ws.sourceType === "Station Davis"){
+            humi = _arr.map(_elt =>{
+              return { date: _elt.recordDate, value: _elt.humidity_int , sensorRef: _elt.sensorRef, type: "humi" }
+            });
+            this.getSerieByData(humi, obsArray[i].name, (serieComplete) => {
+              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 4;
+              serieComplete.xAxisIndex = 4;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
+
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+            });
+          }
+
+        })
+      },
+      () => {},
+      () => {
+        this.loadIndexesWithChosenSource(apiary, ws, (options)=>{
+          next(this.options);
+        })
+        
+      }
+    )
+  }
+
+  loadIndexesWithChosenSource(apiary: RucherModel, ws: WeatherSource[], next:Function){
+    let nec: any[] = [], fli: any[] = [];
+    let obsArray = [];
+    obsArray = ws.map(_ws => {
+      let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
+      let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
+      return [
+        { apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
+          ws: _ws,
+          name: _ws.apiaryName,
+          obs: this.currentIdx.getCurrentIndexByApiaryAndSensorRefAndDateBetweenLocal(_ws.apiaryId, _ws.sourceId, [start, end])
+        },
+      ];
+    }).flat();
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      _indexes => {
+        _indexes.forEach((_arr: any[], i) => {
+          _arr.forEach( (_r) => {
+            _r.date = _r.date.substr(0, 11) + '00:00:00.000+0000';
+            //console.log(_r.recordDate.substr(14, 27));
+          });
+          nec = _arr.map( _elt => {
+            return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: _elt.sensorRef, type: "nec" }
+          });
+          this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
+            serieComplete.type = 'bar';
+            serieComplete.id = "Nectar " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+            serieComplete.yAxisIndex = 0;
+            serieComplete.xAxisIndex = 0;
+            //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+            serieComplete.itemStyle = {
+              color: this.getColor(obsArray[i].apiary, 'Local') 
+            };
+
+            const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+            if (indexSerie !== -1) {
+              this.options.series.push(Object.assign({}, serieComplete));
+            } else {
+              this.options.series.push(Object.assign({}, serieComplete));
+              this.options.legend.data.push(serieComplete.name);
+            }
+          });
+          if(obsArray[i].ws.sourceType === "Station Davis"){
+            fli = _arr.map( _elt => {
+              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: _elt.sensorRef, type: "fli" }
+            });
+            this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
+              serieComplete.type = 'bar';
+              serieComplete.id = "Flight " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 1;
+              serieComplete.xAxisIndex = 1;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
+  
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+            });
+          }
+        });
+      },
+      () => {},
+      () => {
+        next(this.options);
+      }
+    )
   }
 
   removeRecords(apiary: RucherModel){
@@ -762,7 +1415,7 @@ export class WeatherRecordsComponent implements OnInit {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
-        serieTmp.name = nameSerie.substr(0,5) + ' | ' + (_data.sensorRef === 'WeatherSource' ? 'WeatherS' : _data.sensorRef);
+        serieTmp.name = nameSerie.substr(0,5) + ' | ' + (_data.sensorRef === 'WeatherSource' ? 'WeatherS' : 'Local');
         if (nameSerie.indexOf('ext') !== -1 || nameSerie.indexOf('Ext') !== -1) {
           serieTmp.lineStyle = {
             normal: {
@@ -778,9 +1431,14 @@ export class WeatherRecordsComponent implements OnInit {
     });
   }
 
-  getColor(apiary: RucherModel): string{
+  getColor(apiary: RucherModel, type: string): string{
     let index = this.user_apiaries.findIndex(_a => _a._id === apiary._id);
-    return colors[index];
+    if(type === 'Local'){
+      return colors.local[index];
+    }
+    else{
+      return colors.ws[index];
+    }
   }
 
   ngOnDestroy(){

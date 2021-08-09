@@ -47,6 +47,14 @@ export class WeatherSrcsService {
     return this.userWeatherSources.filter(_ws => _ws.apiaryId === apiaryId);
   }
 
+  requestApiaryCurrentWeatherSrcs(apiaryId: string): Observable<WeatherSource>{
+    return this.http.post<WeatherSource>(CONFIG.URL + 'weathersrcs/current/apiaryId/' + apiaryId, httpOptions);
+  }
+
+  requestUserCurrentWeatherSrcs(userId: string): Observable<WeatherSource[]>{
+    return this.http.post<WeatherSource[]>(CONFIG.URL + 'weathersrcs/current/userId/' + userId, httpOptions);
+  }
+
   insert(ws: WeatherSource): Observable<WeatherSource>{
     return this.http.post<WeatherSource>(CONFIG.URL + 'weathersrcs/insert', ws, httpOptions);
   }

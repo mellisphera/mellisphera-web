@@ -14,8 +14,8 @@
     <tbody>
       <tr *ngFor="let w_srcs of weatherSrcsByApiary;">
         <td>{{ w_srcs.apiaryName }}</td>
-        <td>{{ w_srcs.source }}</td>
-        <td>{{ unitService.getHourlyDate(w_srcs.begin) }}</td>
+        <td>{{ w_srcs.sourceId }}</td>
+        <td>{{ unitService.getHourlyDate(w_srcs.start) }}</td>
         <td>{{ w_srcs.end ? unitService.getHourlyDate(w_srcs.end) : 'WEATHER.CONFIG.ACTUAL' | translate }}</td>
         <td class="td-edit" data-toggle="modal" data-target="#newSourceModal"(click)="editSource(w_srcs._id)"><i class="fas fa-pen"></i></td>
         <td class="td-del" data-toggle="modal" data-target="#deleteSourceModal"(click)="openDeleteModal(w_srcs)"><i class="fas fa-trash"></i></td>
@@ -56,13 +56,13 @@
             </select>
           </div>
           <div class="weather-modal-flex" *ngIf="!(sourceType === 'WeatherSource')">
-            <div style="margin-top: 10px;" *ngIf="sourceType === 'TH' || sourceType === 'Scale' || sourceType === 'T2'" class="weather-config weather-modal-flex">
+            <div style="margin-top: 10px;" *ngIf="wS.sourceType === 'TH' || wS.sourceType === 'Scale' || wS.sourceType === 'T2'" class="weather-config weather-modal-flex">
               <select id="sensors-select" class="weather-select" (change)="sensorChange()">
                 <option disabled selected>{{ 'WEATHER.CONFIG.ID_SENSOR' | translate }}</option>
                 <option *ngFor="let sensor of captByType" value="{{sensor.sensorRef}}">{{sensor.sensorRef}}</option>
               </select>
             </div>
-            <div *ngIf="sourceType === 'Station Davis'" class="weather-config">
+            <div *ngIf="wS.sourceType === 'Station Davis'" class="weather-config">
               <div>
                 <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.ID_STATION' | translate }}">
               </div>
@@ -79,7 +79,7 @@
               <p class="weather-field-name">{{ 'WEATHER.CONFIG.BEGIN' | translate }} :</p>
             </div>
             <div class="weather-modal-flex" style="flex-wrap: wrap;">
-              <input type="text" class="weather-input-date" style="margin-left: 10px;" [(ngModel)]="wS.begin" [owlDateTimeTrigger]="dtBegin" [owlDateTime]="dtBegin" (ngModelChange)="beginDate()">
+              <input type="text" class="weather-input-date" style="margin-left: 10px;" [(ngModel)]="wS.start" [owlDateTimeTrigger]="dtBegin" [owlDateTime]="dtBegin" (ngModelChange)="beginDate()">
               <owl-date-time [pickerType]="'calendar'" #dtBegin></owl-date-time>
               <input id="w-begin-h" type="number" (change)="beginHours()"
                  class="weather-m-h" placeholder="h" style="text-align:center;">

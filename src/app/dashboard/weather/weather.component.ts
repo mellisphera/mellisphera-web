@@ -14,7 +14,7 @@ import { UnitService } from '../service/unit.service';
 import { WeatherService } from '../service/api/weather.service';
 
 const PREFIX_PATH = '/dashboard/weather/';
-const colors: string[] = ['rgb(20,150,255)', 'green', 'red', 'purple', 'orange', 'cyan', 'magenta', 'brown', 'grey'];
+const colors: string[] = ['rgb(50,160,210)', 'rgb(0,170,0)', 'rgb(255,0,0)', 'rgb(150,0,255)', 'rgb(220,150,0)', 'rgb(0,0,220)', 'rgb(150,0,150)', 'rgb(120,80,0)', 'rgb(150,150,150)'];
 
 @Component({
   selector: 'app-weather',

@@ -318,19 +318,27 @@ export const BASE_OPTIONS = {
             link: { xAxisIndex: 'all' }
         },
         title: [{
-            top: '3%',
+            top: '1%',
             left: '36%',
             text: 'Temperature'
         },  {
-            top: '19%',
+            top: '16%',
             left: '40%',
             text: 'Vent'
         },{
-            top: '35%',
+            top: '31%',
             left: '40%',
             text: 'Vent'
         }, {
-            top: '51%',
+            top: '46%',
+            left: '40%',
+            text: 'Humidité'
+        }, {
+            top: '61%',
+            left: '40%',
+            text: 'Humidité'
+        }, {
+            top: '76%',
             left: '40%',
             text: 'Humidité'
         }],
@@ -343,10 +351,12 @@ export const BASE_OPTIONS = {
             width: 150
         },
         grid: [
-            { x: '3%', y: '5%', left: '8%', width: '75%', height: '12%', background: 'white'},
-            { x: '3%', y: '21%', left: '8%', width: '75%', height: '12%', background: 'white'},
-            { x: '3%', y: '37%', left: '8%', width: '75%', height: '12%', background: 'white' },
-            { x: '3%', y: '53%', left: '8%', width: '75%', height: '12%', background: 'white' },
+            { x: '3%', y: '3%', left: '8%', width: '75%', height: '11%', background: 'white'},
+            { x: '3%', y: '18%', left: '8%', width: '75%', height: '11%', background: 'white'},
+            { x: '3%', y: '33%', left: '8%', width: '75%', height: '11%', background: 'white' },
+            { x: '3%', y: '48%', left: '8%', width: '75%', height: '11%', background: 'white' },
+            { x: '3%', y: '63%', left: '8%', width: '75%', height: '11%', background: 'white' },
+            { x: '3%', y: '78%', left: '8%', width: '75%', height: '11%', background: 'white' },
         ],
         dataZoom: [
               {
@@ -356,13 +366,13 @@ export const BASE_OPTIONS = {
                 end: 100,
                 // bottom: 50,
                 bottom: 20,
-                xAxisIndex: [0, 1, 2, 3]
+                xAxisIndex: [0, 1, 2, 3, 4, 5]
             },
             {
                 type: 'inside',
                 filterMode: 'empty',
                 realtime: true,
-                xAxisIndex: [0, 1, 2, 3]
+                xAxisIndex: [0, 1, 2, 3, 4, 5]
             },
             {
                 type: 'inside',
