@@ -1042,16 +1042,21 @@
         },
         "GRAPH":{
             "TEMP":"Temperature",
-            "TEMP_LEFT":"39%",
+            "TEMP_LEFT":"41%",
             "WIND":"Wind",
             "WIND_LEFT":"42%",
-            "RAIN":"Rain",
+            "RAIN":"Rainfall",
             "RAIN_LEFT":"42%",
-            "HUMI":"Humidity",
-            "HUMI_LEFT":"40%"
+            "HUMI":"Hygrometry",
+            "HUMI_LEFT":"40%",
+            "NECTAR":"Nectar flow index",
+            "NECTAR_LEFT":"37%",
+            "FLIGHT":"Foraging index",
+            "FLIGHT_LEFT":"38%"
         },
         "CONFIG":{
             "APIARY":"Apiary",
+            "TYPE":"Type",
             "SOURCE":"Source",
             "BEGIN":"Begin",
             "END":"End",

@@ -1042,16 +1042,21 @@
         },
         "GRAPH":{
             "TEMP":"Temperatura",
-            "TEMP_LEFT":"39%",
+            "TEMP_LEFT":"41%",
             "WIND":"Viento",
             "WIND_LEFT":"41%",
-            "RAIN":"Lluvia",
-            "RAIN_LEFT":"41%",
-            "HUMI":"Humedad",
-            "HUMI_LEFT":"40%"
+            "RAIN":"Precipitación",
+            "RAIN_LEFT":"40%",
+            "HUMI":"Higrometria",
+            "HUMI_LEFT":"40%",
+            "NECTAR":"Índice de flujo de néctar",
+            "NECTAR_LEFT":"36%",
+            "FLIGHT":"Índice de pecoreo",
+            "FLIGHT_LEFT":"37%"
         },
         "CONFIG":{
             "APIARY":"Colemnar",
+            "TYPE":"Tipo",
             "SOURCE":"Fuente",
             "BEGIN":"Inicio",
             "END":"Fin",

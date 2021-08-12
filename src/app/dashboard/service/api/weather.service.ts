@@ -70,6 +70,18 @@ export class WeatherService {
    *
    * @param {string} apiaryId
    * @param {Date[]} range
+   * @returns {Observable<CurrentHourlyWeather[]>}
+   * @memberof WeatherService
+   */
+   public getCurrentHourlyWeatherWithWSrcs(apiaryId: string, ws: string, range: Date[]): Observable<CurrentHourlyWeather[]> {
+    return this.httpClient.post<CurrentHourlyWeather[]>(CONFIG.URL + `hourlyWeather/hourly/apiary/${apiaryId}/${ws}`, range);
+  }
+
+  /**
+   *
+   *
+   * @param {string} apiaryId
+   * @param {Date[]} range
    * @returns {Observable<ForecastDailyWeather[]>}
    * @memberof WeatherService
    */

@@ -160,15 +160,15 @@ limitations under the License. -->
                 
             </div>
         </div>
-        <div class="panel panel-default">
+        <!--<div class="panel panel-default">
             <div class="panel-heading">{{ 'PREFERENCE_CONFIG.WEATHER_SOURCE' | translate }}</div>
             <div class="panel-body">
-                <!--userPref.availableSource-->
+                userPref.availableSource
                 <div *ngFor="let source of userPref.availableSource" class="form-group">
                     <input [(ngModel)]="weatherSrc" (ngModelChange)="onChangeWeatherSrc()" [value]="source"
                         name="weatherSource" type="radio" /><label>{{ source }}</label>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>

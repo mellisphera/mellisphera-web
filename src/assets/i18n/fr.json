@@ -1049,16 +1049,21 @@
         },
         "GRAPH":{
             "TEMP":"Temperature",
-            "TEMP_LEFT":"39%",
+            "TEMP_LEFT":"41%",
             "WIND":"Vent",
-            "WIND_LEFT":"42%",
-            "RAIN":"Pluie",
-            "RAIN_LEFT":"42%",
-            "HUMI":"Humidité",
-            "HUMI_LEFT":"40%"
+            "WIND_LEFT":"43%",
+            "RAIN":"Précipitations",
+            "RAIN_LEFT":"40%",
+            "HUMI":"Hygrométrie",
+            "HUMI_LEFT":"41%",
+            "NECTAR":"Indice de miellée",
+            "NECTAR_LEFT":"38%",
+            "FLIGHT":"Indice de Butinage",
+            "FLIGHT_LEFT":"37%"
         },
         "CONFIG":{
             "APIARY":"Rucher",
+            "TYPE":"Type",
             "SOURCE":"Source",
             "BEGIN":"Debut",
             "END":"Fin",

@@ -9,6 +9,6 @@ export interface WeatherSource{
     start: Date,
     end: Date,
     stationId: string,
-    APIKey: string,
-    APISecret: string
+    key: string,
+    secret: string
 }

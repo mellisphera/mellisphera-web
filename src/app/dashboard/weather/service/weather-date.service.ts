@@ -97,7 +97,9 @@ export class WeatherDateService {
       return [this.rangeDateForRequest[1],this.rangeDateForRequest[1]];
     }
     else{
-      return [this.today, this.rangeDateForRequest[1]];
+      let aux: Date = new Date(this.today);
+      aux.setDate(aux.getDate() - 1)
+      return [aux, this.rangeDateForRequest[1]];
     }
   }
 

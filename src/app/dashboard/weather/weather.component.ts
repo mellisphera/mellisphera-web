@@ -12,6 +12,7 @@ import { DataRange } from '../../_model/data-range';
 import { TranslateService } from '@ngx-translate/core';
 import { UnitService } from '../service/unit.service';
 import { WeatherService } from '../service/api/weather.service';
+import { range } from 'rxjs';
 
 const PREFIX_PATH = '/dashboard/weather/';
 const colors: string[] = ['rgb(50,160,210)', 'rgb(0,170,0)', 'rgb(255,0,0)', 'rgb(150,0,255)', 'rgb(220,150,0)', 'rgb(0,0,220)', 'rgb(150,0,150)', 'rgb(120,80,0)', 'rgb(150,150,150)'];
@@ -166,7 +167,7 @@ export class WeatherComponent implements OnInit {
    * @returns {DataRange}
    * @memberof MelliChartsComponent
    */
-   getRangeBYLang(range: DataRange): string {
+  getRangeBYLang(range: DataRange): string {
     if (this.translateService.currentLang === 'fr') {
       return this.w_d_service.ranges.filter(_range => _range.type === range.type)[0].typeFr;
     } else if (this.translateService.currentLang === 'es') {
@@ -176,14 +177,7 @@ export class WeatherComponent implements OnInit {
     }
   }
 
-   /**
-   *
-   *
-   * @param {string} type
-   * @returns {Array<DataRange>}
-   * @memberof MelliChartsComponent
-   */
-    getRangeByType(type: string): Array<DataRange> {
+  getRangeByType(type: string): Array<DataRange> {
       let arg: DataRange;
       const ranges: Array<DataRange> = this.w_d_service.ranges.filter(elt => elt.type === type || elt.type === type + 'S');
       if (type === 'YEAR') {
@@ -198,9 +192,9 @@ export class WeatherComponent implements OnInit {
         ranges.splice(index, 1);
       }
       return ranges;
-    }
+  }
 
-    setDateFromInput(): void {
+  setDateFromInput(): void {
       const start = this.w_d_service.start;
       const end = this.w_d_service.end;
       this.w_d_service.setRangeForRequest([start, end]);
@@ -210,20 +204,13 @@ export class WeatherComponent implements OnInit {
           this.w_o_service.getRecordsChartInstance().hideLoading();
         });
       } 
-    }
+  }
 
-    /**
-   *
-   *
-   * @param {DataRange} rangeSelect
-   * @memberof MelliChartsComponent
-   */
   setRangeSelect(rangeSelect: DataRange): void {
     this.w_d_service.setRange(rangeSelect);
     if (this.router.url === PREFIX_PATH + 'records' ) {
       this.recordsComponent.loadAllRecords((options: any) => {
-        options.baseOption.xAxis[0].min = this.w_d_service.getRangeForRequest()[0];
-        options.baseOption.xAxis[0].max = this.w_d_service.getRangeForRequest()[1];
+        console.log(options);
         this.w_o_service.getRecordsChartInstance().setOption(options, true);
         this.w_o_service.getRecordsChartInstance().hideLoading();
       });
