@@ -57,7 +57,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { InspCatService } from '../service/api/insp-cat.service';
 import { InspCat } from '../../_model/inspCat';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { b } from '@angular/core/src/render3';
 
 const PREFIX_PATH = '/dashboard/explore/';
@@ -125,6 +125,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   private eventsComponent: EventsComponent;
   private eltOnClick: EventTarget;
 
+  public apiaryColor: RucherModel = null;
 
   constructor(private deviceService: DeviceDetectorService,
     public rucheService: RucheService,
@@ -1400,6 +1401,48 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       }
       return;
     }
+  }
+
+  /* Hive Color part */
+  changeApiary(evt: Event): void{
+    let select = <HTMLInputElement>evt.target;
+    //console.log(select.value);
+    this.apiaryColor = this.rucherService.allApiaryAccount.find(_a => _a._id === select.value);
+  }
+
+  deleteColor(ruche: RucheInterface){
+    ruche.color = null;
+  }
+
+  testSave(){
+    let obsArray = this.rucheService.getHivesByApiaryId(this.apiaryColor._id)
+                                    .map( _r => {
+                                      return {
+                                        ruche: _r,
+                                        obs: this.rucheService.updateRuche(_r)
+                                      }
+                                    });
+    let button = <HTMLButtonElement>document.getElementById("save-colors");
+    button.disabled = true;
+    Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+      () => {}, 
+      () => {
+        setTimeout( () => {
+          this.notify.notify('error','Il y a eu une erreur dans la sauvegarde des couleurs');
+          button.disabled = false;
+          console.log('error in saving');
+        }, 300);
+        
+      }, 
+      () => {
+        setTimeout( () => {
+          this.notify.notify('success','Couleurs sauvegardés');
+          button.disabled = false;
+          console.log('colors saved');
+          $('#colorModal').modal('hide');
+        }, 300);
+      }
+    )
   }
 
 }

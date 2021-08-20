@@ -142,6 +142,12 @@ limitations under the License. -->
                   <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
                   {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
                 </button>
+                <!-- *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')" -->
+                <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
+                  data-toggle="modal" data-target="#colorModal">
+                  <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-fill"></i>
+                  {{'MELLICHARTS.HIVE_COLOR.BTN' | translate}}
+                </button>
               </div>
             </div>
           </div>
@@ -242,6 +248,45 @@ limitations under the License. -->
           <button class="btn btn-danger" style="margin-right:10px;height:34px;width:100px;" data-dismiss="modal">{{'MELLICHARTS.EVENT.BUTTONS.CANCEL' | translate}}</button>
           <button class="btn btn-success" style="margin-left:10px;height:34px;width:100px;" (click)="insertAddEvent()">{{'MELLICHARTS.EVENT.BUTTONS.ADD' | translate}}</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Color Modal-->
+<div class="modal fade" id="colorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Couleur des ruches</h4>
+        <select style="margin-top: 10px;" (change)="changeApiary($event)">
+          <option selected disabled>Choisir rucher</option>
+          <option *ngFor="let rucher of rucherService.allApiaryAccount; let i = index;" value="{{rucher._id}}">{{ rucher.name }}</option>
+        </select>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="apiaryColor != null">
+          <div id="{{ruche._id}}" style="display: flex; align-items: center; margin-top: 10px;" *ngFor="let ruche of rucheService.getHivesByApiaryId(apiaryColor._id); let i = index">
+            <div style="width: 20px; height: 20px;" >
+              <input [class]="'color-picker'" style="width: 20px; height: 20px; border-radius: 5px; border: 1px solid black;"[(colorPicker)]="ruche.color" [style.background]="ruche.color"/>
+            </div>
+            <!--<div style="width: 20px; height: 20px; margin-left: 10px;">
+              <button id="deleteColor" style="width: 20px; height: 20px; padding: 0; background-color: transparent;" (click)="deleteColor(ruche)">
+                <i class="fas fa-times" style="font-size: 20px; color: red;"></i>
+              </button>
+            </div>-->
+            <div style="margin-left: 10px;">
+              <span>{{ ruche.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div>
+          <button class="btn btn-danger" data-dismiss="modal">Annuler</button>
+          <button id="save-colors" class="btn btn-success" (click)="testSave()">Valider</button>
+        </div>     
+      </div>
     </div>
   </div>
 </div>

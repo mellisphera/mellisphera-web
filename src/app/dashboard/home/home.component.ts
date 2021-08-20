@@ -177,6 +177,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       apiaryName: '',
       hivePosX: '',
       hivePosY: '',
+      color: null,
       sharingUser: []
     };
 

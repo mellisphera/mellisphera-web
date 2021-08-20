@@ -24,6 +24,7 @@ export interface RucheInterface {
     hidden: boolean;
     dataLastReceived: Date;
     hivePosY: string;
+    color: string;
     sharingUser: User[];
     sensor?: Boolean;
 }

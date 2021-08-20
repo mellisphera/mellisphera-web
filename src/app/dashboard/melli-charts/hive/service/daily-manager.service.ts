@@ -38,6 +38,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { RucheInterface } from '../../../../_model/ruche';
 import { RucherService } from '../../../../dashboard/service/api/rucher.service';
 import { RucheService } from '../../../../dashboard/service/api/ruche.service';
+import { WeatherSource } from '../../../../_model/weatherSource';
+import { WeatherSrcsService } from '../../../../dashboard/service/api/weather-srcs.service';
+import { Console } from 'console';
 
 
 
@@ -94,7 +97,8 @@ export class DailyManagerService {
     private unitService: UnitService,
     private inspectionService: InspectionService,
     private translateService: TranslateService,
-    private rucheService: RucheService
+    private rucheService: RucheService,
+    private w_srcs_service: WeatherSrcsService
   ) {
     this.meanPeriodDevice = {
       value: 0,
@@ -274,10 +278,11 @@ export class DailyManagerService {
 
   getChartDailyWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     const weatherObs: Array<Observable<any>> = [this.weatherService.getCurrentDailyWeather(apiaryId, range), this.weatherService.getForecastDailyWeather(apiaryId, range)];
+    let option = JSON.parse(JSON.stringify(this.baseOptionExt));
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
+        console.log(_weather);
         const data = _weather.filter(_elt => _elt.value[0].mainDay !== 'Undefined').map(_map => [_map.date].concat(this.getValueBySerie(_map.value, type.name), _map.sensorRef));
-        let option = JSON.parse(JSON.stringify(this.baseOptionExt));
         if (data.length > 0) {
           if (this.existSeries(option.series, type.name)) {
             option.series = new Array();
@@ -322,14 +327,93 @@ export class DailyManagerService {
           option.series.push(this.graphGlobal.getDaySerie());
           option.visualMap = null;
         }
-        option.calendar.range = range;
+        /*option.calendar.range = range;
         chartInstance.clear();
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
-        this.baseOptionExt = option;
-
+        this.baseOptionExt = option;*/
+      },
+      () => {},
+      () => {
+        let w_srcs: WeatherSource[] = [];
+        this.w_srcs_service.requestApiaryWeatherSrcsWithDateBetween(apiaryId, range).subscribe(
+          _wsrcs => { w_srcs = [..._wsrcs] },
+          () => {},
+          () => {
+            let obsArray = w_srcs.filter(_ws => _ws.sourceType === "Station Davis" && apiaryId === _ws.apiaryId).map(_ws => {
+              let start: Date = new Date(_ws.start) < range[0] ? range[0] : new Date(_ws.start);
+              let end: Date = _ws.end ? (new Date(_ws.end) > range[1] ? range[1] : new Date(_ws.end)) : range[1];
+              return {
+                apiaryId: apiaryId,
+                ws: _ws,
+                obs: this.weatherService.getCurrentDailyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end])                  
+              }
+            }).flat();
+            //console.log(obsArray);
+            if(obsArray.length > 0){
+              Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+                (_weather:any[]) => { 
+                  //console.log(_weather);
+                  _weather.forEach(_arr => {
+                    const data = _arr.filter(_elt => _elt.value[0].mainDay !== 'Undefined').map(_map => [_map.date].concat(this.getValueBySerie(_map.value, type.name), _map.sensorRef));
+                    if (data.length > 0) {
+                      let serie = JSON.parse(JSON.stringify(SERIES.custom));
+                      serie.data = data;
+                      //console.log(serie.data);
+                      serie.name = "Local";
+                      serie.renderItem = (params, api) => {
+                        let cellPoint = api.coord(api.value(0));
+                        let cellWidth = params.coordSys.cellWidth;
+                        let cellHeight = params.coordSys.cellHeight;
+                        let group = {
+                          type: 'group',
+                          children: []
+                        };
+                        group.children.push({
+                          type: 'rect',
+                          z2: 0,
+                          shape: {
+                            x: -cellWidth / 2,
+                            y: -cellHeight / 2,
+                            width: cellWidth,
+                            height: cellHeight,
+                          },
+                          position: [cellPoint[0], cellPoint[1]],
+                          style: {
+                            fill: this.graphGlobal.getColorCalendarByValue(api.value(0)),
+                            stroke: 'black'
+                          }
+                        });
+                        group.children = group.children.concat(this.weatherService.getPicto(api.value(1), cellPoint));
+                        return group;
+                      };
+                      option.legend.data.push("Local");
+                      option.series.push(serie);
+                    }
+                  });
+                },
+                () => {},
+                () => {
+                  option.calendar.range = range;
+                  chartInstance.clear();
+                  chartInstance.setOption(option, true);
+                  chartInstance.hideLoading();
+                  this.baseOptionExt = option;
+                }
+              )
+            }
+            else{
+              option.calendar.range = range;
+              chartInstance.clear();
+              chartInstance.setOption(option, true);
+              chartInstance.hideLoading();
+              this.baseOptionExt = option;
+            }
+          }
+        );
       }
     );
+    
   }
   getChartAstro(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
     this.astroService.getAstroByApiary(apiaryId, range).subscribe(
@@ -465,6 +549,7 @@ export class DailyManagerService {
     )
   }
   getChartTempMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    let option = Object.assign({}, this.baseOptionExt);
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.map(_elt => {
@@ -472,7 +557,7 @@ export class DailyManagerService {
           return _elt;
         });
         //this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
-        let option = Object.assign({}, this.baseOptionExt);
+        //let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxTempDay));
         } else {
@@ -480,24 +565,101 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = type.name;
+          serie.name = this.unitService.getUserPref().weatherSource;
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxTempDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.legend.selectedMode = 'single';
+          option.legend.data.push(this.unitService.getUserPref().weatherSource);
+          //console.log(option.series);
         }
-        option.calendar.range = range;
-        option.series.push(this.graphGlobal.getDaySerie());
-        chartInstance.setOption(option, true);
-        chartInstance.hideLoading();
-        this.baseOptionExt = option;
+      },
+      () => {},
+      () => {
+        let w_srcs: WeatherSource[] = [];
+        this.w_srcs_service.requestApiaryWeatherSrcsWithDateBetween(apiaryId, range).subscribe(
+          _wsrcs => { w_srcs = [..._wsrcs] },
+          () => {},
+          () => {
+            let obsArray = w_srcs.filter(_ws => _ws.apiaryId === apiaryId).map(_ws => {
+              let start: Date = new Date(_ws.start) < range[0] ? range[0] : new Date(_ws.start);
+              let end: Date = _ws.end ? (new Date(_ws.end) > range[1] ? range[1] : new Date(_ws.end)) : range[1];
+              return {
+                apiaryId: apiaryId,
+                ws: _ws,
+                obs: _ws.sourceType === 'Station Davis' ? this.weatherService.getCurrentDailyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end]) : this.dailyHService.requestRecordsTHBySensorAndDateBetween(_ws.sourceId, [start, end])                 
+              }
+            }).flat();
+            Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+              _rcds => {
+                //console.log(_rcds);
+                let temp:any[] = [];
+                _rcds.forEach((_arr:any[], i) =>{
+                  if(obsArray[i].ws.sourceType !== "Station Davis"){
+                    temp = _arr.map(_elt => {
+                      _elt.temp_int_max = this.unitService.convertTempFromUsePref(_elt.temp_int_max, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = temp.map(_data => new Array(_data.recordDate, _data.temp_int_max));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = temp.map(_data => new Array(_data.recordDate, _data.temp_int_max));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                  else{
+                    temp = _arr.map(_elt => {
+                      _elt.value[1].maxTempDay = this.unitService.convertTempFromUsePref(_elt.value[1].maxTempDay, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = temp.map(_data => new Array(_data.recordDate, _data.temp_int_max));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = temp.map(_data => new Array(_data.date, _data.value[1].maxTempDay));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                });
+              },
+              () => {},
+              () => {
+                //console.log(option.series);
+                option.legend.data.push('Local');
+                option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+                option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+                option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+                option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+                option.legend.selectedMode = 'single';
+                option.calendar.range = range;
+                option.series.push(this.graphGlobal.getDaySerie());
+                chartInstance.setOption(option, true);
+                chartInstance.hideLoading();
+                this.baseOptionExt = option;
+              }
+            )
+        });
       }
     );
+    
   }
 
   getHextMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    let option = Object.assign({}, this.baseOptionExt);
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.map(_elt => {
@@ -505,7 +667,6 @@ export class DailyManagerService {
           return _elt;
         });
         //this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
-        let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.maxHumidityDay));
         } else {
@@ -513,24 +674,99 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = type.name;
+          serie.name = this.unitService.getUserPref().weatherSource;
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxHumidityDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.legend.data.push(this.unitService.getUserPref().weatherSource);
         }
-        option.calendar.range = range;
-        chartInstance.setOption(option, true);
-        option.series.push(this.graphGlobal.getDaySerie());
-        chartInstance.hideLoading();
-        this.baseOptionExt = option;
+      },
+      () => {},
+      () => {
+        let w_srcs: WeatherSource[] = [];
+        this.w_srcs_service.requestApiaryWeatherSrcsWithDateBetween(apiaryId, range).subscribe(
+          _wsrcs => { w_srcs = [..._wsrcs] },
+          () => {},
+          () => {
+            let obsArray = w_srcs.filter(_ws => apiaryId === _ws.apiaryId).map(_ws => {
+              let start: Date = new Date(_ws.start) < range[0] ? range[0] : new Date(_ws.start);
+              let end: Date = _ws.end ? (new Date(_ws.end) > range[1] ? range[1] : new Date(_ws.end)) : range[1];
+              return {
+                apiaryId: apiaryId,
+                ws: _ws,
+                obs: _ws.sourceType === 'Station Davis' ? this.weatherService.getCurrentDailyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end]) : this.dailyHService.requestRecordsTHBySensorAndDateBetween(_ws.sourceId, [start, end])                  
+              }
+            }).flat();
+            Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+              _rcds => {
+                console.log(_rcds);
+                let humi:any[] = [];
+                _rcds.forEach( (_arr: any[], i) => {
+                  if(obsArray[i].ws.sourceType !== "Station Davis"){
+                    humi = _arr.map(_elt => {
+                      _elt.humidity_int_max = this.unitService.convertTempFromUsePref(_elt.humidity_int_max, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = humi.map(_data => new Array(_data.recordDate, _data.humidity_int_max));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = humi.map(_data => new Array(_data.recordDate, _data.humidity_int_max));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                  else{
+                    humi = _arr.map(_elt => {
+                      _elt.value[1].maxHumidityDay = this.unitService.convertTempFromUsePref(_elt.value[1].maxHumidityDay, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = humi.map(_data => new Array(_data.date, _data.value[1].maxHumidityDay));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = humi.map(_data => new Array(_data.date, _data.value[1].maxHumidityDay));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                })
+              },
+              () => {},
+              () => {
+                 //console.log(option.series);
+                 option.legend.data.push('Local');
+                 option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+                 option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+                 option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+                 option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+                 option.legend.selectedMode = 'single';
+                 option.calendar.range = range;
+                 option.series.push(this.graphGlobal.getDaySerie());
+                 chartInstance.setOption(option, true);
+                 chartInstance.hideLoading();
+                 this.baseOptionExt = option;
+              }
+            )
+          }
+        );
       }
     );
   }
 
   getHextMinWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    let option = Object.assign({}, this.baseOptionExt);
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.map(_elt => {
@@ -538,7 +774,6 @@ export class DailyManagerService {
           return _elt;
         });
         //this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
-        let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.minHumidityDay));
         } else {
@@ -546,28 +781,103 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = type.name;
+          serie.name = this.unitService.getUserPref().weatherSource;
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.minHumidityDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.legend.data.push(this.unitService.getUserPref().weatherSource);
         }
-        option.calendar.range = range;
-        chartInstance.setOption(option, true);
-        option.series.push(this.graphGlobal.getDaySerie());
-        chartInstance.hideLoading();
-        this.baseOptionExt = option;
+      },
+      () => {},
+      () => {
+        let w_srcs: WeatherSource[] = [];
+        this.w_srcs_service.requestApiaryWeatherSrcsWithDateBetween(apiaryId, range).subscribe(
+          _wsrcs => { w_srcs = [..._wsrcs] },
+          () => {},
+          () => {
+            let obsArray = w_srcs.filter(_ws => apiaryId === _ws.apiaryId).map(_ws => {
+              let start: Date = new Date(_ws.start) < range[0] ? range[0] : new Date(_ws.start);
+              let end: Date = _ws.end ? (new Date(_ws.end) > range[1] ? range[1] : new Date(_ws.end)) : range[1];
+              return {
+                apiaryId: apiaryId,
+                ws: _ws,
+                obs: _ws.sourceType === 'Station Davis' ? this.weatherService.getCurrentDailyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end]) : this.dailyHService.requestRecordsTHBySensorAndDateBetween(_ws.sourceId, [start, end])                  
+              }
+            }).flat();
+            Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+              _rcds => {
+                console.log(_rcds);
+                let humi:any[] = [];
+                _rcds.forEach( (_arr: any[], i) => {
+                  if(obsArray[i].ws.sourceType !== "Station Davis"){
+                    humi = _arr.map(_elt => {
+                      _elt.humidity_int_min = this.unitService.convertTempFromUsePref(_elt.humidity_int_min, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = humi.map(_data => new Array(_data.recordDate, _data.humidity_int_min));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = humi.map(_data => new Array(_data.recordDate, _data.humidity_int_min));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                  else{
+                    humi = _arr.map(_elt => {
+                      _elt.value[1].minHumidityDay = this.unitService.convertTempFromUsePref(_elt.value[1].minHumidityDay, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = humi.map(_data => new Array(_data.date, _data.value[1].minHumidityDay));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = humi.map(_data => new Array(_data.date, _data.value[1].minHumidityDay));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                })
+              },
+              () => {},
+              () => {
+                 //console.log(option.series);
+                 option.legend.data.push('Local');
+                 option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+                 option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+                 option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+                 option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+                 option.legend.selectedMode = 'single';
+                 option.calendar.range = range;
+                 option.series.push(this.graphGlobal.getDaySerie());
+                 chartInstance.setOption(option, true);
+                 chartInstance.hideLoading();
+                 this.baseOptionExt = option;
+              }
+            )
+          }
+        );
       }
     );
   }
 
   getChartWindMaxWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    let option = Object.assign({}, this.baseOptionExt);
     this.weatherService.getWindAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         // this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
-        let option = Object.assign({}, this.baseOptionExt);
+        
         //this.getLastDayForMeanValue(this.weatherService.getWindAllWeather(apiaryId, this.rangeSevenDay), true, type);
         if (rangeChange) {
           option.series[0].data = _temp.map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
@@ -576,25 +886,72 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = type.name;
+          serie.name = this.unitService.getUserPref().weatherSource;
           serie.data = _temp.map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.legend.selectedMode = 'single';
+          option.legend.data.push(this.unitService.getUserPref().weatherSource);
+          
         }
-        option.calendar.range = range;
-        option.series.push(this.graphGlobal.getDaySerie());
-        chartInstance.setOption(option, true);
-        chartInstance.hideLoading();
-        this.baseOptionExt = option;
-      }
+      },
+      () => {},
+      () => {
+        let w_srcs: WeatherSource[] = [];
+        this.w_srcs_service.requestApiaryWeatherSrcsWithDateBetween(apiaryId, range).subscribe(
+          _wsrcs => { w_srcs = [..._wsrcs] },
+          () => {},
+          () => {
+            let obsArray = w_srcs.filter(_ws => _ws.sourceType === "Station Davis" && apiaryId === _ws.apiaryId).map(_ws => {
+              let start: Date = new Date(_ws.start) < range[0] ? range[0] : new Date(_ws.start);
+              let end: Date = _ws.end ? (new Date(_ws.end) > range[1] ? range[1] : new Date(_ws.end)) : range[1];
+              return {
+                apiaryId: apiaryId,
+                ws: _ws,
+                obs: this.weatherService.getWindByApiaryIdAndOriginAndDate(_ws.apiaryId, "WeatherLink", [start,end])                  
+              }
+            }).flat();
+            Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+              _rcds => {
+                console.log(_rcds.flat());
+                _rcds.flat();
+                if (rangeChange) {
+                  option.series[0].data = _rcds.flat().map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
+                } else {
+                  /*if (this.existSeries(option.series, type.name)) {
+                    option.series = new Array();
+                  }*/
+                  let serie = Object.assign({}, SERIES.heatmap);
+                  serie.name = 'Local';
+                  serie.data = _rcds.flat().map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
+                  option.series.push(serie);
+                }
+              },
+              () => {},
+              () => {
+                option.legend.data.push('Local');
+                option.calendar.range = range;
+                option.series.push(this.graphGlobal.getDaySerie());
+                chartInstance.setOption(option, true);
+                chartInstance.hideLoading();
+                this.baseOptionExt = option;
+                option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+                option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+                option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+                option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+              }
+            )
+          })
+       }
     );
   }
 
 
   getChartTempMinWeather(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    let option = Object.assign({}, this.baseOptionExt);
     this.weatherService.getAllTempWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _temp => {
         _temp = _temp.map(_elt => {
@@ -602,7 +959,6 @@ export class DailyManagerService {
           return _elt;
         });
         //this.getLastDayForMeanValue(this.weatherService.getAllTempWeather(apiaryId, this.rangeSevenDay), true, type);
-        let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           option.series[0].data = _temp.map(_data => new Array(_data.date, _data.value.minTempDay));
         } else {
@@ -610,28 +966,104 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = type.name;
+          serie.name = this.unitService.getUserPref().weatherSource;
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.minTempDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+          option.legend.selectedMode = 'single';
+          option.legend.data.push(this.unitService.getUserPref().weatherSource);
         }
-        option.calendar.range = range;
-        option.series.push(this.graphGlobal.getDaySerie());
-        chartInstance.setOption(option, true);
-        chartInstance.hideLoading();
-        this.baseOptionExt = option;
+      },
+      () => {},
+      () => {
+        let w_srcs: WeatherSource[] = [];
+        this.w_srcs_service.requestApiaryWeatherSrcsWithDateBetween(apiaryId, range).subscribe(
+          _wsrcs => { w_srcs = [..._wsrcs] },
+          () => {},
+          () => {
+            let obsArray = w_srcs.filter(_ws => _ws.apiaryId === apiaryId).map(_ws => {
+              let start: Date = new Date(_ws.start) < range[0] ? range[0] : new Date(_ws.start);
+              let end: Date = _ws.end ? (new Date(_ws.end) > range[1] ? range[1] : new Date(_ws.end)) : range[1];
+              return {
+                apiaryId: apiaryId,
+                ws: _ws,
+                obs: _ws.sourceType === 'Station Davis' ? this.weatherService.getCurrentDailyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end]) : this.dailyHService.requestRecordsTHBySensorAndDateBetween(_ws.sourceId, [start, end])                 
+              }
+            }).flat();
+            Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+              _rcds => {
+                //console.log(_rcds);
+                let temp:any[] = [];
+                _rcds.forEach((_arr:any[], i) =>{
+                  if(obsArray[i].ws.sourceType !== "Station Davis"){
+                    temp = _arr.map(_elt => {
+                      _elt.temp_int_min = this.unitService.convertTempFromUsePref(_elt.temp_int_min, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = temp.map(_data => new Array(_data.recordDate, _data.temp_int_min));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = temp.map(_data => new Array(_data.recordDate, _data.temp_int_min));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                  else{
+                    temp = _arr.map(_elt => {
+                      _elt.value[1].minTempDay = this.unitService.convertTempFromUsePref(_elt.value[1].minTempDay, this.unitService.getUserPref().unitSystem);
+                      return _elt;
+                    });
+                    if (rangeChange) {
+                      option.series[i+1].data = temp.map(_data => new Array(_data.recordDate, _data.temp_int_min));
+                    } else {
+                      /*if (this.existSeries(option.series, type.name)) {
+                        option.series = new Array();
+                      }*/
+                      let serie = Object.assign({}, SERIES.heatmap);
+                      serie.name = 'Local'
+                      serie.data = temp.map(_data => new Array(_data.date, _data.value[1].maxTempDay));
+                      option.series.push(serie);  
+                      //console.log(option.series);
+                    }
+                  }
+                });
+              },
+              () => {},
+              () => {
+                //console.log(option.series);
+                option.legend.data.push('Local');
+                option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
+                option.tooltip = this.graphGlobal.getTooltipBySerie(type);
+                option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
+                option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
+                option.legend.selectedMode = 'single';
+                option.calendar.range = range;
+                option.series.push(this.graphGlobal.getDaySerie());
+                chartInstance.setOption(option, true);
+                chartInstance.hideLoading();
+                this.baseOptionExt = option;
+              }
+            )
+          }
+        );
       }
     );
   }
 
   gatPrecipitationByApiary(type: Tools, apiaryId: string, chartInstance: any, range: Date[], rangeChange: boolean) {
+    let option = Object.assign({}, this.baseOptionExt);
     this.weatherService.getRainAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _rain => {
+        console.log(_rain);
         //this.getLastDayForMeanValue(this.weatherService.getRainAllWeather(apiaryId, this.rangeSevenDay), false, type);
-        let option = Object.assign({}, this.baseOptionExt);
         if (rangeChange) {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {
             const index = option.series.map(_serie => _serie.name).indexOf(serieComplete.name);
@@ -682,6 +1114,32 @@ export class DailyManagerService {
         chartInstance.setOption(option, true);
         chartInstance.hideLoading();
         this.baseOptionExt = option;
+      },
+      () => {},
+      () => {
+        let w_srcs: WeatherSource[] = [];
+        this.w_srcs_service.requestApiaryWeatherSrcsWithDateBetween(apiaryId, range).subscribe(
+          _wsrcs => { w_srcs = [..._wsrcs] },
+          () => {},
+          () => {
+            let obsArray = w_srcs.filter(_ws => _ws.sourceType === "Station Davis" && apiaryId === _ws.apiaryId).map(_ws => {
+              let start: Date = new Date(_ws.start) < range[0] ? range[0] : new Date(_ws.start);
+              let end: Date = _ws.end ? (new Date(_ws.end) > range[1] ? range[1] : new Date(_ws.end)) : range[1];
+              return {
+                apiaryId: apiaryId,
+                ws: _ws,
+                obs: this.weatherService.getRainByApiaryAndOriginAndDateBetween(_ws.apiaryId, "WeatherLink", [start,end])
+              }
+            }).flat();
+            Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
+              _rcds => {
+                console.log(_rcds);
+              },
+              () => {},
+              () => {}
+            )
+          }
+        );
       }
     )
   }

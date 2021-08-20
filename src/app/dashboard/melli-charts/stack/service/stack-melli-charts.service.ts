@@ -192,7 +192,10 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
    */
   getColorByIndex(index: number, hive: RucheInterface) {
     if (this.arrayHiveSelect.filter(elt => elt._id === hive._id).length > 0) {
-      return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
+      if(hive.color != null){
+        return hive.color;
+      }
+      else return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null ;
     } else {
       return 'white';
     }
@@ -232,6 +235,7 @@ checkIfInstanceEchartAlerayExist(): Promise<boolean> {
       apiaryName: '',
       hivePosX : '',
       hivePosY : '',
+      color: null,
       sharingUser : []
     };
   }

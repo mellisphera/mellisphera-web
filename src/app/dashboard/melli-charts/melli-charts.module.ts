@@ -37,6 +37,8 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 import { PipeModule } from './../../pipe/pipe.module';
 import { HourlyWeightComponent } from './weight/hourly-weight/hourly-weight.component';
 
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { UserParamsService } from '../preference-config/service/user-params.service';
 import { DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { MomentDateTimeAdapter, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
@@ -88,7 +90,8 @@ const MY_CUSTOM_FORMATS = {
     MatChipsModule,
     MatIconModule,
     MatInputModule,
-    PipeModule
+    PipeModule,
+    ColorPickerModule
   ],
   entryComponents: [
     HourlyWeightComponent

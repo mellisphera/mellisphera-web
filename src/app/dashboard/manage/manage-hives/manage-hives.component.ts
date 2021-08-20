@@ -97,6 +97,7 @@ export class ManageHivesComponent implements OnInit, OnDestroy {
       apiaryName: '',
       hivePosX : '',
       hivePosY : '',
+      color: null,
       sharingUser : []
     };
 

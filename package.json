@@ -46,6 +46,7 @@
     "jquery": "^3.5.1",
     "moment": "^2.26.0",
     "ng-pick-datetime": "^7.0.0",
+    "ngx-color-picker": "^11.0.0",
     "ngx-device-detector": "^1.4.5",
     "ngx-echarts": "^4.2.2",
     "ngx-loading": "^3.0.1",

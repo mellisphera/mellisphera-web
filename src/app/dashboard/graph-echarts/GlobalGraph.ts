@@ -805,6 +805,7 @@ export class GraphGlobal {
    */
   getTooltipBySerie(type: Tools, extraData?: any[]): any {
     const tooltip = Object.assign({}, BASE_OPTIONS.tooltip);
+    tooltip.backgroundColor = 'rgba(70,70,70,0.8)';
     switch (type.name) {
       case 'WEATHER':
         tooltip.formatter = (params) => {

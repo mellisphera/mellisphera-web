@@ -94,7 +94,10 @@ export class MelliChartsHiveService {
   getColorByIndex(index: number, hive: RucheInterface) {
     try{
       if (this.hiveSelectForHivePage === hive) {
-        return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null;
+        if(hive.color != null){
+          return hive.color;
+        }
+        else return (index < this.arrayColor.length - 1) ? this.arrayColor[index].hexString : null;
       } else {
         return 'white';
       }

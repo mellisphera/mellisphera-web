@@ -132,7 +132,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.title[5].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
 
     let yAxisNec = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
-    yAxisNec.name = 'Nectar Index (%)';
+    yAxisNec.name = this.translateService.instant('WEATHER.GRAPH.NECTAR_YAXIS');
     yAxisNec.min = 0;
     yAxisNec.max = 110;
     yAxisNec.gridIndex = 0;
@@ -152,7 +152,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.xAxis.push(xAxisNec);
 
     let yAxisFli = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
-    yAxisFli.name = 'Flight Index (%)';
+    yAxisFli.name = this.translateService.instant('WEATHER.GRAPH.FLIGHT_YAXIS');
     yAxisFli.min = 0;
     yAxisFli.max = 110;
     yAxisFli.gridIndex = 1;
@@ -219,7 +219,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.xAxis.push(xAxisHumi);
 
     let yAxisHumi = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
-    yAxisHumi.name = this.graphGlobal.humidity.name;
+    yAxisHumi.name = this.translateService.instant('WEATHER.GRAPH.HUMI_YAXIS');
     yAxisHumi.min = 0;
     yAxisHumi.max = 100;
     yAxisHumi.gridIndex = 3;
@@ -228,7 +228,7 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.yAxis.push(yAxisHumi);
 
     let yAxisRain = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
-    yAxisRain.name = this.graphGlobal.rain.name;
+    yAxisRain.name = this.translateService.instant('WEATHER.GRAPH.RAIN_YAXIS') + '(' + this.graphGlobal.rain.unitT + ')';
     yAxisRain.min = 0;
     yAxisRain.max = 10;
     yAxisRain.gridIndex = 4;
@@ -563,24 +563,22 @@ export class WeatherRecordsComponent implements OnInit {
   desktopGraph(){
     //console.log('allo');
     this.type_graph = 'desktop';
-    this.options.legend.orient = "vertical";
-    this.options.legend.right = 10;
-    this.options.legend.top = "5%";
-    this.options.legend.width = 150;
+    this.options.legend.orient = "horizontal";
+    this.options.legend.center = 'center';
     delete this.options.legend.center;
-    this.options.title[0].top = "1%";
-    this.options.title.forEach((_t,i) => _t.top = (1 + i*16) + '%');
+    this.options.title[0].top = "3%";
+    this.options.title.forEach((_t,i) => _t.top = (3 + i*15) + '%');
     this.options.title[0].left = this.translateService.instant('WEATHER.GRAPH.NECTAR_LEFT');
     this.options.title[1].left = this.translateService.instant('WEATHER.GRAPH.FLIGHT_LEFT');
     this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.TEMP_LEFT');
-    this.options.title[3].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
-    this.options.title[4].left = this.translateService.instant('WEATHER.GRAPH.HUMI_LEFT');
+    this.options.title[3].left = this.translateService.instant('WEATHER.GRAPH.HUMI_LEFT');
+    this.options.title[4].left = this.translateService.instant('WEATHER.GRAPH.RAIN_LEFT');
     this.options.title[5].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
 
-    this.options.grid[0].top = "3%";
+    this.options.grid[0].top = "5%";
     this.options.grid.forEach((_t,i) => {
-      _t.top = (3 + i*16) + '%';
-      _t.width = "75%";
+      _t.top = (5 + i*15) + '%';
+      _t.width = "85%";
       _t.left = "6%";
     });
     this.options.xAxis.forEach(_a => _a.axisLabel.fontSize = 12);
@@ -965,21 +963,21 @@ export class WeatherRecordsComponent implements OnInit {
             );
             console.log(_arr);
             temp = _arr.map(_elt => {
-              return { date: _elt.date, value: _elt.value[0].temp ? _elt.value[0].temp : null , sensorRef: obsArray[i].ws.stationId, type: "temp" }
+              return { date: _elt.date, value: _elt.value[0].temp ? _elt.value[0].temp : null , sensorRef: obsArray[i].ws.sourceId, type: "temp" }
             });
             rain = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[2] ? _elt.value[2] : null , sensorRef: obsArray[i].ws.stationId, type: "rain" }
+              return { date: _elt.date, value: _elt.value[2] ? _elt.value[2] : null , sensorRef: obsArray[i].ws.sourceId, type: "rain" }
             });
             humi = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: obsArray[i].ws.stationId, type: "humi" }
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: obsArray[i].ws.sourceId, type: "humi" }
             });
             wind = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[1].speed ? _elt.value[1].speed : null , sensorRef: obsArray[i].ws.stationId, type: "wind" }
+              return { date: _elt.date, value: _elt.value[1].speed ? _elt.value[1].speed : null , sensorRef: obsArray[i].ws.sourceId, type: "wind" }
             });
             //ADD TEMP TO GRAPH
             this.getSerieByData(temp, obsArray[i].name, (serieComplete: any) => {
               
-              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.stationId;
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
@@ -997,7 +995,7 @@ export class WeatherRecordsComponent implements OnInit {
             //ADD HUMIDITY TO GRAPH
             this.getSerieByData(humi, obsArray[i].name, (serieComplete: any) => {
               
-              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.stationId;
+              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 3;
               serieComplete.xAxisIndex = 3;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
@@ -1016,7 +1014,7 @@ export class WeatherRecordsComponent implements OnInit {
             this.getSerieByData(rain, obsArray[i].name, (serieComplete: any) => {
 
               serieComplete.type = 'bar';
-              serieComplete.id = "Rain " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.stationId;
+              serieComplete.id = "Rain " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 4;
               serieComplete.xAxisIndex = 4;
               serieComplete.itemStyle = {
@@ -1033,7 +1031,7 @@ export class WeatherRecordsComponent implements OnInit {
             //ADD WIND TO GRAPH
             this.getSerieByData(wind, obsArray[i].name, (serieComplete: any) => {
               
-              serieComplete.id = "Wind " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.stationId;
+              serieComplete.id = "Wind " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 5;
               serieComplete.xAxisIndex = 5;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
@@ -1408,7 +1406,7 @@ export class WeatherRecordsComponent implements OnInit {
           apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
           ws: _ws,
           name: _ws.apiaryName,
-          obs: this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
+          obs: _ws.sourceType === "Station Davis" ? this.weatherService.getCurrentHourlyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end]) : this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
         },
       ];
     }).flat();
@@ -1416,29 +1414,96 @@ export class WeatherRecordsComponent implements OnInit {
       _records => {
         //console.log(_records);
         _records.forEach((_arr: any[],i) => {
-          _arr.forEach( _r => {
-            _r.recordDate = _r.recordDate.substr(0, 14) + '00:00.000+0000';
-            //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
-            //console.log(_r.recordDate.substr(14, 27));
-          });
-          // Retirer doublons meme date
-          _arr = _arr.filter((_r, i, self) =>
-            i === self.findIndex((t) => (
-              t.recordDate === _r.recordDate
-            ))
-          )
-          temp = _arr.map(_elt =>{
-            return { date:_elt.recordDate, value: _elt.temp_int , sensorRef: _elt.sensorRef, type: "temp" }
-          });
-          this.getSerieByData(temp, obsArray[i].name, (serieComplete) => {
-              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+          if(obsArray[i].ws.sourceType !== "Station Davis"){
+            _arr.forEach( _r => {
+              _r.recordDate = _r.recordDate.substr(0, 14) + '00:00.000+0000';
+              //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
+              //console.log(_r.recordDate.substr(14, 27));
+            });
+            // Retirer doublons meme date
+            _arr = _arr.filter((_r, i, self) =>
+              i === self.findIndex((t) => (
+                t.recordDate === _r.recordDate
+              ))
+            )
+            temp = _arr.map(_elt =>{
+              return { date:_elt.recordDate, value: _elt.temp_int , sensorRef: _elt.sensorRef, type: "temp" }
+            });
+            this.getSerieByData(temp, obsArray[i].name, (serieComplete) => {
+                serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+                serieComplete.yAxisIndex = 2;
+                serieComplete.xAxisIndex = 2;
+                //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+                serieComplete.itemStyle = {
+                  color: this.getColor(obsArray[i].apiary, 'Local') 
+                };
+  
+                const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+                if (indexSerie !== -1) {
+                  this.options.series.push(Object.assign({}, serieComplete));
+                } else {
+                  this.options.series.push(Object.assign({}, serieComplete));
+                  this.options.legend.data.push(serieComplete.name);
+                }
+            });
+            if(obsArray[i].ws.sourceType === "TH"){
+              humi = _arr.map(_elt =>{
+                return { date: _elt.recordDate, value: _elt.humidity_int , sensorRef: _elt.sensorRef, type: "humi" }
+              });
+              this.getSerieByData(humi, obsArray[i].name, (serieComplete) => {
+                serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+                serieComplete.yAxisIndex = 3;
+                serieComplete.xAxisIndex = 3;
+                //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+                serieComplete.itemStyle = {
+                  color: this.getColor(obsArray[i].apiary, 'Local') 
+                };
+  
+                const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+                if (indexSerie !== -1) {
+                  this.options.series.push(Object.assign({}, serieComplete));
+                } else {
+                  this.options.series.push(Object.assign({}, serieComplete));
+                  this.options.legend.data.push(serieComplete.name);
+                }
+              });
+            }
+          }
+          else{
+            _arr.forEach( (_r) => {
+              _r.date = _r.date.substr(0, 14) + '00:00.000+0000';
+              //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
+              //console.log(_r.recordDate.substr(14, 27));
+            });
+            // Retirer doublons meme date
+            _arr = _arr.filter((_r, i, self) =>
+              i === self.findIndex((t) => (
+                t.date === _r.date
+              ))
+            );
+            console.log(_arr);
+            temp = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].temp ? _elt.value[0].temp : null , sensorRef: obsArray[i].ws.sourceId, type: "temp" }
+            });
+            rain = _arr.map(_elt => { 
+              return { date: _elt.date, value: _elt.value[2] ? _elt.value[2] : null , sensorRef: obsArray[i].ws.sourceId, type: "rain" }
+            });
+            humi = _arr.map(_elt => { 
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: obsArray[i].ws.sourceId, type: "humi" }
+            });
+            wind = _arr.map(_elt => { 
+              return { date: _elt.date, value: _elt.value[1].speed ? _elt.value[1].speed : null , sensorRef: obsArray[i].ws.sourceId, type: "wind" }
+            });
+            //ADD TEMP TO GRAPH
+            this.getSerieByData(temp, obsArray[i].name, (serieComplete: any) => {
+              
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[i].apiary, 'Local') 
               };
-
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
                 this.options.series.push(Object.assign({}, serieComplete));
@@ -1446,20 +1511,53 @@ export class WeatherRecordsComponent implements OnInit {
                 this.options.series.push(Object.assign({}, serieComplete));
                 this.options.legend.data.push(serieComplete.name);
               }
-          });
-          if(obsArray[i].ws.sourceType === "TH" || obsArray[i].ws.sourceType === "Station Davis"){
-            humi = _arr.map(_elt =>{
-              return { date: _elt.recordDate, value: _elt.humidity_int , sensorRef: _elt.sensorRef, type: "humi" }
             });
-            this.getSerieByData(humi, obsArray[i].name, (serieComplete) => {
-              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+            //ADD HUMIDITY TO GRAPH
+            this.getSerieByData(humi, obsArray[i].name, (serieComplete: any) => {
+              
+              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 3;
               serieComplete.xAxisIndex = 3;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
                 color: this.getColor(obsArray[i].apiary, 'Local') 
               };
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+            });
+            //ADD RAIN TO GRAPH
+            this.getSerieByData(rain, obsArray[i].name, (serieComplete: any) => {
 
+              serieComplete.type = 'bar';
+              serieComplete.id = "Rain " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 4;
+              serieComplete.xAxisIndex = 4;
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
+            });
+            //ADD WIND TO GRAPH
+            this.getSerieByData(wind, obsArray[i].name, (serieComplete: any) => {
+              
+              serieComplete.id = "Wind " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 5;
+              serieComplete.xAxisIndex = 5;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local') 
+              };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
                 this.options.series.push(Object.assign({}, serieComplete));
@@ -1469,7 +1567,6 @@ export class WeatherRecordsComponent implements OnInit {
               }
             });
           }
-
         })
       },
       () => {},

@@ -176,6 +176,7 @@ export class NavbarComponent implements OnInit {
             apiaryName: '',
             hivePosX: '',
             hivePosY: '',
+            color: null,
             sharingUser: []
         };
 

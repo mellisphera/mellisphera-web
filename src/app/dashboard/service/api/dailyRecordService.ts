@@ -14,7 +14,7 @@ limitations under the License. */
  * @description Ensemble des requetes pour les records Journalier des ruches
  *
  */
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DailyRecordTh } from '../../../_model/daily-record-th';
@@ -25,6 +25,10 @@ import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { RucherService } from './rucher.service';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
+
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class DailyRecordService {
@@ -452,6 +456,10 @@ export class DailyRecordService {
               return _elt;
             })
           );
+    }
+
+    public requestRecordsTHBySensorAndDateBetween(sensor: string, range: Date[]):Observable<DailyRecordTh[]>{
+        return this.http.post<DailyRecordTh[]>(CONFIG.URL + 'dailyRecordsTH/sensor/'+ sensor, range, httpOptions);
     }
 
 

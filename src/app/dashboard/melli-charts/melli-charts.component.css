@@ -1585,6 +1585,22 @@ nav[role=admin-navigation] {
   left: -10%;
 }
 
+.color-picker:hover{
+  cursor: pointer;
+}
+
+color-picker{
+  width: 20px;
+}
+
+#deleteColor{
+  border: 0;
+  border-radius: 5px;
+}
+
+#deleteColor:hover{
+  border: 1px solid black;
+}
 
 @media screen and (max-width:1500px) {
 

@@ -10,6 +10,7 @@ import { WeatherDateService } from '../service/weather-date.service';
 import { UnitService } from '../../service/unit.service';
 import { NotifierService } from 'angular-notifier';
 import { TranslateService } from '@ngx-translate/core';
+import { fakeAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-weather-config',
@@ -92,7 +93,7 @@ export class WeatherConfigComponent implements OnInit {
 
   changeApiary(apiary: RucherModel){
     this.captService.getCapteursByApiaryId(apiary._id).subscribe(
-      _captArray => { this.captApiary = _captArray.filter(_c => !_c.sensorRef.includes("_removed")) },
+      _captArray => { this.captApiary = [..._captArray]/*.filter(_c => !_c.sensorRef.includes("_removed"))*/ },
       () => {},
       () => {}
     );
@@ -181,7 +182,7 @@ export class WeatherConfigComponent implements OnInit {
   }
 
   stationIdChange(evt: Event){
-    this.wS.stationId = (<HTMLInputElement>evt.target).value;
+    this.wS.sourceId = (<HTMLInputElement>evt.target).value;
   }
 
   keyChange(evt: Event){
@@ -193,7 +194,7 @@ export class WeatherConfigComponent implements OnInit {
   }
 
   beginDate(){
-    console.log(this.wS.start);
+    //console.log(this.wS.start);
     this.wS.start = new Date( (<any>this.wS.start)._d);
   }
   beginHours(){
@@ -312,59 +313,110 @@ export class WeatherConfigComponent implements OnInit {
     (<HTMLElement>document.getElementById("source-save-icon")).style.display ="block";
     (<HTMLElement>document.getElementById("source-save-text")).style.display ="none";
     if(!this.edit){
-      if(this.overlapDate()){
-        setTimeout(()=> {
-          (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
-          (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
-          this.notify.notify('error',"Il ne peut y avoir qu'une source méteo active a la fois");
-        }, 500);
-      }
-      else{
-        this.w_srcs_service.insert(this.wS).subscribe(
-          _ws => {
-            setTimeout(()=> {
-              this.weatherSrcsByApiary.push(_ws);
-              this.w_srcs_service.userWeatherSources.push(_ws);
-              (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
-              (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
-              $("#newSourceModal").modal("hide");
-              this.notify.notify('success','Source météo ajoutée');
-            }, 500);
-          }, 
-          () => {}, 
-          () => {}
-        );
-      }
-      
+      if(this.verifyFields()){
+        if(this.overlapDate()){
+          setTimeout(()=> {
+            (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
+            (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
+            this.notify.notify('error',"Il ne peut y avoir qu'une source méteo active a la fois");
+          }, 500);
+        }
+        else{
+          this.w_srcs_service.insert(this.wS).subscribe(
+            _ws => {
+              setTimeout(()=> {
+                this.weatherSrcsByApiary.push(_ws);
+                this.w_srcs_service.userWeatherSources.push(_ws);
+                (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
+                (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
+                $("#newSourceModal").modal("hide");
+                this.notify.notify('success','Source météo ajoutée');
+              }, 500);
+            }, 
+            () => {}, 
+            () => {}
+          );
+        }
+      } 
     }
     else{
-      if(this.overlapDate()){
+      if(this.verifyFields()){
+        if(this.overlapDate()){
+          setTimeout(()=> {
+            (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
+            (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
+            this.notify.notify('error',"Il ne peut y avoir qu'une source méteo active a la fois");
+          }, 500);
+        }
+        else{
+           this.w_srcs_service.update(this.wS).subscribe(
+            _ws => {
+              let index = this.weatherSrcsByApiary.findIndex(_w => _w._id === _ws._id);
+              let indexServ = this.w_srcs_service.userWeatherSources.findIndex(_w => _w._id === _ws._id);
+              setTimeout(()=> {
+                this.weatherSrcsByApiary[index] = _ws;
+                this.w_srcs_service.userWeatherSources[indexServ] = _ws;
+                (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
+                (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
+                $("#newSourceModal").modal("hide");
+                this.notify.notify('success','Source météo editée');
+              }, 500);
+            }, 
+            () => {}, 
+            () => {}
+          );
+        }
+      }
+      
+     
+    }
+  }
+
+  verifyFields(): boolean{
+    let select = <HTMLSelectElement>document.getElementById("sources-select");
+    let sensorSelect = <HTMLSelectElement>document.getElementById("sensors-select");
+    let inputId = <HTMLInputElement>document.getElementById("stationid");
+    let inputKey = <HTMLInputElement>document.getElementById("key");
+    let inputSecret = <HTMLInputElement>document.getElementById("secret");
+    if(select.selectedIndex === 0){
+      setTimeout(()=> {
+        (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
+        (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
+        this.notify.notify('error',"Veuillez choisir un type de capteur");
+      }, 500);
+      return false;
+    }
+    if(select.selectedIndex > 0 && select.selectedIndex < 5){
+      if(sensorSelect.selectedIndex === 0){
         setTimeout(()=> {
           (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
           (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
-          this.notify.notify('error',"Il ne peut y avoir qu'une source méteo active a la fois");
+          this.notify.notify('error',"Veuillez choisir un capteur");
         }, 500);
+        return false;
       }
-      else{
-         this.w_srcs_service.update(this.wS).subscribe(
-          _ws => {
-            let index = this.weatherSrcsByApiary.findIndex(_w => _w._id === _ws._id);
-            let indexServ = this.w_srcs_service.userWeatherSources.findIndex(_w => _w._id === _ws._id);
-            setTimeout(()=> {
-              this.weatherSrcsByApiary[index] = _ws;
-              this.w_srcs_service.userWeatherSources[indexServ] = _ws;
-              (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
-              (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
-              $("#newSourceModal").modal("hide");
-              this.notify.notify('success','Source météo editée');
-            }, 500);
-          }, 
-          () => {}, 
-          () => {}
-        );
-      }
-     
+      else return true;
     }
+    if(select.selectedIndex === 5){
+      if(inputId.value == null && inputKey.value == null && inputSecret.value == null){
+        setTimeout(()=> {
+          (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
+          (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
+          this.notify.notify('error',"Veuillez remplir les champs de la station météo");
+        }, 500);
+        return false;
+      }
+      else return true;
+    }
+    if(this.wS.start == null){
+      setTimeout(()=> {
+        (<HTMLElement>document.getElementById("source-save-icon")).style.display ="none";
+        (<HTMLElement>document.getElementById("source-save-text")).style.display ="block";
+        this.notify.notify('error',"Veuillez remplir la date de début");
+      }, 500);
+      return false;
+    }
+    else return true;
   }
 
   editSource(wSId: string){
@@ -388,10 +440,43 @@ export class WeatherConfigComponent implements OnInit {
     this.edit = true;
 
     let select = <HTMLSelectElement>document.getElementById("sources-select");
-    if(ws.sourceId === 'WeatherSource'){
-      this.sourceType = "WeatherSource";
-      select.selectedIndex = 5;
+    if(ws.sourceType === "Scale"){
+      this.sourceType = "Scale";
+      select.selectedIndex = 3;
+      setTimeout(()=> {
+        this.changeSensorSelect();
+      }, 200)
     }
+    if(ws.sourceType === "T2"){
+      this.sourceType = "T2";
+      select.selectedIndex = 1;
+      setTimeout(()=> {
+        this.changeSensorSelect();
+      }, 200)
+    }
+    if(ws.sourceType === "TH"){
+      this.sourceType = "TH";
+      select.selectedIndex = 2;
+      setTimeout(()=> {
+        this.changeSensorSelect();
+      }, 200)
+    }
+    if(ws.sourceType === "Hub"){
+      this.sourceType = "Hub";
+      select.selectedIndex = 4;
+      setTimeout(()=> {
+        this.changeSensorSelect();
+      }, 200)
+    }
+    if(ws.sourceType === 'Station Davis'){
+      this.sourceType = "Station Davis";
+      select.selectedIndex = 5;
+      setTimeout(()=> {
+        this.changeStationDavis();
+      }, 200)
+    }
+
+    /*
     if(ws.sourceId.substr(0,2) === '43' || ws.sourceId.substr(0,2) === '49' || ws.sourceId.substr(0,2) === '57' || ws.sourceId.substr(0,2) === '58'){
       this.sourceType = "Scale";
       select.selectedIndex = 4;
@@ -408,10 +493,7 @@ export class WeatherConfigComponent implements OnInit {
       this.sourceType = "Hub";
       select.selectedIndex = 2;
     }
-    if(ws.sourceId === 'Station Davis'){
-      this.sourceType = "Station Davis";
-      select.selectedIndex = 5;
-    }
+    */
 
     (<HTMLElement>document.getElementById("newSourceModalLabel")).textContent = this.translate.instant('WEATHER.CONFIG.EDIT_SOURCE');
     (<HTMLSpanElement>document.getElementById("source-save-text")).textContent = this.translate.instant('WEATHER.CONFIG.BTN_EDIT');
@@ -424,38 +506,45 @@ export class WeatherConfigComponent implements OnInit {
       (<HTMLInputElement>document.getElementById("w-end-h")).value = this.wS.end.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});
       (<HTMLInputElement>document.getElementById("w-end-m")).value = this.wS.end.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});
     }
-    setTimeout(()=> {
-      this.changeSensorSelect();
-    }, 200)
+    
   }
 
   changeSensorSelect(){
     let sensorSelect = <HTMLSelectElement>document.getElementById("sensors-select");
     let index;
-    if(this.wS.sourceId.substr(0,2) === '43' || this.wS.sourceId.substr(0,2) === '49' || this.wS.sourceId.substr(0,2) === '57' || this.wS.sourceId.substr(0,2) === '58'){
+    if(this.wS.sourceType === "Scale"){
       this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58');
       index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58')
                              .findIndex(_c => _c.sensorRef === this.wS.sourceId);
       sensorSelect.selectedIndex = index + 1;
     }
-    if(this.wS.sourceId.substr(0,2) === '41' || this.wS.sourceId.substr(0,2) === '47'){
+    if(this.wS.sourceType === "T2"){
       this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' );
       index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' )
                              .findIndex(_c => _c.sensorRef === this.wS.sourceId);
       sensorSelect.selectedIndex = index + 1;
     }
-    if(this.wS.sourceId.substr(0,2) === '42' || this.wS.sourceId.substr(0,2) === '56'){
+    if(this.wS.sourceType === "TH"){
       this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' );
       index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' )
                              .findIndex(_c => _c.sensorRef === this.wS.sourceId);
       sensorSelect.selectedIndex = index + 1;
     }
-    if(this.wS.sourceId.substr(0,2) === '54'){
+    if(this.wS.sourceType === "Hub"){
       this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '54');
       index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '54' )
                              .findIndex(_c => _c.sensorRef === this.wS.sourceId);
       sensorSelect.selectedIndex = index + 1;
     }
+  }
+
+  changeStationDavis(){
+    let inputId = <HTMLInputElement>document.getElementById("stationid");
+    let inputKey = <HTMLInputElement>document.getElementById("key");
+    let inputSecret = <HTMLInputElement>document.getElementById("secret");
+    inputId.value = this.wS.sourceId;
+    inputKey.value = this.wS.key;
+    inputSecret.value = this.wS.secret;
   }
 
   openDeleteModal(ws: WeatherSource){
@@ -492,6 +581,9 @@ export class WeatherConfigComponent implements OnInit {
         if(this.wS.end == null && new Date(this.wS.start) <= new Date(_ws.end)){
           return _ws;
         }
+        else if(this.wS.end == null && _ws.end == null){
+          return _ws;
+        }
         else if(_ws.end == null && new Date(this.wS.end) >= new Date(_ws.start)){
           return _ws;
         }
@@ -515,6 +607,9 @@ export class WeatherConfigComponent implements OnInit {
     else{
       overlaps = this.weatherSrcsByApiary.filter(_ws => {
         if(this.wS.end == null && new Date(this.wS.start) <= new Date(_ws.end)){
+          return _ws;
+        }
+        else if(this.wS.end == null && _ws.end == null){
           return _ws;
         }
         else if(_ws.end == null && new Date(this.wS.end) >= new Date(_ws.start)){

@@ -177,6 +177,7 @@ export const BASE_OPTIONS = {
         showDelay: 0,
         hideDelay: 100,
         transitionDuration: 0.5,
+        backgroundColor: 'rgba(50,50,50,0.5)'
     },
     legend: {
         orient: 'horizontal',
@@ -286,9 +287,9 @@ export const BASE_OPTIONS = {
     },
     
     baseOptionWeather: {
-        /*toolbox: {
+        toolbox: {
             orient: 'vertical',
-            left:'0%',
+            right:'0%',
             top: '2%',
             itemSize: 16,
             feature: {
@@ -299,7 +300,7 @@ export const BASE_OPTIONS = {
                 restore: {},
                 saveAsImage: {}
             }
-        },*/
+        },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -318,49 +319,49 @@ export const BASE_OPTIONS = {
             link: { xAxisIndex: 'all' }
         },
         title: [{
-            top: '1%',
+            top: '3%',
             left: '36%',
             text: 'Temperature'
         },  {
-            top: '16%',
+            top: '18%',
             left: '40%',
             text: 'Vent'
         },{
-            top: '31%',
+            top: '33%',
             left: '40%',
             text: 'Vent'
         }, {
-            top: '46%',
+            top: '48%',
             left: '40%',
             text: 'Humidité'
         }, {
-            top: '61%',
+            top: '63%',
             left: '40%',
             text: 'Humidité'
         }, {
-            top: '76%',
+            top: '78%',
             left: '40%',
             text: 'Humidité'
         }],
         legend: {
-            orient: 'vertical',
+            orient: 'horizontal',
             data: [],
             selectedMode: 'multiple',
-            right: 10,
-            top: '5%',
-            width: 150
+            center: 'center',
+            top: '1%',
+            icon:'roundRect'
         },
         grid: [
-            { x: '3%', y: '3%', left: '8%', width: '75%', height: '11%', background: 'white'},
-            { x: '3%', y: '18%', left: '8%', width: '75%', height: '11%', background: 'white'},
-            { x: '3%', y: '33%', left: '8%', width: '75%', height: '11%', background: 'white' },
-            { x: '3%', y: '48%', left: '8%', width: '75%', height: '11%', background: 'white' },
-            { x: '3%', y: '63%', left: '8%', width: '75%', height: '11%', background: 'white' },
-            { x: '3%', y: '78%', left: '8%', width: '75%', height: '11%', background: 'white' },
+            { x: '3%', y: '5%', left: '3%', width: '85%', height: '11%', background: 'white'},
+            { x: '3%', y: '20%', left: '3%', width: '85%', height: '11%', background: 'white'},
+            { x: '3%', y: '35%', left: '3%', width: '85%', height: '11%', background: 'white' },
+            { x: '3%', y: '50%', left: '3%', width: '85%', height: '11%', background: 'white' },
+            { x: '3%', y: '65%', left: '3%', width: '85%', height: '11%', background: 'white' },
+            { x: '3%', y: '80%', left: '3%', width: '85%', height: '11%', background: 'white' },
         ],
         dataZoom: [
               {
-                show: true,
+                show: false,
                 realtime: true,
                 start: 0,
                 end: 100,

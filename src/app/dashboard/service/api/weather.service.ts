@@ -82,6 +82,18 @@ export class WeatherService {
    *
    * @param {string} apiaryId
    * @param {Date[]} range
+   * @returns {Observable<CurrentHourlyWeather[]>}
+   * @memberof WeatherService
+   */
+   public getCurrentDailyWeatherWithWSrcs(apiaryId: string, ws: string, range: Date[]): Observable<CurrentDailyWeather[]> {
+    return this.httpClient.post<CurrentHourlyWeather[]>(CONFIG.URL + `dailyWeather/daily/apiary/${apiaryId}/${ws}`, range);
+  }
+
+  /**
+   *
+   *
+   * @param {string} apiaryId
+   * @param {Date[]} range
    * @returns {Observable<ForecastDailyWeather[]>}
    * @memberof WeatherService
    */
@@ -127,6 +139,19 @@ export class WeatherService {
     return this.httpClient.post<any[]>(CONFIG.URL + `hourlyWeather/temp/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
+  }
+
+
+  /**
+   *
+   *
+   * @param {string} apiaryId
+   * @param {Date[]} range
+   * @returns {Observable<CurrentHourlyWeather[]>}
+   * @memberof WeatherService
+   */
+   public getRainByApiaryAndOriginAndDateBetween(apiaryId: string, origin: string, range: Date[]): Observable<any[]> {
+    return this.httpClient.post<any[]>(CONFIG.URL + `dailyWeather/rain/apiary/${apiaryId}/${origin}`, range);
   }
 
 
@@ -197,6 +222,18 @@ export class WeatherService {
    */
   public getWindCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
     return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/wind/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+  }
+
+  /**
+   *
+   *
+   * @param {string} apiaryId
+   * @param {Date[]} range
+   * @returns {Observable<any>}
+   * @memberof WeatherService
+   */
+   public getWindByApiaryIdAndOriginAndDate(apiaryId: string, origin: string, range: Date[]): Observable<any> {
+    return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/wind/apiary/${apiaryId}/${origin}`, range);
   }
 
 

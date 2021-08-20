@@ -455,6 +455,9 @@
         }
     },
     "MELLICHARTS": {
+        "HIVE_COLOR":{
+            "BTN":"Couleur des ruches"
+        },
         "HELP": {
             "HIVE" :["Ici, vous pouvez explorer avec beaucoup de détails toutes les données relatives à une ruche.",
             "Comparez les données de la ruche avec vos propres opérations (notes) et avec les conditions météorologiques.",
@@ -1049,17 +1052,21 @@
         },
         "GRAPH":{
             "TEMP":"Temperature",
-            "TEMP_LEFT":"41%",
+            "TEMP_LEFT":"46%",
             "WIND":"Vent",
-            "WIND_LEFT":"43%",
+            "WIND_LEFT":"49%",
             "RAIN":"Précipitations",
-            "RAIN_LEFT":"40%",
+            "RAIN_LEFT":"45%",
+            "RAIN_YAXIS":"Précipitations ",
             "HUMI":"Hygrométrie",
-            "HUMI_LEFT":"41%",
-            "NECTAR":"Indice de miellée",
-            "NECTAR_LEFT":"38%",
+            "HUMI_LEFT":"46%",
+            "HUMI_YAXIS":"Hygrométrie (%)",
+            "NECTAR":"Indice de Miellée",
+            "NECTAR_LEFT":"44%",
+            "NECTAR_YAXIS":"Indice Miéllée (%)",
             "FLIGHT":"Indice de Butinage",
-            "FLIGHT_LEFT":"37%"
+            "FLIGHT_LEFT":"44%",
+            "FLIGHT_YAXIS":"Indice Butinage (%)"
         },
         "CONFIG":{
             "APIARY":"Rucher",
@@ -1076,6 +1083,7 @@
             "DELETE_SOURCE":"Supprimer source",
             "CHOOSE_SOURCE":"Choix source",
             "SCALE":"Balance",
+            "STATION":"Station Meteo Davis",
             "ID_SENSOR":"ID Capteur",
             "ID_STATION":"ID Station",
             "API_KEY":"Clé API",

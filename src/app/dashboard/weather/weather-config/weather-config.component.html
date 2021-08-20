@@ -16,7 +16,7 @@
       <tr *ngFor="let w_srcs of weatherSrcsByApiary;">
         <td>{{ w_srcs.apiaryName }}</td>
         <td>{{ w_srcs.sourceType }}</td>
-        <td>{{ w_srcs.sourceType === 'Station Davis' ? w_srcs.stationId : w_srcs.sourceId}}</td>
+        <td>{{ w_srcs.sourceId }}</td>
         <td>{{ unitService.getHourlyDate(w_srcs.start) }}</td>
         <td>{{ w_srcs.end ? unitService.getHourlyDate(w_srcs.end) : 'WEATHER.CONFIG.ACTUAL' | translate }}</td>
         <td class="td-edit" data-toggle="modal" data-target="#newSourceModal"(click)="editSource(w_srcs._id)"><i class="fas fa-pen"></i></td>
@@ -50,11 +50,11 @@
           <div class="weather-modal-flex">
             <select id="sources-select" class="weather-select" (change)="onSourceChange()">
               <option disabled selected >{{ 'WEATHER.CONFIG.CHOOSE_SOURCE' | translate }}</option>
-              <option value="TH">TH</option>
-              <option value="Hub">Hub</option>
               <option value="T2">T2</option>
+              <option value="TH">TH</option>
               <option value="Scale">{{ 'WEATHER.CONFIG.SCALE' | translate }}</option>
-              <option value="Station Davis">Station Davis</option>
+              <option value="Hub">Hub</option>
+              <option value="Station Davis">{{ 'WEATHER.CONFIG.STATION' | translate }}</option>
             </select>
           </div>
           <div class="weather-modal-flex">
@@ -66,13 +66,13 @@
             </div>
             <div *ngIf="wS.sourceType === 'Station Davis'" class="weather-config">
               <div>
-                <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.ID_STATION' | translate }}" (change)="stationIdChange($event)">
+                <input id="stationid" style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.ID_STATION' | translate }}" (change)="stationIdChange($event)">
               </div>
               <div>
-                <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.API_KEY' | translate }}" (change)="keyChange($event)">
+                <input id="key" style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.API_KEY' | translate }}" (change)="keyChange($event)">
               </div>
               <div>
-                <input style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.API_SECRET' | translate }}" (change)="secretChange($event)">
+                <input id="secret" style="margin-top: 10px;" type="text" class="weather-input" placeholder="{{ 'WEATHER.CONFIG.API_SECRET' | translate }}" (change)="secretChange($event)">
               </div>
             </div>
           </div>
