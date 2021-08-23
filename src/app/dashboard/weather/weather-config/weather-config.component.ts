@@ -34,6 +34,23 @@ export class WeatherConfigComponent implements OnInit {
     secret: null
   }
 
+  private edit_capt : CapteurInterface = {
+    _id: null,
+    sensorRef: null,
+    name: null,
+    model: null,
+    type: null,
+    hiveId: null,
+    apiaryId: null,
+    userId: null,
+    dataLastReceived: null,
+    deviceLocation: null,
+    start: null,
+    createDate: null,
+    sensorTime: null,
+    sensorBat: null
+  }
+
   public captApiary: CapteurInterface[];
   public captByType: CapteurInterface[];
 
@@ -142,6 +159,7 @@ export class WeatherConfigComponent implements OnInit {
 
     let select = <HTMLSelectElement>document.getElementById("sources-select");
     select.selectedIndex = 0;
+    select.disabled = false;
     (<HTMLInputElement>document.getElementById("w-begin-h")).value = this.wS.start.getHours().toLocaleString('en-US',{minimumIntegerDigits : 2});
     (<HTMLInputElement>document.getElementById("w-begin-m")).value = this.wS.start.getMinutes().toLocaleString('en-US',{minimumIntegerDigits : 2});
 
@@ -157,23 +175,31 @@ export class WeatherConfigComponent implements OnInit {
     let select = <HTMLSelectElement>document.getElementById("sources-select");
     this.sourceType = select.value;
     this.wS.sourceType = select.value;
-    switch(select.value){
-      case 'TH':
-        this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' );
-        break;
-      case 'T2':
-        this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' );
-        break;
-      case 'Scale':
-        this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58' );
-        break;
-      case 'Hub':
-        this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '54');
-        break;
-      case 'Station Davis':
-      default:
-        break;
-    }
+    setTimeout(() => {
+      let selectSource = <HTMLSelectElement>document.getElementById("sensors-select");
+      switch(select.value){
+        case 'TH':
+          this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' );
+          selectSource.disabled = false;
+          break;
+        case 'T2':
+          this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' );
+          selectSource.disabled = false;
+          break;
+        case 'Scale':
+          this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58' );
+          selectSource.disabled = false;
+          break;
+        case 'Hub':
+          this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '54');
+          selectSource.disabled = false;
+          break;
+        case 'Station Davis':
+        default:
+          break;
+      }
+    }, 200);
+    
   }
 
   sensorChange(){
@@ -440,6 +466,7 @@ export class WeatherConfigComponent implements OnInit {
     this.edit = true;
 
     let select = <HTMLSelectElement>document.getElementById("sources-select");
+    select.disabled = true;
     if(ws.sourceType === "Scale"){
       this.sourceType = "Scale";
       select.selectedIndex = 3;
@@ -511,31 +538,11 @@ export class WeatherConfigComponent implements OnInit {
 
   changeSensorSelect(){
     let sensorSelect = <HTMLSelectElement>document.getElementById("sensors-select");
-    let index;
-    if(this.wS.sourceType === "Scale"){
-      this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58');
-      index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '43' || _c.sensorRef.substr(0,2) === '49' || _c.sensorRef.substr(0,2) === '57' || _c.sensorRef.substr(0,2) === '58')
-                             .findIndex(_c => _c.sensorRef === this.wS.sourceId);
-      sensorSelect.selectedIndex = index + 1;
-    }
-    if(this.wS.sourceType === "T2"){
-      this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' );
-      index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '41' || _c.sensorRef.substr(0,2) === '47' )
-                             .findIndex(_c => _c.sensorRef === this.wS.sourceId);
-      sensorSelect.selectedIndex = index + 1;
-    }
-    if(this.wS.sourceType === "TH"){
-      this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' );
-      index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '42' || _c.sensorRef.substr(0,2) === '56' )
-                             .findIndex(_c => _c.sensorRef === this.wS.sourceId);
-      sensorSelect.selectedIndex = index + 1;
-    }
-    if(this.wS.sourceType === "Hub"){
-      this.captByType = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '54');
-      index = this.captApiary.filter(_c => _c.sensorRef.substr(0,2) === '54' )
-                             .findIndex(_c => _c.sensorRef === this.wS.sourceId);
-      sensorSelect.selectedIndex = index + 1;
-    }
+    this.captByType = [];
+    this.edit_capt.sensorRef = this.wS.sourceId;
+    this.captByType.push(this.edit_capt);
+    sensorSelect.selectedIndex = 1;
+    sensorSelect.disabled = true;
   }
 
   changeStationDavis(){

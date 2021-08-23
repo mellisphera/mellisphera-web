@@ -49,7 +49,7 @@ limitations under the License. -->
         </li>
         <li (click)="focus('sidebar-inspect')">
           <a id="sidebar-inspect" routerLink="./inspect" data-toggle="tooltip" data-placement="top"
-              title="Inspecter">
+              title="{{ 'SIDEBAR.INSPECT' | translate }}">
               <img src="../../../assets/icons/inspect/inspectsV2/3_bkpr_observ_white.png" style="width:50px;" />
               <p>{{ 'SIDEBAR.INSPECT' | translate }}</p>
           </a>
@@ -63,7 +63,7 @@ limitations under the License. -->
         </li>
         <li (click)="focus('sidebar-weather')">
             <a id="sidebar-weather" routerLink="./weather" data-toggle="tooltip" data-placement="top"
-            title="Weather">
+            title="{{ 'SIDEBAR.WEATHER' | translate }}">
                 <img src="../../../assets/ms-pics/ui/sidebar/weather.svg" style="width:50px;" />
                 <p>{{ 'SIDEBAR.WEATHER' | translate }}</p>
             </a>

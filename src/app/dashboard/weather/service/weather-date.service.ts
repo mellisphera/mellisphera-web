@@ -38,7 +38,7 @@ export class WeatherDateService {
       { scale: 9, type: 'MONTH', typeFr: 'MOIS', typeEs: 'Mes'},
       { scale: 1, type: 'YEAR', typeFr: 'AN', typeEs: 'Año'}
     ];
-    this.setRange(this.ranges[6]);
+    this.setRange(this.ranges[4]);
   }
 
   setRange(scale: DataRange): void {
@@ -88,7 +88,10 @@ export class WeatherDateService {
       return this.rangeDateForRequest;
     }
     else{
-      return [this.rangeDateForRequest[0], this.today];
+      let date = new Date(this.today);
+      date.setHours(0);
+      date.setMinutes(0);
+      return [this.rangeDateForRequest[0], date];
     }
   }
 
@@ -98,7 +101,9 @@ export class WeatherDateService {
     }
     else{
       let aux: Date = new Date(this.today);
-      aux.setDate(aux.getDate() - 1)
+      aux.setDate(aux.getDate() - 1);
+      aux.setHours(0);
+      aux.setMinutes(0);
       return [aux, this.rangeDateForRequest[1]];
     }
   }

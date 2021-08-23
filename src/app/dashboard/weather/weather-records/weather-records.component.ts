@@ -657,6 +657,12 @@ export class WeatherRecordsComponent implements OnInit {
         //console.log(_records);
         _records.forEach((_apiRec: any[], index) => {
           if(index % 2 === 0){
+            /*console.log(_apiRec);
+            console.log(_apiRec = _apiRec.filter((_r, i, self) =>
+              i === self.findIndex((t) => (
+                t.date === _r.date
+              ))
+            ))*/
             temp = [];
             rain = [];
             humi = [];
