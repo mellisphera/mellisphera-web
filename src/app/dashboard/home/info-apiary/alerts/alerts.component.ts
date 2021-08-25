@@ -363,7 +363,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
 
     if (obs.length > 0) {
       Observable.forkJoin(obs).subscribe(() => { }, () => { }, () => {
-        this.myNotifer.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+        //this.myNotifer.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
       });
     }
   }

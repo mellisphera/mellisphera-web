@@ -425,7 +425,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
       if (this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id).length > 0) {
         this.alertsService.checkAlert(this.hiveAlertsByApiary.filter(_notif => _notif.hiveId === ruche._id)).subscribe(
           _res => {
-            this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+            //this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
             this.hiveAlertsByApiary = this.hiveAlertsByApiary.filter(_notif => _notif.hiveId !== ruche._id).slice();
           }
         );
@@ -480,7 +480,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     if (this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary()).length > 0) {
       this.alertsService.checkAlert(this.apiaryAlertsActives.filter(_notif => _notif.apiaryId === this.rucherService.getCurrentApiary())).subscribe(
         _res => {
-          this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
+          //this.myNotifier.sendSuccessNotif(NotifList.READ_ALL_ALERTS_HIVE);
           this.apiaryAlertsActives = this.apiaryAlertsActives.filter(_notif => _notif.apiaryId !== this.rucherService.getCurrentApiary()).slice();
         }
       );

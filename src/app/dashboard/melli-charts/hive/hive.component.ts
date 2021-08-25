@@ -18,6 +18,7 @@ import { DailyComponent } from './daily/daily.component';
 import { HourlyComponent } from './hourly/hourly.component';
 import { Router } from '@angular/router';
 import { RoutingHistoryService } from '../../service/routing-history.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 export const PATH = {
@@ -40,7 +41,8 @@ export class HiveComponent implements OnInit, AfterViewInit {
   constructor(private melliDate: MelliChartsDateService,
     private routingHistory: RoutingHistoryService,
     private router: Router,
-    private render: Renderer2) {
+    private render: Renderer2,
+    private translate: TranslateService) {
 
   }
 
@@ -117,6 +119,12 @@ export class HiveComponent implements OnInit, AfterViewInit {
       loadCalendar();
     }
     catch{}
+  }
+  
+
+  openHelp(){
+    let url = this.translate.instant('HELP.EXPLORE.HIVE');
+    window.open(url);
   }
 
 

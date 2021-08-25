@@ -1,3 +1,17 @@
+.infoToolip{
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+}
+.btn-tooltip{
+    color: #4f4f51;
+    opacity: 1;
+}
+.btn-tooltip:hover{
+    color: rgb(0, 179, 0);
+    opacity: 1;
+}
+
 .inspect-history-container{
     padding-left: 25px;
 }

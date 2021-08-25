@@ -4,6 +4,7 @@ import { AlertsService } from '../../service/api/alerts.service';
 import { SocketService } from '../../service/socket.service';
 import { MyNotifierService } from '../../service/my-notifier.service';
 import { NotifList } from '../../../../constants/notify';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-alerts-conf-submit',
@@ -17,7 +18,8 @@ export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
   public frequency: string;
   constructor(private alertService: AlertsService,
     private socketService: SocketService,
-    private notifService: MyNotifierService) {
+    private notifService: MyNotifierService,
+    private translate: TranslateService) {
     this.alertUser = {
       _id: '',
       userId: '',
@@ -56,6 +58,11 @@ export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
         this.notifService.sendSuccessNotif(NotifList.SEND_MAIL_TEST);
       }
     )
+  }
+
+  openHelp(){
+    let url = this.translate.instant('HELP.ALERTS.PARAMS');
+    window.open(url);
   }
 
   ngOnDestroy(): void {

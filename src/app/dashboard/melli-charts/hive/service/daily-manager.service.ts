@@ -281,7 +281,6 @@ export class DailyManagerService {
     let option = JSON.parse(JSON.stringify(this.baseOptionExt));
     Observable.forkJoin(weatherObs).map(_elt => _elt.flat()).subscribe(
       _weather => {
-        console.log(_weather);
         const data = _weather.filter(_elt => _elt.value[0].mainDay !== 'Undefined').map(_map => [_map.date].concat(this.getValueBySerie(_map.value, type.name), _map.sensorRef));
         if (data.length > 0) {
           if (this.existSeries(option.series, type.name)) {
@@ -565,7 +564,7 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = this.unitService.getUserPref().weatherSource;
+          serie.name = "WeatherSource";
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxTempDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
@@ -573,7 +572,7 @@ export class DailyManagerService {
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.selectedMode = 'single';
-          option.legend.data.push(this.unitService.getUserPref().weatherSource);
+          option.legend.data.push("WeatherSource");
           //console.log(option.series);
         }
       },
@@ -674,14 +673,14 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = this.unitService.getUserPref().weatherSource;
+          serie.name = "WeatherSource";
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.maxHumidityDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.legend.data.push(this.unitService.getUserPref().weatherSource);
+          option.legend.data.push("WeatherSource");
         }
       },
       () => {},
@@ -781,14 +780,14 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = this.unitService.getUserPref().weatherSource;
+          serie.name = "WeatherSource";
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.minHumidityDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
           option.tooltip = this.graphGlobal.getTooltipBySerie(type);
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
-          option.legend.data.push(this.unitService.getUserPref().weatherSource);
+          option.legend.data.push("WeatherSource");
         }
       },
       () => {},
@@ -886,7 +885,7 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = this.unitService.getUserPref().weatherSource;
+          serie.name = "WeatherSource";
           serie.data = _temp.map(_data => new Array(_data.date, this.unitService.convertWindFromUserPref(_data.value.maxSpeed, this.unitService.getUserPref().unitSystem)));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
@@ -894,7 +893,7 @@ export class DailyManagerService {
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.selectedMode = 'single';
-          option.legend.data.push(this.unitService.getUserPref().weatherSource);
+          option.legend.data.push("WeatherSource");
           
         }
       },
@@ -966,7 +965,7 @@ export class DailyManagerService {
             option.series = new Array();
           }
           let serie = Object.assign({}, SERIES.heatmap);
-          serie.name = this.unitService.getUserPref().weatherSource;
+          serie.name = "WeatherSource";
           serie.data = _temp.map(_data => new Array(_data.date, _data.value.minTempDay));
           option.series.push(serie);
           option.visualMap = this.graphGlobal.getVisualMapBySerie(type.name);
@@ -974,7 +973,7 @@ export class DailyManagerService {
           option.calendar.dayLabel.nameMap = this.graphGlobal.getDays();
           option.calendar.monthLabel.nameMap = this.graphGlobal.getMonth();
           option.legend.selectedMode = 'single';
-          option.legend.data.push(this.unitService.getUserPref().weatherSource);
+          option.legend.data.push("WeatherSource");
         }
       },
       () => {},
@@ -1062,7 +1061,7 @@ export class DailyManagerService {
     let option = Object.assign({}, this.baseOptionExt);
     this.weatherService.getRainAllWeather(apiaryId, range).map(_elt => _elt.flat()).subscribe(
       _rain => {
-        console.log(_rain);
+        //console.log(_rain);
         //this.getLastDayForMeanValue(this.weatherService.getRainAllWeather(apiaryId, this.rangeSevenDay), false, type);
         if (rangeChange) {
           this.getSerieByData(_rain, type.name, SERIES.effectScatter, (serieComplete: any) => {

@@ -115,16 +115,3 @@ limitations under the License. -->
         </ul> -->
   </section>
 </div>
-
-<div class="infoToolip">
-  <popover-content #broodToltip placement="left" [animation]="true"
-      [closeOnClickOutside]="false">
-      <span class="helpTooltip">
-          <span
-              *ngFor="let line of 'ALERT_CONF_PAGE.HELP.ALERTS' | translate">{{ line }}<br /></span>
-      </span>
-  </popover-content>
-  <div [popover]="broodToltip" style="font-size: 15px !important;">
-      <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-  </div>
-</div>

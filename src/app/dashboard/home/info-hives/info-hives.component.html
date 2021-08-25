@@ -20,47 +20,12 @@ limitations under the License. -->
 <hr /> -->
         <div class="calendar" id="alerts">
             <app-alerts-hive></app-alerts-hive>
-            <div class="infoToolip">
-                <popover-content #eventHelpHiveCalendar placement="left" [animation]="true"
-                    [closeOnClickOutside]="false">
-                    <span class="helpTooltip">
-                        {{  'MELLIUX.HELP.HIVE.EVENT_CALENDAR' | translate }}
-                    </span>
-                </popover-content>
-                <div [popover]="eventHelpHiveCalendar" style="font-size: 15px !important;">
-                    <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-                </div>
-            </div>
         </div>
         <div class="calendar" id="health">
             <app-health-hive></app-health-hive>
-            <div class="infoToolip">
-                <popover-content #broodToltip placement="left" [animation]="true"
-                    [closeOnClickOutside]="false">
-                    <span class="helpTooltip">
-                        <span
-                            *ngFor="let line of 'MELLIUX.HELP.HIVE.BROOD_CALENDAR' | translate">{{ line }}<br /></span>
-                    </span>
-                </popover-content>
-                <div [popover]="broodToltip" style="font-size: 15px !important;">
-                    <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-                </div>
-            </div>
         </div>
         <div class="calendar" id="weight">
             <app-weight-hives></app-weight-hives>
-            <div class="infoToolip">
-                <popover-content #weightCalendarTooltip placement="left" [animation]="true"
-                    [closeOnClickOutside]="false">
-                    <span class="helpTooltip">
-                        <span
-                            *ngFor="let line of 'MELLIUX.HELP.HIVE.WEIGHT_CALENDAR' | translate">{{ line }}<br /></span>
-                    </span>
-                </popover-content>
-                <div [popover]="weightCalendarTooltip" style="font-size: 15px !important;">
-                    <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-                </div>
-            </div>
         </div>
         <br clear="both" />
     </div>
@@ -74,4 +39,11 @@ limitations under the License. -->
  -->
         </div>
     </div>
+    <div class="infoToolip">
+        <div style="font-size: 15px !important;">
+            <button (click)="openHelp()" class="btn btn-tooltip" style="background-color: transparent; border: 0; outline: 0;">
+                <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+            </button>
+        </div>
+      </div>
 </div>

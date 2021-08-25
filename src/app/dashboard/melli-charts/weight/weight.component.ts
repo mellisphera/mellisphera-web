@@ -1549,6 +1549,11 @@ export class WeightComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  openHelp(){
+    let url = this.translateService.instant('HELP.EXPLORE.WEIGHT');
+    window.open(url);
+  }
+
   ngOnDestroy(): void {
     this.stackService.weightChartInstance.dispose();
   }

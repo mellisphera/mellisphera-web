@@ -1,3 +1,4 @@
+
 *{
     color: #4F4F51;
 }
@@ -42,11 +43,6 @@ td, p, label{
     width: 50%;
     margin-right: 10px;
     float: left;
-}
-.infoToolip{
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
 }
 .info-link{
     color: #4F4F51;

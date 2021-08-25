@@ -1,3 +1,17 @@
+.infoToolip{
+  position: fixed;
+  right: 30px;
+  bottom: 10px;
+}
+.btn-tooltip{
+  color: #4f4f51;
+  opacity: 1;
+}
+.btn-tooltip:hover{
+  color: rgb(0, 179, 0);
+  opacity: 1;
+}
+
 .inspect-new-container{
   width: 100%;
   padding-left: 10px;
@@ -395,14 +409,14 @@
 }
 
 .btn-nobrood_b{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobrood_b.svg');
   background-position: center;
 }
 
 .btn-nobrood_cb{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg');
   background-position: center;
@@ -410,14 +424,14 @@
 }
 
 .btn-nobees_b{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobees_b.svg');
   background-position: center;
 }
 
 .btn-nobees_cb{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobees_cb.svg');
   background-position: center;

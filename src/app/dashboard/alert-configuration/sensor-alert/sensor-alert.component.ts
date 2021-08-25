@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertsService } from '../../service/api/alerts.service';
 import { AlertCat } from '../../../_model/alertCat';
 import { AlertUser } from '../../../_model/alertUser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sensor-alert',
@@ -10,7 +11,8 @@ import { AlertUser } from '../../../_model/alertUser';
 })
 export class SensorAlertComponent implements OnInit {
 
-  constructor(private alertService: AlertsService) { }
+  constructor(private alertService: AlertsService,
+    private translate: TranslateService) { }
 
   ngOnInit() {
   }
@@ -25,6 +27,9 @@ export class SensorAlertComponent implements OnInit {
     return this.alertService.alertUser;
   }
 
-  
+  openHelp(){
+    let url = this.translate.instant('HELP.ALERTS.SENSOR');
+    window.open(url);
+  }
 
 }

@@ -26,6 +26,7 @@ import { AtokenStorageService } from '../../../auth/Service/atoken-storage.servi
 import { AdminService } from '../../admin/service/admin.service';
 import { DailyManagerService } from '../hive/service/daily-manager.service';
 import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-stack',
@@ -47,7 +48,8 @@ export class StackComponent implements OnInit {
     private rucheService: RucheService,
     private melliDate: MelliChartsDateService,
     private dailyManager: DailyManagerService,
-    private melliHive: MelliChartsHiveService) { }
+    private melliHive: MelliChartsHiveService,
+    private translate: TranslateService) { }
 
   ngOnInit() {
 
@@ -395,6 +397,10 @@ export class StackComponent implements OnInit {
     }
   }
 
+  openHelp(){
+    let url = this.translate.instant('HELP.EXPLORE.DATA');
+    window.open(url);
+  }
 
   ngOnDestroy() {
     this.stackService.stackEchartInstance.dispose();

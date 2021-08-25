@@ -123,7 +123,7 @@ export class SettingsViewTemplateComponent implements OnInit {
     }
 
     userHaveWeatherStation(): boolean {
-      return this.userPrefService.getUserPref().weatherStation;
+      return false;
     }
 
     getPeriodByLang(period: string, lang: string) {
@@ -237,6 +237,5 @@ export class SettingsViewTemplateComponent implements OnInit {
   isMetric(): boolean {
     return this.userPrefService.getUserPref().unitSystem === 'METRIC';
   }
-
 
 }

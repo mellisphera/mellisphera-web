@@ -20,7 +20,7 @@ limitations under the License. -->
   <hr /> -->
     <div class="calendar" id="apiaryAlerts">
       <app-alerts></app-alerts>
-      <div class="infoToolip">
+      <!--<div class="infoToolip">
         <popover-content #eventHelpApiaryCalendar placement="left" [animation]="true" [closeOnClickOutside]="false">
           <span class="helpTooltip">
             <span *ngFor="let line of 'MELLIUX.HELP.APIARY.EVENT_CALENDAR' | translate">{{ line }}<br /></span>
@@ -29,7 +29,7 @@ limitations under the License. -->
         <div [popover]="eventHelpApiaryCalendar" style="font-size: 15px !important;">
           <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
   <div id="apiaryLeft">
@@ -40,5 +40,12 @@ limitations under the License. -->
   <div id="states">
     <hr id="allPage" />
     <app-states></app-states>
+  </div>
+  <div class="infoToolip">
+    <div style="font-size: 15px !important;">
+        <button (click)="openHelp()" class="btn btn-tooltip" style="background-color: transparent; border: 0; outline: 0;">
+            <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+        </button>
+    </div>
   </div>
 </div>

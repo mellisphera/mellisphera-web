@@ -12,14 +12,9 @@ limitations under the License. -->
 <app-daily></app-daily>
 <!-- <app-hourly></app-hourly> -->
 <div class="infoToolip">
-    <popover-content #weightCalendarTooltip placement="left" [animation]="true"
-        [closeOnClickOutside]="false">
-        <span class="helpTooltip" class="helpTooltip">
-            <span
-                *ngFor="let line of 'MELLICHARTS.HELP.HIVE' | translate">{{ line }}<br /></span>
-        </span>
-    </popover-content>
-    <div [popover]="weightCalendarTooltip" style="font-size: 15px !important;">
-        <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+    <div style="font-size: 15px !important;">
+        <button (click)="openHelp()" class="btn btn-tooltip" style="background-color: transparent; border: 0; outline: 0;">
+            <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+        </button>
     </div>
 </div>

@@ -59,6 +59,7 @@ import { InspCatService } from '../service/api/insp-cat.service';
 import { InspCat } from '../../_model/inspCat';
 import { from, Observable } from 'rxjs';
 import { b } from '@angular/core/src/render3';
+import { SeasonsService } from '../inspect/service/seasons.service';
 
 const PREFIX_PATH = '/dashboard/explore/';
 
@@ -154,7 +155,8 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
     private notify: NotifierService,
     public sanitizer: DomSanitizer,
     public safeHtml: SafeHtmlPipe,
-    private inspCat: InspCatService
+    private inspCat: InspCatService,
+    private season: SeasonsService
     ) {
     if (this.translateService.currentLang === 'fr') {
       this.btnNav = [
@@ -253,7 +255,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
       _inspCat => {
         let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
         arr.sort((a:InspCat, b:InspCat) => { return a.code - b.code }).forEach(_cat => {
-          if(_cat.img !== "Default" && this.notConstant(_cat)){
+          if(_cat.img !== "Default" && this.notConstant(_cat) && _cat.seasons.findIndex(_s => _s === this.season.getSeason()) !== -1){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(), 
               img: _cat.img.toLowerCase() + '_b.svg',
@@ -289,7 +291,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   notConstant(cat: InspCat): boolean{
-    if(cat.name === 'Egg' || cat.name === 'Larva' || cat.name === 'Pupa' || cat.name === 'Dronebrood' || cat.name === 'Mitecountwash'){
+    if(cat.name === 'Egg' || cat.name === 'Larva' || cat.name === 'Pupa' || cat.name === 'Dronebrood'){
       return false;
     }
     else return true;

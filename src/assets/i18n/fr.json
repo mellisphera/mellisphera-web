@@ -7,6 +7,34 @@
         },
         "SIGN_UP": {}
     },
+    "HELP":{
+        "MY_APIARY":{
+            "APIARY":"https://doc.mellisphera.com/fr/mellisphera/#vue-du-rucher",
+            "HIVE":"https://doc.mellisphera.com/fr/mellisphera/#vue-de-la-ruche"
+        },
+        "EXPLORE":{
+            "HIVE":"https://doc.mellisphera.com/fr/mellisphera/#ruche",
+            "BROOD":"https://doc.mellisphera.com/fr/mellisphera/#couvain",
+            "WEIGHT":"https://doc.mellisphera.com/fr/mellisphera/#poids",
+            "EVENTS":"https://doc.mellisphera.com/fr/mellisphera/#evenements",
+            "DATA":"https://doc.mellisphera.com/fr/mellisphera/#donnees-horaires"
+        },
+        "INSPECT":{
+            "NEW":"https://doc.mellisphera.com/fr/mellisphera/#nouvelle-inspection",
+            "HISTORY":"https://doc.mellisphera.com/fr/mellisphera/#historique-des-inspections",
+            "PARAMS":"https://doc.mellisphera.com/fr/mellisphera/#parametres"
+        },
+        "ALERTS":{
+            "HIVE":"https://doc.mellisphera.com/fr/mellisphera/#ruche_1",
+            "WEATHER":"https://doc.mellisphera.com/fr/mellisphera/#meteo",
+            "SENSOR":"https://doc.mellisphera.com/fr/mellisphera/#capteurs",
+            "PARAMS":"https://doc.mellisphera.com/fr/mellisphera/#parametres-demail"
+        },
+        "WEATHER":{
+            "RECORDS":"https://doc.mellisphera.com/fr/mellisphera/#releves",
+            "CONFIG":"https://doc.mellisphera.com/fr/mellisphera/#configuration"
+        }
+    },
     "MELLIUX": {
         "HELP": {
             "APIARY": {

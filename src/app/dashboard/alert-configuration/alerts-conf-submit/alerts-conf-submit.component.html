@@ -51,17 +51,11 @@
 
     </div>
   </div>
-
-</div>
-<div class="infoToolip">
-  <popover-content #broodToltip placement="left" [animation]="true"
-      [closeOnClickOutside]="false">
-      <span class="helpTooltip">
-          <span
-              *ngFor="let line of 'ALERT_CONF_PAGE.HELP.ALERTS' | translate">{{ line }}<br /></span>
-      </span>
-  </popover-content>
-  <div [popover]="broodToltip" style="font-size: 15px !important;">
-      <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+  <div class="infoToolip">
+    <div style="font-size: 15px !important;">
+        <button (click)="openHelp()" class="btn btn-tooltip" style="background-color: transparent; border: 0; outline: 0;">
+            <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+        </button>
+    </div>
   </div>
 </div>

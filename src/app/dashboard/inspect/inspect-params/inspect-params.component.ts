@@ -8,6 +8,7 @@ import { InspUser } from '../../../_model/inspUser';
 import { UserloggedService } from '../../../userlogged.service';
 import { MyNotifierService } from '../../service/my-notifier.service';
 import { NotifList } from '../../../../constants/notify';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-inspect-params',
@@ -28,7 +29,8 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
     private inspCatService: InspCatService,
     private inspUserService: InspUserService,
     private userService: UserloggedService,
-    private notifService: MyNotifierService
+    private notifService: MyNotifierService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -137,6 +139,11 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
   onDisable(i: number): void{
     this.inspConf[i].enable = false;
     this.inspUser.inspConf[i].enable = false;
+  }
+
+  openHelp(){
+    let url = this.translate.instant('HELP.INSPECT.PARAMS');
+    window.open(url);
   }
 
   ngOnDestroy(){

@@ -1578,4 +1578,9 @@ export class InspectNewComponent implements OnInit {
     return true;
   }
 
+  openHelp(){
+    let url = this.translateService.instant('HELP.INSPECT.NEW');
+    window.open(url);
+  }
+
 }

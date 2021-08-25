@@ -220,20 +220,16 @@
     </div>
     <div class="inspect-footer" style="height: 60px;">
       <button class="btn btn-danger btn-cancel" (click)="cancelInspection()">{{'INSPECT.NEW.BTN_CANCEL' | translate}}</button>
-      <div>
-        <popover-content #weightCalendarTooltip placement="left" [animation]="true"
-            [closeOnClickOutside]="false">
-            <span class="helpTooltip">
-                <span *ngFor="let line of 'INSPECT.HELP.NEW' | translate">{{ line }}<br /></span>
-            </span>
-        </popover-content>
-        <div [popover]="weightCalendarTooltip" style="font-size: 18px !important;width: 36px; float: right; margin-right: 5px;">
-            <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
-        </div>
-      </div>
       <button style="margin-right: 40px;" class="btn btn-success btn-save" data-toggle="modal" data-target="#saveModal" (click)="openSaveModal()">{{'INSPECT.NEW.BTN_SAVE' | translate}}</button>
       <button class="btn btn-success btn-pdf" (click)="openModal()">{{'INSPECT.NEW.BTN_PDF' | translate}}</button>
 
+    </div>
+    <div class="infoToolip">
+      <div style="font-size: 15px !important;">
+          <button (click)="openHelp()" class="btn btn-tooltip" style="background-color: transparent; border: 0; outline: 0;">
+              <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+          </button>
+      </div>
     </div>
 </div>
 

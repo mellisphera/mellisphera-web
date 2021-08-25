@@ -50,7 +50,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<CurrentDailyWeather[]> {
-    return this.httpClient.post<CurrentDailyWeather[]>(CONFIG.URL + `dailyWeather/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<CurrentDailyWeather[]>(CONFIG.URL + `dailyWeather/apiary/${apiaryId}/WeatherSource`, range);
   }
 
   /**
@@ -62,7 +62,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
    public getCurrentHourlyWeather(apiaryId: string, range: Date[]): Observable<CurrentHourlyWeather[]> {
-    return this.httpClient.post<CurrentHourlyWeather[]>(CONFIG.URL + `hourlyWeather/hourly/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<CurrentHourlyWeather[]>(CONFIG.URL + `hourlyWeather/hourly/apiary/${apiaryId}/WeatherSource`, range);
   }
 
   /**
@@ -98,7 +98,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getForecastDailyWeather(apiaryId: string, range: Date[]): Observable<ForecastDailyWeather[]> {
-    return this.httpClient.post<ForecastDailyWeather[]>(CONFIG.URL + `forecastDailyWeather/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<ForecastDailyWeather[]>(CONFIG.URL + `forecastDailyWeather/apiary/${apiaryId}/WeatherSource`, range);
   }
 
   /**
@@ -110,7 +110,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
    public getForecastHourlyWeather(apiaryId: string, range: Date[]): Observable<ForecastHourlyWeather[]> {
-    return this.httpClient.post<ForecastHourlyWeather[]>(CONFIG.URL + `forecastHourlyWeather/hourly/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<ForecastHourlyWeather[]>(CONFIG.URL + `forecastHourlyWeather/hourly/apiary/${apiaryId}/WeatherSource`, range);
   }
 
   /**
@@ -122,7 +122,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempForecastHourlyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + `forecastHourlyWeather/temp/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range).map(_elt => _elt.map(_value => {
+    return this.httpClient.post<any[]>(CONFIG.URL + `forecastHourlyWeather/temp/apiary/${apiaryId}/WeatherSource`, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -136,7 +136,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempCurrentHourlyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + `hourlyWeather/temp/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range).map(_elt => _elt.map(_value => {
+    return this.httpClient.post<any[]>(CONFIG.URL + `hourlyWeather/temp/apiary/${apiaryId}/WeatherSource`, range).map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertTempFromUsePref(_value.value, this.unitSystem), sensorRef: _value.sensorRef };
     }));
   }
@@ -164,7 +164,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getRainCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + `dailyWeather/rain/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<any[]>(CONFIG.URL + `dailyWeather/rain/apiary/${apiaryId}/WeatherSource`, range);
   }
 
 
@@ -177,7 +177,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getRainForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any[]> {
-    return this.httpClient.post<any[]>(CONFIG.URL + `forecastDailyWeather/rain/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);/* .map(_elt => _elt.map(_value => {
+    return this.httpClient.post<any[]>(CONFIG.URL + `forecastDailyWeather/rain/apiary/${apiaryId}/WeatherSource`, range);/* .map(_elt => _elt.map(_value => {
       return { date: _value.date, value: this.unitService.convertMilimetreToPouce(_value.value.rainDay, this.unitSystem), sensorRef: _value.sensorRef };
     })); */
   }
@@ -192,7 +192,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempExtForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + `forecastDailyWeather/tExt/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<any>(CONFIG.URL + `forecastDailyWeather/tExt/apiary/${apiaryId}/WeatherSource`, range);
   }
 
 
@@ -221,7 +221,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getWindCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/wind/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/wind/apiary/${apiaryId}/WeatherSource`, range);
   }
 
   /**
@@ -246,7 +246,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getWindForecastDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + `forecastDailyWeather/wind/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`,range);
+    return this.httpClient.post<any>(CONFIG.URL + `forecastDailyWeather/wind/apiary/${apiaryId}/WeatherSource`,range);
   }
 
 
@@ -259,7 +259,7 @@ export class WeatherService {
    * @memberof WeatherService
    */
   public getTempExtCurrentDailyWeather(apiaryId: string, range: Date[]): Observable<any> {
-    return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/tExt/apiary/${apiaryId}/${this.userPrefService.getUserPref().weatherSource}`, range);
+    return this.httpClient.post<any>(CONFIG.URL + `dailyWeather/tExt/apiary/${apiaryId}/WeatherSource`, range);
   }
 
 

@@ -36,6 +36,7 @@ import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
 import { MyDatePipe } from '../../../../pipe/my-date.pipe';
 import { InspCatService } from '../../../service/api/insp-cat.service';
 import { InspCat } from '../../../../_model/inspCat';
+import { SeasonsService } from '../../../../dashboard/inspect/service/seasons.service';
 
 
 @Component({
@@ -113,7 +114,8 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     public sanitizer: DomSanitizer,
     public safeHtml: SafeHtmlPipe,
     private myDate: MyDatePipe,
-    private inspCat: InspCatService
+    private inspCat: InspCatService,
+    private season: SeasonsService
   ) {
     this.typeObs = false;
     this.notifier = notifyService;
@@ -132,7 +134,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       _inspCat => {
         let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
         arr.forEach(_cat => {
-          if(_cat.applies.indexOf("hive") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
+          if(_cat.applies.indexOf("hive") !== -1 && _cat.img !== "Default" && this.notConstant(_cat) && _cat.seasons.findIndex(_s => _s === this.season.getSeason()) !== -1){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(),
               img: _cat.img.toLowerCase() + '_b.svg',

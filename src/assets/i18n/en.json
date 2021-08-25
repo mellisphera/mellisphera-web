@@ -7,6 +7,34 @@
         },
         "SIGN_UP": {}
     },
+    "HELP":{
+        "MY_APIARY":{
+            "APIARY":"https://doc.mybroodminder.com/en/mellisphera/#apiary-view",
+            "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive-overview"
+        },
+        "EXPLORE":{
+            "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive-mode",
+            "BROOD":"https://doc.mybroodminder.com/en/mellisphera/#brood-mode",
+            "WEIGHT":"https://doc.mybroodminder.com/en/mellisphera/#weight",
+            "EVENTS":"https://doc.mybroodminder.com/en/mellisphera/#events",
+            "DATA":"https://doc.mybroodminder.com/en/mellisphera/#hourly-data"
+        },
+        "INSPECT":{
+            "NEW":"https://doc.mybroodminder.com/en/mellisphera/#new-inspection",
+            "HISTORY":"https://doc.mybroodminder.com/en/mellisphera/#inspection-history",
+            "PARAMS":"https://doc.mybroodminder.com/en/mellisphera/#settings"
+        },
+        "ALERTS":{
+            "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive",
+            "WEATHER":"https://doc.mybroodminder.com/en/mellisphera/#weather",
+            "SENSOR":"https://doc.mybroodminder.com/en/mellisphera/#devices",
+            "PARAMS":"https://doc.mybroodminder.com/en/mellisphera/#email-settings"
+        },
+        "WEATHER":{
+            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/#readings",
+            "CONFIG":"https://doc.mybroodminder.com/en/mellisphera/#configuration"
+        }
+    },
     "MELLIUX": {
         "HELP": {
             "APIARY": {

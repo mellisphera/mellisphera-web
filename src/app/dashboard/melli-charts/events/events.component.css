@@ -9,6 +9,14 @@
     right: 30px;
     bottom: 10px;
 }
+.btn-tooltip{
+  color: #4f4f51;
+  opacity: 1;
+}
+.btn-tooltip:hover{
+  color: rgb(0, 179, 0);
+  opacity: 1;
+}
 
 .content{
     width: 100%;
@@ -1389,14 +1397,14 @@
 .hives-lowbrood-img{
   background-size: 37px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_b.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/lowbrood_b.svg');
   background-position: center;
 }
 
 .hives-lowbrood-img-active{
   background-size: 37px;
   background-repeat: no-repeat;
-  background-image: url('../../../../assets/ms-pics/alerts/ruche/lowbrood_cb.svg');
+  background-image: url('../../../../assets/ms-pics/inspects/lowbrood_cb.svg');
   background-position: center;
   border: 2px solid #4f4f51
 }
@@ -1432,14 +1440,14 @@
 }
 
 .hives-nobrood-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobrood_b.svg');
   background-position: center;
 }
 
 .hives-nobrood-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobrood_cb.svg');
   background-position: center;
@@ -1447,14 +1455,14 @@
 }
 
 .hives-nobees-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobees_b.svg');
   background-position: center;
 }
 
 .hives-nobees-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nobees_cb.svg');
   background-position: center;
@@ -1507,14 +1515,14 @@
 }
 
 .hives-nores-img{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nores_b.svg');
   background-position: center;
 }
 
 .hives-nores-img-active{
-  background-size: 32px;
+  background-size: 37px;
   background-repeat: no-repeat;
   background-image: url('../../../../assets/ms-pics/inspects/nores_cb.svg');
   background-position: center;

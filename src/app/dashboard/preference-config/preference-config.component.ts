@@ -54,7 +54,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
         this.formatDt = this.userConfig.dtFormat.indexOf(this.userPref.timeFormat);
         this.unitSys = this.userPref.unitSystem;
         this.lang = this.userPref.lang;
-        this.weatherSrc = this.userPref.weatherSource;
+        this.weatherSrc = "WeatherSource";
       }
     );
     this.passwordForm = this.formBuilder.group({
@@ -106,8 +106,7 @@ export class PreferenceConfigComponent implements OnInit, OnDestroy {
   }
 
   onChangeWeatherSrc() {
-    this.userPref.weatherSource = this.weatherSrc;
-    this.userConfig.setWeatherSource(this.weatherSrc);
+    //this.userConfig.setWeatherSource(this.weatherSrc);
     this.saveUserPref();
   }
 

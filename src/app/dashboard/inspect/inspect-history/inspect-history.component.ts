@@ -163,5 +163,9 @@ export class InspectHistoryComponent implements OnInit {
     return;
   }
 
+  openHelp(){
+    let url = this.translate.instant('HELP.INSPECT.HISTORY');
+    window.open(url);
+  }
 
 }

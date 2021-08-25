@@ -36,6 +36,7 @@ import { MyDatePipe } from '../../../../pipe/my-date.pipe';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { InspCatService } from '../../../service/api/insp-cat.service';
 import { InspCat } from '../../../../_model/inspCat';
+import { SeasonsService } from '../../../inspect/service/seasons.service';
 
 @Component({
   selector: 'app-notes',
@@ -114,7 +115,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     public sanitizer: DomSanitizer,
     public safeHtml: SafeHtmlPipe,
     private myDate: MyDatePipe,
-    private inspCat: InspCatService) {
+    private inspCat: InspCatService,
+    private season: SeasonsService) {
       this.type = 'ApiaryObs';
       this.message = '';
       this.typeToMv = 0;
@@ -134,7 +136,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       _inspCat => {
         let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
         arr.forEach(_cat => {
-          if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
+          if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat) && _cat.seasons.findIndex(_s => _s === this.season.getSeason()) !== -1 ){
             this.PICTOS_HIVES_OBS.push({
               name:_cat.name.toLowerCase(),
               img: _cat.img.toLowerCase() + '_b.svg',
@@ -179,7 +181,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   }
 
   notConstant(cat: InspCat): boolean{
-    if(cat.name === 'Egg' || cat.name === 'Larva' || cat.name === 'Pupa' || cat.name === 'Dronebrood' || cat.name === 'Mitecountwash'){
+    if(cat.name === 'Egg' || cat.name === 'Larva' || cat.name === 'Pupa' || cat.name === 'Dronebrood'){
       return false;
     }
     else return true;

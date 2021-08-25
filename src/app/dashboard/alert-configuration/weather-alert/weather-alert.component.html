@@ -1,1 +1,8 @@
 <app-settings-view-template [alertTypes]="getAlertTypeByCategory('Weather')" [alertUser]="getAlertConf()"></app-settings-view-template>
+<div class="infoToolip">
+    <div style="font-size: 15px !important;">
+        <button (click)="openHelp()" class="btn btn-tooltip" style="background-color: transparent; border: 0; outline: 0;">
+            <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>

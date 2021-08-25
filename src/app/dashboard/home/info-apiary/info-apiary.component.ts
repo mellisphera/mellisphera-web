@@ -10,6 +10,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { Component, OnInit, AfterViewChecked,HostListener,ViewChild, Renderer2 } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { RucherService } from '../../service/api/rucher.service';
 import { AlertsComponent } from './alerts/alerts.component';
 import { NotesComponent } from './notes/notes.component';
@@ -28,7 +29,8 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
   @ViewChild(NotesComponent) notesComponent: NotesComponent;
 
   constructor(public rucherService: RucherService,
-    private renderer: Renderer2) {
+    private renderer: Renderer2,
+    private translate: TranslateService) {
 
     this.getScreenSize();
     this.eltOnClickId = null;
@@ -62,6 +64,11 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
 
   onChangeNote(): void {
     this.alertsComponent.initCalendar();
+  }
+
+  openHelp(){
+    let url = this.translate.instant('HELP.MY_APIARY.APIARY');
+    window.open(url);
   }
 
 }
