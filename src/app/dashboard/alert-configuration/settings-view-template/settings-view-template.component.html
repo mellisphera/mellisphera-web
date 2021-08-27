@@ -47,11 +47,11 @@ limitations under the License. -->
             </td>
             <td class="text-left name_notif"
               style='vertical-align: middle;'>
-              {{ getNameByLang(alert._id) }}
+              {{ getNameByLang(alert) }}
             </td>
             <td class="text-left"
               style='vertical-align: middle;'>
-              <popover-content #myPopover title="{{ getNameByLang(alert._id) }}" placement="right" [animation]="true"
+              <popover-content #myPopover title="{{ getNameByLang(alert) }}" placement="right" [animation]="true"
                 [closeOnClickOutside]="false">
                 <span class="helpTooltip">{{ 'ALERTS_DESC.'+alert.icon.toUpperCase()+'_DESC' | translate }}</span>
               </popover-content>

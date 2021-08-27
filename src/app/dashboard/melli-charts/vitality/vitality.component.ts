@@ -632,18 +632,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
     '<h5 style="float:left"><b>' + hiveName + '</b></h5>' +
     '<h5 style="float:right"><b>' + this.unitService.getHourlyDate(date) + '</b></h5>' +
     '</div>';
-    if(insp.obs != null){
-      res += '<div>';
-      insp.obs.forEach( o => {
-        let name = this.translate.instant('INSP_CONF.'+ o.name.toUpperCase());
-        res += '<div style="display:flex; width:100%; font-size:12px; align-items:center;">';
-        res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url(${IMG_PATH + 'inspects/' + o.name.toLowerCase() + '_cw.png'}); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
-        res += '<div style="height:30px; display:flex; margin-left:10px; margin-top:5px; align-items:center; font-size:12px;">' + name + '</div>';
-        res += '</div>';
-      });
-      res += '</div>';
-    }
-
+    
     res += '<div style="margin-top: 10px;">';
     if(insp.description != null){
       res += '<p style="max-width:400px; white-space:normal; font-size:12px; font-family:\'Poppins\'; margin: 0;">' + insp.description + '</p>';
@@ -653,6 +642,17 @@ export class VitalityComponent implements OnInit, OnDestroy{
     res += '<div style="margin-top: 10px;">';
     if(insp.todo != null){
       res += '<p style="width:auto; max-width: 400px; white-space: normal; font-size:12px; font-family:\'Poppins\'; margin: 0;">' + insp.todo + '</p>';
+    }
+    if(insp.obs != null){
+      res += '<div>';
+      insp.obs.forEach( o => {
+        let name = this.translate.instant('INSP_CONF.'+ o.name.toUpperCase());
+        res += '<div style="display:flex; width:100%; font-size:12px; align-items:center;">';
+        res += `<div style="width:25px; height:25px; margin-top:-5px; background-image:url(${IMG_PATH + 'inspects/' + o.name.toLowerCase() + '_cw.png'}); background-repeat:no-repeat; background-size:25px; background-position: center;"></div>`;
+        res += '<div style="height:30px; display:flex; margin-left:10px; margin-top:5px; align-items:center; font-size:12px; width:150px; white-space: normal; line-height: 1em;">' + name + '</div>';
+        res += '</div>';
+      });
+      res += '</div>';
     }
     res += '</div>';
 

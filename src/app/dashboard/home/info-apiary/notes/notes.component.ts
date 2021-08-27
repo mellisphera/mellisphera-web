@@ -84,6 +84,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   private edit: boolean;
 
+  private inspCats: InspCat[];
+
 
   @Output() noteChange = new EventEmitter<any>();
 
@@ -134,6 +136,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
     // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
     this.inspCat.getInspCat().subscribe(
       _inspCat => {
+        this.inspCats = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
         let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
         arr.forEach(_cat => {
           if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat) && _cat.seasons.findIndex(_s => _s === this.season.getSeason()) !== -1 ){
@@ -142,7 +145,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
               img: _cat.img.toLowerCase() + '_b.svg',
               img_active: _cat.img.toLowerCase() + '_cb.svg',
               class: 'hives-' + _cat.name.toLowerCase() + '-img',
-              type: _cat.type
+              type: _cat.type,
+              code: _cat.code
             })
           }
         })
@@ -151,7 +155,8 @@ export class NotesComponent implements OnInit,AfterViewChecked {
           img: 'default_b.svg',
           img_active:'default_cb.svg',
           class: 'hives-default-img',
-          type: "obs"
+          type: "obs",
+          code: 9999
         })
       },
       () => {},
@@ -550,8 +555,10 @@ export class NotesComponent implements OnInit,AfterViewChecked {
       return;
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
-    this.new_event.obs.sort((a,b) => {
-      return a.code - b.code;
+    this.new_event.obs = this.new_event.obs.sort((a,b) => {
+      let iA = this.inspCats.find(_i => _i.name.toLowerCase() === a.name.toLowerCase());
+      let iB = this.inspCats.find(_i => _i.name.toLowerCase() === b.name.toLowerCase());
+      return iA.code - iB.code;
     });
     this.inspService.insertHiveEvent(this.new_event).subscribe(
       _insp => {
@@ -690,8 +697,10 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   editEvent(): void{
     this.inspectionService.inspectionsApiary[ this.inspectionService.inspectionsApiary.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
-    this.new_event.obs.sort((a,b) => {
-      return a.code - b.code;
+    this.new_event.obs = this.new_event.obs.sort((a,b) => {
+      let iA = this.inspCats.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
+      let iB = this.inspCats.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
+      return iA.code - iB.code;
     });
     this.inspService.updateEvent(this.new_event).subscribe(
       _insp => {

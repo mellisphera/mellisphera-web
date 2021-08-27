@@ -529,11 +529,11 @@ th{
   background-size: 37px !important;
   border: 2px solid #4f4f51;
 }
-.hives-drone-img{
+.hives-dronebrood-img{
   background: url('../../../../../assets/ms-pics/inspects/dronebrood_b.svg') center no-repeat;
   background-size: 37px;
 }
-.hives-drone-img-active{
+.hives-dronebrood-img-active{
   background: url('../../../../../assets/ms-pics/inspects/dronebrood_cb.svg') center no-repeat !important;
   background-size: 37px !important;
   border: 2px solid #4f4f51;
@@ -1131,6 +1131,15 @@ th{
 
 .hive-op-brood-home{
   background-color: transparent;
+}
+
+#new_event_table th, #edit_event_table th {
+  width: 30px;
+  text-align: center;
+}
+
+#new_event_table td, #edit_event_table td{
+  text-align: center;
 }
 
 @media (max-width:800px) {

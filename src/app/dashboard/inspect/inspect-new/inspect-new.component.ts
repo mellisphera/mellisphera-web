@@ -496,15 +496,19 @@ export class InspectNewComponent implements OnInit {
         }
       }
       this.new_apiary_insp.createDate = new Date();
-      this.new_apiary_insp.obs.sort((a,b) => {
-        return a.code - b.code;
+      this.new_apiary_insp.obs = this.new_apiary_insp.obs.sort((a,b) => {
+        let iA = this.inspCat.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
+        let iB = this.inspCat.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
+        return iA.code - iB.code;
       });
       this.inspService.insertApiaryInsp(this.new_apiary_insp).subscribe(
         _api_insp => {
           //console.log(_api_insp);
           inspHivesToPush.forEach(_h => {
-            _h.obs.sort((a,b) => {
-              return a.code - b.code;
+            _h.obs = _h.obs.sort((a,b) => {
+              let iA = this.inspCat.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
+              let iB = this.inspCat.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
+              return iA.code - iB.code;
             });
             _h.apiaryInspId = _api_insp._id;
             _h.createDate = new Date();

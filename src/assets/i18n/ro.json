@@ -13,8 +13,8 @@
             "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive-overview"
         },
         "EXPLORE":{
-            "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive-mode",
-            "BROOD":"https://doc.mybroodminder.com/en/mellisphera/#brood-mode",
+            "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive",
+            "BROOD":"https://doc.mybroodminder.com/en/mellisphera/#brood",
             "WEIGHT":"https://doc.mybroodminder.com/en/mellisphera/#weight",
             "EVENTS":"https://doc.mybroodminder.com/en/mellisphera/#events",
             "DATA":"https://doc.mybroodminder.com/en/mellisphera/#hourly-data"
@@ -25,13 +25,13 @@
             "PARAMS":"https://doc.mybroodminder.com/en/mellisphera/#settings"
         },
         "ALERTS":{
-            "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive",
+            "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive_1",
             "WEATHER":"https://doc.mybroodminder.com/en/mellisphera/#weather",
             "SENSOR":"https://doc.mybroodminder.com/en/mellisphera/#devices",
             "PARAMS":"https://doc.mybroodminder.com/en/mellisphera/#email-settings"
         },
         "WEATHER":{
-            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/#readings",
+            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/",
             "CONFIG":"https://doc.mybroodminder.com/en/mellisphera/#configuration"
         }
     },
@@ -671,8 +671,8 @@
             "STOLEN": "Stup furat",
             "DEAD": "Stup mort",
             "OXALIC": "Tratamentul cu acid oxalic",
-            "SUPER +": "Adăugarea Magazin",
-            "SUPER -": "Eliminarea Magazin",
+            "SUPER+": "Adăugarea Magazin",
+            "SUPER-": "Eliminarea Magazin",
             "WLIM": "Limită de greutate"
           }
         }
@@ -748,7 +748,7 @@
     "ALERTS_DESC": {
       "HONEYDEW": "Aport ridicat de nectar",
       "HONEYDEW_DESC": "Este declanșata atunci când greutate stupului depășește pragul ales în ultima săptămână.",
-      "Ploaia": "Posibile precipitații abundente",
+      "RAIN": "Posibile precipitații abundente",
       "RAIN_DESC": "Declanșata atunci când precipitațiile depășesc pragul ales în ziua următoare.",
       "SWARM": "Roit",
       "SWARM_DESC": "Declanșata când exista riscul unui potențial roit (Hub oferă mai multă eficiență).",
@@ -798,9 +798,9 @@
       "LOWBATTERYW_DESC": "Declanșata când nivelul bateriei senzorului W este sub pragul selectat.",
       "LOWBATTERYT": "Baterie descărcată",
       "LOWBATTERYT_DESC": "Declanșata când nivelul bateriei senzorului T este sub pragul selectat.",
-      "SUPER +": "Adăugarea unui Magazin",
-      "SUPER + _DESC": "Indicați greutatea maximă a unui Magazin.",
-      "SUPER -": "Eliminarea unui Magazin",
+      "SUPER+": "Adăugarea unui Magazin",
+      "SUPER+_DESC": "Indicați greutatea maximă a unui Magazin.",
+      "SUPER-": "Eliminarea unui Magazin",
       "SUPER-_DESC": "Indicați greutatea minimă a unui Magazin.",
       "OXALIC": "Tratamentul cu acid oxalic",
       "OXALIC_DESC": "Declanșata când puietul mediu din stupi este sub pragul stabilit. Aceasta este o indicație care vă permite să vă tratați stupii cu acid oxalic la momentul potrivit.",

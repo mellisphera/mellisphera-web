@@ -81,14 +81,8 @@ export class SettingsViewTemplateComponent implements OnInit {
     } catch { }
   }
 
-  getNameByLang(alertId: string) {
-    if (this.translateService.currentLang === 'fr') {
-      return this.alertTypes.filter(_alert => _alert._id === alertId)[0].nameFr;
-    } else if (this.translateService.currentLang === 'es') {
-      return this.alertTypes.filter(_alert => _alert._id === alertId)[0].nameEs;
-    } else {
-      return this.alertTypes.filter(_alert => _alert._id === alertId)[0].nameEn;
-    }
+  getNameByLang(alert: AlertCat) {
+    return this.translateService.instant('ALERTS_DESC.'+alert.icon.toUpperCase());
   }
 
   getUserValue(alertId: string): number {

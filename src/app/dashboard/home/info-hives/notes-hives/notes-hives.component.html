@@ -104,13 +104,73 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
-            <button class="hive-obs brood-none" (click)="setBroodStage('none', 'hive', null)"></button>  
-            <button class="hive-obs brood-egg" (click)="setBroodStage('egg', 'hive', null)"></button>
-            <button class="hive-obs brood-larva" (click)="setBroodStage('larva', 'hive', null)"></button>
-            <button class="hive-obs brood-pupa" (click)="setBroodStage('pupa', 'hive', null)"></button>
-            <button class="hive-obs brood-drone" (click)="setBroodStage('drone', 'hive', null)"></button>    
-        </div>
+        <table style="table-layout: fixed;" id="new_event_table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/none_cb.svg" width="15" height="15">
+              </th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/low_cb.svg" width="20" height="20">
+              </th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/average_cb.svg" width="20" height="20">
+              </th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/high_cb.svg" width="20" height="20">
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><!--<img src="../../../../assets/ms-pics/bees_b.svg" width="35" height="35">-->{{ 'INSPECT.TABLE.BEES' | translate }}</td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="bees_none_check" (click)="setBeeLevel('none')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="bees_low_check" (click)="setBeeLevel('low')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="bees_avg_check" (click)="setBeeLevel('avg')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="bees_high_check" (click)="setBeeLevel('high')">
+              </td>
+            </tr>
+            <tr>
+              <td><!--<img src="../../../../assets/ms-pics/emptybrood_b.svg" width="30" height="30">-->{{ 'INSPECT.TABLE.BROOD' | translate }}</td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="brood_none_check" (click)="setBroodLevel('none')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="brood_low_check" (click)="setBroodLevel('low')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="brood_avg_check" (click)="setBroodLevel('avg')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="brood_high_check" (click)="setBroodLevel('high')">
+              </td>
+            </tr>
+            <tr>
+              <td><!--<img src="../../../../assets/ms-pics/inspects/res_b.svg" width="30" height="30">-->{{ 'INSPECT.TABLE.STORES' | translate }}</td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="res_none_check" (click)="setResLevel('none')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="res_low_check" (click)="setResLevel('low')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="res_avg_check" (click)="setResLevel('avg')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="res_high_check" (click)="setResLevel('high')">
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="add-event-notes">
             <div style="width: 45px; margin-left: 4px;">
                 <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
@@ -160,13 +220,73 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <div id="brood-stage" class="hive-op-brood-home" style="margin-left: 3px;">
-            <button class="hive-obs brood-none" (click)="editBroodStage('none', 'hive', null)"></button>  
-            <button class="hive-obs brood-egg" (click)="editBroodStage('egg', 'hive', null)"></button>
-            <button class="hive-obs brood-larva" (click)="editBroodStage('larva', 'hive', null)"></button>
-            <button class="hive-obs brood-pupa" (click)="editBroodStage('pupa', 'hive', null)"></button>
-            <button class="hive-obs brood-drone" (click)="editBroodStage('drone', 'hive', null)"></button>    
-        </div>
+        <table style="table-layout: fixed;" id="edit_event_table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/none_cb.svg" width="15" height="15">
+              </th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/low_cb.svg" width="20" height="20">
+              </th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/average_cb.svg" width="20" height="20">
+              </th>
+              <th>
+                <img src="../../../../assets/ms-pics/inspects/hcc/high_cb.svg" width="20" height="20">
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><!--<img src="../../../../assets/ms-pics/bees_b.svg" width="35" height="35">-->{{ 'INSPECT.TABLE.BEES' | translate }}</td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_bees_none_check" (click)="editBeeLevel('none')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_bees_low_check" (click)="editBeeLevel('low')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_bees_avg_check" (click)="editBeeLevel('avg')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_bees_high_check" (click)="editBeeLevel('high')">
+              </td>
+            </tr>
+            <tr>
+              <td><!--<img src="../../../../assets/ms-pics/emptybrood_b.svg" width="30" height="30">-->{{ 'INSPECT.TABLE.BROOD' | translate }}</td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_brood_none_check" (click)="editBroodLevel('none')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_brood_low_check" (click)="editBroodLevel('low')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_brood_avg_check" (click)="editBroodLevel('avg')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_brood_high_check" (click)="editBroodLevel('high')">
+              </td>
+            </tr>
+            <tr>
+              <td><!--<img src="../../../../assets/ms-pics/inspects/res_b.svg" width="30" height="30">-->{{ 'INSPECT.TABLE.STORES' | translate }}</td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_res_none_check" (click)="editResLevel('none')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_res_low_check" (click)="editResLevel('low')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_res_avg_check" (click)="editResLevel('avg')">
+              </td>
+              <td style="padding-left:5px; padding-right:5px;">
+                <input class="form-check-input" type="radio" value="" id="edit_res_high_check" (click)="editResLevel('high')">
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="edit-event-notes">
             <div style="width: 45px; margin-left: 4px;">
               <button class="add-event-notes-toggle" (click)="showNotes($event)"><i style="font-size: 22px;" class="fas fa-pen"></i></button>
