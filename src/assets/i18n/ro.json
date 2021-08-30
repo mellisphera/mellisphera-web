@@ -213,7 +213,7 @@
             "ALERTSAPIARY":"Evenimente pentru stupină",
             "GAIN":"câştig",
             "LOSS":"pierderi",
-            "BROOD":"Nivelde puiet",
+            "BROOD":"Nivel de puiet",
             "ALERTSHIVE":"Alerte și Evenimente",
             "INCOME":"Productivitate"
         }
@@ -526,8 +526,8 @@
             "TOOLTIP": {
               "SWARM": "Roire",
               "DEFAULT": "Implicit",
-              "SUPER +": "Adăugați Magazin",
-              "SUPER -": "Eliminați Magazin"
+              "SUPER+": "Adăugați Magazin",
+              "SUPER-": "Eliminați Magazin"
             }
         },
         "HIVE":{
@@ -823,7 +823,7 @@
       "WLIM_MSG": "Greutatea stupului dvs. depășește {VAL}",
       "SWARM_MSG": "Potențial roit detectat în jurul orei 14:00",
       "RSWARM_MSG": "Se așteaptă o zi de roit",
-      "SUPER + _MSG": "Ați adăugat un Magazin",
+      "SUPER+ _MSG": "Ați adăugat un Magazin",
       "SUPER-_MSG": "Ați eliminat un Magazin",
       "LOWBATTERYT_MSG": "Înlocuiți bateria",
       "LOWBATTERYW_MSG": "Înlocuiți bateria",
@@ -870,8 +870,8 @@
             "HIVE": "Stup",
             "APIARY": "Stupină"
         },
-        "SUPER +": "Magazin adăugat",
-        "SUPER -": "Magazin eliminat",
+        "SUPER+": "Magazin adăugat",
+        "SUPER-": "Magazin eliminat",
         "QUEENINSERT": "Matci introdusă",
         "DIVIZIUNE": "Divizie",
         "QUEENABSENT": "Matca absentă",

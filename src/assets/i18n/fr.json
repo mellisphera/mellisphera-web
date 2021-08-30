@@ -456,7 +456,7 @@
             "WEIGHT_INCOME_LOSS":"Perte",
             "WIND":"Vent (km/h)",
             "BROOD":"Couvain (%)",
-            "TEMP":"Temperature (°C)"
+            "TEMP":"Température (°C)"
         },
         "IMPERIAL":{
             "WEIGHT":"Poids (lbs)",
@@ -474,7 +474,7 @@
             "WEIGHT_INCOME_LOSS":"Perte",
             "WIND":"Vent (mph)",
             "BROOD":"Couvain (%)",
-            "TEMP":"Temperature (°F)"
+            "TEMP":"Température (°F)"
         },
         "MARKAREA":{
             "BROOD":"Zone optimale de production",
@@ -1079,7 +1079,7 @@
             "CONFIG":"Configuration"
         },
         "GRAPH":{
-            "TEMP":"Temperature",
+            "TEMP":"Température",
             "TEMP_LEFT":"46%",
             "WIND":"Vent",
             "WIND_LEFT":"49%",

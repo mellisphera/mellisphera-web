@@ -71,8 +71,8 @@ limitations under the License. -->
                 id="apiary-photos" class="photo" />
             <!-- The button to change hive handle => click -->
             <div zIndex="100" class="toolApiaryPicture">
-                <button data-toggle="tooltip" data-html="true" (click)="exportToCsv()" class="btn-picture"
-                title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="far fa-file-excel" aria-hidden="true"></i></button>
+                <!--<button data-toggle="tooltip" data-html="true" (click)="exportToCsv()" class="btn-picture"
+                title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="far fa-file-excel" aria-hidden="true"></i></button>-->
                 <!-- <button data-toggle="tooltip" data-html="true" class="btn-picture"
                 title="{{ 'HOME.PRINT' | translate}}" id="print" printSectionId="print-section" [printTitle]="rucherService.rucher.name" ngxPrint [useExistingCss]="true" type="button"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
                 <input style="display: none" type="file" (lastBaseUrlChange)="changePicturePhotos($event)" ngf [(file)]="selectPhotoApiary"
@@ -132,23 +132,25 @@ limitations under the License. -->
                         <span class="hive-info">{{ruche.name}}</span>
                     </div>
                     <div (click)="onClick(ruche);" class="brood collapse ">
+                        <span class="hive-info">{{ruche.name}}</span><br />
                         <span class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
                     </div>
                     <div (click)="onClick(ruche);" class="weight collapse ">
-                        <span
-                            class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getDailyWeightByHive(ruche._id)) }}</span>
+                        <span class="hive-info">{{ruche.name}}</span><br />
+                        <span class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getDailyWeightByHive(ruche._id)) }}</span>
                     </div>
                     <div (click)="onClick(ruche);" id="collapse1"
                         [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
+                        <span class="hive-info">{{ruche.name}}</span><br />
                         <span *ngIf="capteurService.getCapteursByHive(ruche._id).length === 0"
                             class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
                         <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
                             <ng-container
                                 *ngFor="let capt of capteurService.getCapteursByHive(ruche._id); let i = index">
-                                <p [style.background-color]="checkSensor(capt.sensorRef)"
+                                <span [style.background-color]="checkSensor(capt.sensorRef)"
                                     [title]="deviceSatusService.getMessageBySensor(capt.sensorRef)" class="hive-info">
                                     {{ capt.sensorRef }}
-                                </p>
+                                </span><br />
 
                             </ng-container>
                         </ng-container>

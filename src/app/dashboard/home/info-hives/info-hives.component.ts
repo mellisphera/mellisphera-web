@@ -122,7 +122,8 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     option.baseOption.series = new Array();
     this.dailyRecordThService.getBroodOldMethod(this.rucheService.getCurrentHive()._id, MyDate.getRangeForCalendarAlerts()).subscribe(
       _brood => {
-        let posTab = _brood.map(_val => _val.position);
+        let n = "Above Lower Brood Box";
+        let posTab = [n].concat(_brood.map(_val => _val.position).filter(_pos => _pos !== n));
         posTab.map((_pos,index) => {
           if(_pos != undefined && _pos != null){
             posTab[index] = this.translateService.instant('HIVE_POS.' + _pos.toUpperCase() + '.MSG')

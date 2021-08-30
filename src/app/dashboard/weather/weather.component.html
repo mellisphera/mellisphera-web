@@ -17,7 +17,7 @@
       </li>
     </ul>
     <ul class="nav nav-date navbar-nav navbar-right">
-      <li style="width: 44px;"><button style="width: 40px;" type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
+      <li style="width: 44px; color:white"><button style="width: 40px;color:white" type="button" (click)="previousDate()" class="btn date-arrow btn-transparent"><i
             class="fa fa-arrow-circle-left" id="previous-date"></i></button></li>
       <li id="dropdown">
         <div class="dropdown" id="date-dropdown">
@@ -51,19 +51,19 @@
             <div id="dt-scale">
               <div>
                 <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
+                  <li class="time weather-time" *ngFor="let dt of getRangeByType('DAY')" (click)="setRangeSelect(dt)">
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>
                 <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('WEEK')" (click)="setRangeSelect(dt)">
+                  <li class="time weather-time" *ngFor="let dt of getRangeByType('WEEK')" (click)="setRangeSelect(dt)">
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>
                 <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
+                  <li class="time weather-time" *ngFor="let dt of getRangeByType('MONTH')" (click)="setRangeSelect(dt)">
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>
                 <ul>
-                  <li class="time" *ngFor="let dt of getRangeByType('YEAR')" (click)="setRangeSelect(dt)">
+                  <li class="time weather-time" *ngFor="let dt of getRangeByType('YEAR')" (click)="setRangeSelect(dt)">
                     {{ dt.scale }} {{ getRangeBYLang(dt) | lowercase }}</li>
                 </ul>
               </div>
@@ -71,7 +71,7 @@
           </div>
         </div>
       </li>
-      <li><button type="button" (click)="nextDate()" class="btn date-arrow btn-transparent"><i id="next-date"
+      <li><button type="button" style="color:white" (click)="nextDate()" class="btn date-arrow btn-transparent"><i id="next-date"
             class="fa fa-arrow-circle-right"></i></button>
       </li>
     </ul>

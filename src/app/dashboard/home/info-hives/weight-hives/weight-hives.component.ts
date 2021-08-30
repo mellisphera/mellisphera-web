@@ -80,7 +80,7 @@ export class WeightHivesComponent implements OnDestroy{
                     }
                 },
                 calendar: [{
-                    top: 60,
+                    top: 80,
                     left: 'center',
                     //height:'auto',
                     cellSize: [40, 40],

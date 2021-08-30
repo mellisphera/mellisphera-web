@@ -124,8 +124,24 @@ export class StackComponent implements OnInit {
 
     let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisTemp.name = this.graphGlobal.temp.name;
-    yAxisTemp.min = this.graphGlobal.temp.min;
-    yAxisTemp.max = this.graphGlobal.temp.max;
+    yAxisTemp.min = function (value: any) {
+      if(value.min < -2){
+        let nb = Math.ceil(Math.abs(value.min)) / 2;
+        return Math.round(nb) * -2;
+      }
+      else{
+        return 0;
+      }
+    };
+    yAxisTemp.max = function (value) {
+      if(value.max > 50){
+        let nb = Math.ceil(value.max) / 5;
+        return Math.ceil(nb) * 5;
+      }
+      else{
+        return 50;
+      }
+    };
     yAxisTemp.gridIndex = 0;
     this.options.yAxis.push(yAxisTemp);
 

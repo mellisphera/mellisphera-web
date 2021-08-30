@@ -47,6 +47,13 @@ limitations under the License. -->
                 <p>{{ 'SIDEBAR.DATA' | translate }}</p>
             </a>
         </li>
+        <li (click)="focus('sidebar-weather')">
+            <a id="sidebar-weather" routerLink="./weather" data-toggle="tooltip" data-placement="top"
+            title="{{ 'SIDEBAR.WEATHER' | translate }}">
+                <img src="../../../assets/ms-pics/ui/sidebar/weather.svg" style="width:50px;" />
+                <p>{{ 'SIDEBAR.WEATHER' | translate }}</p>
+            </a>
+        </li>
         <li (click)="focus('sidebar-inspect')">
           <a id="sidebar-inspect" routerLink="./inspect" data-toggle="tooltip" data-placement="top"
               title="{{ 'SIDEBAR.INSPECT' | translate }}">
@@ -59,13 +66,6 @@ limitations under the License. -->
                 title="{{ 'SIDEBAR.ALERT_CONF' | translate }}">
                 <img src="./assets/icons/ui/settings.png" style="width:50px;" />
                 <p>{{ 'SIDEBAR.ALERT_CONF' | translate }}</p>
-            </a>
-        </li>
-        <li (click)="focus('sidebar-weather')">
-            <a id="sidebar-weather" routerLink="./weather" data-toggle="tooltip" data-placement="top"
-            title="{{ 'SIDEBAR.WEATHER' | translate }}">
-                <img src="../../../assets/ms-pics/ui/sidebar/weather.svg" style="width:50px;" />
-                <p>{{ 'SIDEBAR.WEATHER' | translate }}</p>
             </a>
         </li>
         <li *ngIf="!tokenService.ifDemoAccount()" (click)="focus('bm')">

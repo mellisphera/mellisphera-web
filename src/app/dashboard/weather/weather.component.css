@@ -44,9 +44,9 @@ nav[role=admin-navigation] {
     background-color: #4F4F51;
 }
 
-.nav li .btn{
-    color: white !important;
-}
+/*.nav li .btn{
+    color: white;
+}*/
 
 .active{
     background-color: white;
@@ -201,6 +201,11 @@ nav[role=admin-navigation] {
     height: 14px;
     margin-right: 10px;
     margin-top: 2px;
+}
+
+.weather-time:hover{
+    cursor: pointer;
+    color: #70A8B2;
 }
 
 @media screen and (max-width:1300px) {

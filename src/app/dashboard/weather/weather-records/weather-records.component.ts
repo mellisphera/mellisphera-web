@@ -887,6 +887,7 @@ export class WeatherRecordsComponent implements OnInit {
     obsArray = this.currentWSByApiary.filter(_ws => this.w_o_service.getApiariesSelected().some(_a => _a._id === _ws.apiaryId)).map(_ws => {
       let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
       let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
+      console.log([start,end])
       return [
         { apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
           ws: _ws,
