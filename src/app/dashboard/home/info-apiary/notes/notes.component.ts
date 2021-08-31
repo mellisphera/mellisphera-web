@@ -214,7 +214,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   getInspectionByApiaryId(apiaryId: string): Inspection[]{
     let start = new Date();
     start.setDate(start.getDate() - 270);
-    return this.inspectionService.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId && new Date(_insp.opsDate) > start)).sort((inspA, inspB) => {
+    return this.inspectionService.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId /*&& new Date(_insp.opsDate) > start*/)).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });
   }

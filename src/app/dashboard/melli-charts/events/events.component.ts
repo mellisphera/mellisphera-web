@@ -1166,9 +1166,9 @@ export class EventsComponent implements OnInit {
   setNewEventDate(): void {
     this.newEventDate = new Date( (<any>this.newEventDate)._d);
     (<HTMLInputElement>document.getElementsByClassName('edit-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
-    this.eventToEdit.opsDate = new Date(this.newEventDate);
     this.newEventDate.setHours( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value ));
     this.newEventDate.setMinutes( parseInt( (<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value ));
+    this.eventToEdit.opsDate = new Date(this.newEventDate);
     /*console.log(this.newEventDate);
     console.log((<HTMLInputElement>document.getElementsByClassName('edit-event-hours-input')[0]).value);
     console.log((<HTMLInputElement>document.getElementsByClassName('edit-event-minutes-input')[0]).value);*/

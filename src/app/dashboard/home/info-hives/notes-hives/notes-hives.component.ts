@@ -205,7 +205,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
   getInspectionByHiveId(hiveId: string): Inspection[]{
     let start = new Date();
     start.setDate(start.getDate() - 270);
-    return this.inspectionService.inspectionsHive.filter(_insp => (_insp.hiveId === hiveId && new Date(_insp.opsDate) > start )).sort((inspA, inspB) => {
+    return this.inspectionService.inspectionsHive.filter(_insp => (_insp.hiveId === hiveId /*&& new Date(_insp.opsDate) > start */)).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });
   }
