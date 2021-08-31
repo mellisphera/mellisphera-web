@@ -243,17 +243,24 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
 
     
 
-    /*let ua = navigator.userAgent;
+    let ua = navigator.userAgent;
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS|FxiOS/i.test(ua)){
       this.isDesktop = false;
-      console.log("mobile");
-    }*/
+      //console.log("mobile");
+      //alert("mobile")
+    }
+    else{
+      this.isDesktop = true;
+      //console.log("desktop");
+      //alert("desktop")
+    }
      
-    console.log(document.documentElement.clientWidth);
+    /*console.log(document.documentElement.clientWidth);
+    alert(document.documentElement.clientWidth);
     if (document.documentElement.clientWidth < 1025) {
       this.isDesktop = false;
     }
-    else this.isDesktop = true;
+    else this.isDesktop = true;*/
     
 
 
@@ -811,15 +818,20 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   }
 
   mouseEnter(id: string){
-    let div = <HTMLDivElement>document.getElementById(id);
-    let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-more-button")[0];
-    more_btn.style.visibility = 'visible';
+    if(this.isDesktop){
+      let div = <HTMLDivElement>document.getElementById(id);
+      let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-more-button")[0];
+      more_btn.style.visibility = 'visible';
+    }
+    
   }
 
   mouseLeave(id: string){
-    let div = <HTMLDivElement>document.getElementById(id);
-    let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-more-button")[0];
-    more_btn.style.visibility = 'hidden';
+    if(this.isDesktop){
+      let div = <HTMLDivElement>document.getElementById(id);
+      let more_btn = <HTMLButtonElement>div.getElementsByClassName("hive-more-button")[0];
+      more_btn.style.visibility = 'hidden';
+    }
   }
 
   showContextMenu(rucher: RucherModel, ruche: RucheInterface, evt: MouseEvent): void {

@@ -210,7 +210,7 @@ export class WeatherComponent implements OnInit {
     this.w_d_service.setRange(rangeSelect);
     if (this.router.url === PREFIX_PATH + 'records' ) {
       this.recordsComponent.loadAllRecords((options: any) => {
-        console.log(options);
+        //console.log(options);
         this.w_o_service.getRecordsChartInstance().setOption(options, true);
         this.w_o_service.getRecordsChartInstance().hideLoading();
       });

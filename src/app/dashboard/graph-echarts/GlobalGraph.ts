@@ -283,9 +283,9 @@ export class GraphGlobal {
     this.temp.name = this.translateService.instant("GRAPH.IMPERIAL.TEMP");
     this.wind.name = this.translateService.instant("GRAPH.IMPERIAL.WIND");
       
-    this.snow.unitT = '″';
+    this.snow.unitT = 'in';
     this.humidity.min = 0;
-    this.rain.unitT = '″';
+    this.rain.unitT = 'in';
     this.wind.unitT = 'mph';
     this.humidity.max = 100;
     this.weight.min = 40;
@@ -295,7 +295,7 @@ export class GraphGlobal {
     this.weight.interval = 5;
     
     this.temp.min = 0;
-    this.temp.unitT = '° F';
+    this.temp.unitT = '°F';
     this.temp.max = null;
   }
 
@@ -329,7 +329,7 @@ export class GraphGlobal {
     this.weight.interval = 10;
     this.weight.max = null;
     
-    this.temp.unitT = '° C';
+    this.temp.unitT = '°C';
     this.temp.min = 0;
     this.temp.max = null;
   }

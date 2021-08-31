@@ -545,7 +545,7 @@
                 "RAIN":"Precipitation",
                 "TEMP_EXT_WEATHER_MAX":"External Temperature max.",
                 "TEMP_EXT_WEATHER_MIN":"External Temperature min.",
-                "WIND":"Wind",
+                "WIND":"Wind Max.",
                 "HEXT_WEATHER_MAX":"External Humidity max.",
                 "HEXT_WEATHER_MIN":"External Humidity min.",
                 "ALERT":"Alerts and Events",

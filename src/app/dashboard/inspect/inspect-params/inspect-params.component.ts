@@ -89,8 +89,7 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
       if(inspItem.img !== "Default"){
         let conf: InspConf = { enable : true, inspCat: Object.assign({},inspItem) };
         aux.inspConf.push(conf);
-      }
-      
+      }  
     });
     this.inspUserService.createInspUser(aux).subscribe(
       _inspUser => {
@@ -109,6 +108,9 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
       _inspUser => {
         this.inspUser = Object.assign({}, _inspUser);
         this.insertNewInspCat();
+        this.inspUser.inspConf.sort((a,b)=> {
+          return a.inspCat.code - b.inspCat.code;
+        })
       },
       () => {},
       () => {

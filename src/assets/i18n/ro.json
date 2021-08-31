@@ -545,7 +545,7 @@
                 "RAIN":"Cantitate de precipitaţii",
                 "TEMP_EXT_WEATHER_MAX":"Temperatura externă max.",
                 "TEMP_EXT_WEATHER_MIN":"Temperatura externă min.",
-                "WIND":"Vânt",
+                "WIND":"Vânt Max.",
                 "HEXT_WEATHER_MAX":"Umiditate externă max.",
                 "HEXT_WEATHER_MIN":"Umiditate externă min.",
                 "ALERT":"Alerte și Evenimente",
