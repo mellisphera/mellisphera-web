@@ -230,7 +230,7 @@ export class WeatherRecordsComponent implements OnInit {
     let yAxisRain = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisRain.name = this.translateService.instant('WEATHER.GRAPH.RAIN_YAXIS') + '(' + this.graphGlobal.rain.unitT + ')';
     yAxisRain.min = 0;
-    yAxisRain.max = 10;
+    yAxisRain.max = this.unitService.getUserPref().unitSystem == "METRIC" ? 10 : 0.4;
     yAxisRain.gridIndex = 4;
     yAxisRain.interval = 1;
     yAxisRain.axisLabel.margin = 5;
