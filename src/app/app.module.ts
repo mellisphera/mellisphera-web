@@ -43,8 +43,9 @@ import { AuthGuardService } from './auth/auth-guard.service';
 
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { RucherService } from './dashboard/service/api/rucher.service';
+import { CONFIG } from '../constants/config';
 
-const config: SocketIoConfig = { url: 'https://t1.mellisphera.com:3000', options: {} };
+const config: SocketIoConfig = { url: CONFIG.URL_SOCKET, options: {} };
 export function httpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
    return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
