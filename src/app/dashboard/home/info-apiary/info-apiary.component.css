@@ -24,6 +24,13 @@ hr
     right: 30px;
     bottom: 10px;
 }
+@media screen and (max-width: 991px ) {
+    .infoToolip {
+        position: absolute;
+        right: 30px;
+        bottom: 0px;
+    }
+}
 .btn-tooltip{
     color: #4f4f51;
     opacity: 1;
@@ -72,12 +79,7 @@ hr
     margin-left: -100%;
 }
 
-/* MEDIA WIDTH */
-@media (max-width : 1100px){
-    .infoToolip {
-        right: 55px;
-    }
-}
+
 
 @media (max-width : 990px){
    #apiaryLeft{

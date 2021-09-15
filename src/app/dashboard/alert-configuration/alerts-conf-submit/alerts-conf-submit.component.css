@@ -1,7 +1,6 @@
 .infoToolip{
-    position: fixed;
-    right: 30px;
-    bottom: 10px;
+    position: relative;
+    left: 30px;
 }
 .btn-tooltip{
     color: #4f4f51;
@@ -46,11 +45,6 @@ input[type='email'] {
 #sendMailBtn{
     width: 100%;
     margin-top: 14px;
-}
-.infoToolip{
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
 }
 /* #infoAlert{
     color: red;

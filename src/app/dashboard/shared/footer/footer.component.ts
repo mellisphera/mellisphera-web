@@ -19,7 +19,7 @@ declare var $:any;
 })
 
 export class FooterComponent{
-    test : Date = new Date();
+    today : Date = new Date();
 
     clientHeight: number;
     constructor() {

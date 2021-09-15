@@ -18,6 +18,13 @@ limitations under the License. */
     right: 30px;
     bottom: 10px;
 }
+@media screen and (max-width: 991px ) {
+    .infoToolip {
+        position: relative;
+        left: 30px;
+        bottom: 0px;
+    }
+}
 .btn-tooltip{
     color: #4f4f51;
     opacity: 1;

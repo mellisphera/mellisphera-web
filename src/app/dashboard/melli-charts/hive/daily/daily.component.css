@@ -33,6 +33,13 @@ limitations under the License. */
     right: 15px;
     top: 4px;
 }
+@media screen and (max-width: 991px ) {
+    .infoToolip {
+        position: relative;
+        left: 30px;
+        bottom: 0px;
+    }
+}
 .item-type{
     text-align: center;
     transition: 0.3s;

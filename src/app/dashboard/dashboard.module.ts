@@ -63,6 +63,7 @@ import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.
 import { HomeModule } from './home/home.module';
 import { MelliChartsModule } from './melli-charts/melli-charts.module';
 import { WeatherComponent } from './weather/weather.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 
 @NgModule({
@@ -114,6 +115,7 @@ import { WeatherComponent } from './weather/weather.component';
     ManageHivesComponent,
     ManageApiarysComponent,
     FeedbackComponent,
+    FooterComponent,
     ManageSensorsComponent,
     ManageNotesComponent,
   ]
