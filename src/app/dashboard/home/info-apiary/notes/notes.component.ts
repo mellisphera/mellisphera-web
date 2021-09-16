@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
 import { MORE_ICON_WHITE, MORE_ICON } from './../../../../../constants/pictos';
 
 import { DomSanitizer} from '@angular/platform-browser';
-import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
+import { SafeHtmlPipe } from '../../../explore/safe-html.pipe';
 import { MyDatePipe } from '../../../../pipe/my-date.pipe';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { InspCatService } from '../../../service/api/insp-cat.service';

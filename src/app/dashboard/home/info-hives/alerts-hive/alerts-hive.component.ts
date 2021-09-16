@@ -19,11 +19,11 @@ import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
 import { Observable } from 'rxjs';
-import { BASE_OPTIONS } from '../../../melli-charts/charts/BASE_OPTIONS';
-import { SERIES } from '../../../melli-charts/charts/SERIES';
-import { GLOBAL_ICONS } from '../../../melli-charts/charts/icons/icons';
+import { BASE_OPTIONS } from '../../../explore/charts/BASE_OPTIONS';
+import { SERIES } from '../../../explore/charts/SERIES';
+import { GLOBAL_ICONS } from '../../../explore/charts/icons/icons';
 import * as echarts from 'echarts';
-import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
+import { MEDIA_QUERY_MELLIUX } from '../../../explore/charts/MEDIA';
 import { InspectionService } from '../../../../dashboard/service/api/inspection.service';
 
 

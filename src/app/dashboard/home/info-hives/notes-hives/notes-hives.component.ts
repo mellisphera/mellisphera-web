@@ -32,7 +32,7 @@ import { UnitService } from '../../../../dashboard/service/unit.service';
 import { MORE_ICON_WHITE, MORE_ICON } from './../../../../../constants/pictos';
 
 import { DomSanitizer} from '@angular/platform-browser';
-import { SafeHtmlPipe } from '../../../melli-charts/safe-html.pipe';
+import { SafeHtmlPipe } from '../../../explore/safe-html.pipe';
 import { MyDatePipe } from '../../../../pipe/my-date.pipe';
 import { InspCatService } from '../../../service/api/insp-cat.service';
 import { InspCat } from '../../../../_model/inspCat';

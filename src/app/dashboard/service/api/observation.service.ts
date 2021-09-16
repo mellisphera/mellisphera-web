@@ -19,7 +19,7 @@ import { DataRange } from '../../../_model/data-range';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { UnitService } from '../unit.service';
 import { RucheService } from './ruche.service';
-import { INSPECTIONS, EVENTS } from '../../melli-charts/charts/icons/icon_inspect';
+import { INSPECTIONS, EVENTS } from '../../explore/charts/icons/icon_inspect';
 import { filter } from 'rxjs/operators';
 
 const httpOptions = {

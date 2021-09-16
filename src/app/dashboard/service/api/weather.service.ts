@@ -19,7 +19,7 @@ import { ForecastHourlyWeather } from '../../../_model/forecast-hourly-weather';
 import { CurrentHourlyWeather } from '../../../_model/current-hourly-weather';
 import { map } from 'rxjs-compat/operator/map';
 import { UnitService } from '../unit.service';
-import { WEATHER } from '../../melli-charts/charts/icons/icons_weather';
+import { WEATHER } from '../../explore/charts/icons/icons_weather';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
 import { isUndefined } from 'util';
 

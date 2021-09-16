@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable} from 'rxjs';
 import { CONFIG } from '../../../../constants/config';
 
 import { Inspection } from '../../../_model/inspection';
-import { EVENTS, INSPECTIONS } from '../../melli-charts/charts/icons/icon_inspect';
+import { EVENTS, INSPECTIONS } from '../../explore/charts/icons/icon_inspect';
 import * as moment from 'moment';
 import { RucheService } from './ruche.service';
 

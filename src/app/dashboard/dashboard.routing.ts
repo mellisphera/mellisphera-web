@@ -16,7 +16,7 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { AuthGuardService } from '../auth/auth-guard.service';
 import { HomeComponent } from './home/home.component';
-import { MelliChartsComponent } from './melli-charts/melli-charts.component';
+import { MelliChartsComponent } from './explore/explore.component';
 import { Erreur404ComponentComponent } from '../erreur404-component/erreur404-component.component';
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
 import { ManageHivesComponent } from './manage/manage-hives/manage-hives.component';
@@ -32,7 +32,7 @@ const routes: Routes = [
             { path: 'admin', loadChildren : './admin/admin.module#AdminModule', canLoad: [AuthGuardService]},
             //{ path: 'stack-apiary', component: StackApiaryComponent, canActivate: [AuthGuardService]},
             { path: 'preferences', component: PreferenceConfigComponent, canActivate: [AuthGuardService]},
-            { path: 'explore', loadChildren: './melli-charts/melli-charts.module#MelliChartsModule', canLoad: [AuthGuardService]},
+            { path: 'explore', loadChildren: './explore/explore.module#MelliChartsModule', canLoad: [AuthGuardService]},
             { path: 'inspect', loadChildren: './inspect/inspect.module#InspectModule', canLoad: [AuthGuardService]},
             { path: 'weather', loadChildren: './weather/weather.module#WeatherModule', canLoad: [AuthGuardService]},
             { path: 'manage-hives', component: ManageHivesComponent, canActivate: [AuthGuardService]},
