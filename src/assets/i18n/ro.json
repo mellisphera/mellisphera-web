@@ -7,7 +7,17 @@
         },
         "SIGN_UP": {}
     },
-    "HELP":{
+    "FOOTER_TEXT":{
+        "BLOG": "Blog",
+        "SHOP": "Magazin"
+    },
+    "FOOTER_LINK":{
+        "MELLISPHERA": "https://www.mellisphera.com/en/",
+        "BLOG": "https://www.mellisphera.com/en/blog/",
+        "SHOP": "https://www.mellisphera.com/en/plans/"
+    },
+    "HELP_TEXT":"Ajutor pe această pagină",
+    "HELP_LINK":{
         "MY_APIARY":{
             "APIARY":"https://doc.mybroodminder.com/en/mellisphera/#apiary-view",
             "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive-overview"
@@ -31,7 +41,7 @@
             "PARAMS":"https://doc.mybroodminder.com/en/mellisphera/#email-settings"
         },
         "WEATHER":{
-            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/",
+            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/#readings",
             "CONFIG":"https://doc.mybroodminder.com/en/mellisphera/#configuration"
         }
     },

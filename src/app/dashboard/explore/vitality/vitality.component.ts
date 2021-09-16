@@ -868,11 +868,6 @@ export class VitalityComponent implements OnInit, OnDestroy{
     }
   }
 
-  openHelp(){
-    let url = this.translate.instant('HELP.EXPLORE.BROOD');
-    window.open(url);
-  }
-
   ngOnDestroy(): void {
     this.stackService.broodChartInstance.dispose();
   }

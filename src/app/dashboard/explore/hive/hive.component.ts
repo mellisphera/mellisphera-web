@@ -11,14 +11,10 @@ limitations under the License. */
 
 import { Component, OnInit, Renderer2, AfterViewChecked, AfterViewInit, ViewChild } from '@angular/core';
 import { MelliChartsDateService } from '../service/melli-charts-date.service';
-import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
-import { DailyManagerService } from './service/daily-manager.service';
-import { HourlyManagerService } from './service/hourly-manager.service';
 import { DailyComponent } from './daily/daily.component';
 import { HourlyComponent } from './hourly/hourly.component';
 import { Router } from '@angular/router';
 import { RoutingHistoryService } from '../../service/routing-history.service';
-import { TranslateService } from '@ngx-translate/core';
 
 
 export const PATH = {
@@ -41,8 +37,7 @@ export class HiveComponent implements OnInit, AfterViewInit {
   constructor(private melliDate: MelliChartsDateService,
     private routingHistory: RoutingHistoryService,
     private router: Router,
-    private render: Renderer2,
-    private translate: TranslateService) {
+    private render: Renderer2) {
 
   }
 
@@ -119,12 +114,6 @@ export class HiveComponent implements OnInit, AfterViewInit {
       loadCalendar();
     }
     catch{}
-  }
-  
-
-  openHelp(){
-    let url = this.translate.instant('HELP.EXPLORE.HIVE');
-    window.open(url);
   }
 
 

@@ -27,7 +27,7 @@ import { SidebarService } from './service/sidebar.service';
 import { AdminService } from './admin/service/admin.service';
 import { UserParamsService } from './preference-config/service/user-params.service';
 import { PreferenceConfigComponent } from './preference-config/preference-config.component';
-import { MelliChartsComponent } from './explore/explore.component';
+import { ExploreComponent } from './explore/explore.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { UnitService } from './service/unit.service';
 import { GraphGlobal } from './graph-echarts/GlobalGraph';
@@ -61,7 +61,7 @@ import { InspectParamsComponent } from './inspect/inspect-params/inspect-params.
 
 
 import { HomeModule } from './home/home.module';
-import { MelliChartsModule } from './explore/explore.module';
+import { ExploreModule } from './explore/explore.module';
 import { WeatherComponent } from './weather/weather.component';
 import { FooterComponent } from './shared/footer/footer.component';
 
@@ -87,7 +87,7 @@ import { FooterComponent } from './shared/footer/footer.component';
    //  DragAndCheckModule,
     ArchwizardModule,
     HomeModule,
-    MelliChartsModule,
+    ExploreModule,
   ],
   providers: [
     RucherService,

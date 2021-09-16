@@ -11,21 +11,21 @@ limitations under the License. */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MelliChartsComponent } from './explore.component';
+import { ExploreComponent } from './explore.component';
 
-describe('MelliChartsComponent', () => {
-  let component: MelliChartsComponent;
-  let fixture: ComponentFixture<MelliChartsComponent>;
+describe('ExploreComponent', () => {
+  let component: ExploreComponent;
+  let fixture: ComponentFixture<ExploreComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MelliChartsComponent ]
+      declarations: [ ExploreComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MelliChartsComponent);
+    fixture = TestBed.createComponent(ExploreComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

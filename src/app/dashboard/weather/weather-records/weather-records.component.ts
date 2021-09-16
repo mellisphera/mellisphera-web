@@ -1705,11 +1705,6 @@ export class WeatherRecordsComponent implements OnInit {
     }
   }
 
-  openHelp(){
-    let url = this.translateService.instant('HELP.WEATHER.RECORDS');
-    window.open(url);
-  }
-
   ngOnDestroy(){
     this.w_o_service.recordsChartInstance.dispose();
   }

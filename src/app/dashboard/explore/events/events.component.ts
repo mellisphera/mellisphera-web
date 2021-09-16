@@ -1288,11 +1288,6 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  openHelp(){
-    let url = this.translate.instant('HELP.EXPLORE.EVENTS');
-    window.open(url);
-  }
-
   editBeeLevel(lvl: string): void{
     let index;
     switch(lvl){

@@ -7,7 +7,17 @@
         },
         "SIGN_UP": {}
     },
-    "HELP":{
+    "FOOTER_TEXT":{
+        "BLOG": "Blog",
+        "SHOP": "Boutique"
+    },
+    "FOOTER_LINK":{
+        "MELLISPHERA": "https://www.mellisphera.com/",
+        "BLOG": "https://www.mellisphera.com/blog/",
+        "SHOP": "https://www.mellisphera.com/balances-pour-ruche2/"
+    },
+    "HELP_TEXT":"Aide sur cette page",
+    "HELP_LINK":{
         "MY_APIARY":{
             "APIARY":"https://doc.mellisphera.com/fr/mellisphera/#vue-du-rucher",
             "HIVE":"https://doc.mellisphera.com/fr/mellisphera/#vue-de-la-ruche"
@@ -31,8 +41,8 @@
             "PARAMS":"https://doc.mellisphera.com/fr/mellisphera/#parametres-demail"
         },
         "WEATHER":{
-            "RECORDS":"https://doc.mellisphera.com/fr/mellisphera/",
-            "CONFIG":"https://doc.mellisphera.com/fr/mellisphera/#configuration"
+            "RECORDS":"https://doc.mellisphera.com/fr/mellisphera/#releves",
+            "CONFIG":"https://doc.mellisphera.com/fr/mellisphera/#configuration-des-sources-locales"
         }
     },
     "MELLIUX": {

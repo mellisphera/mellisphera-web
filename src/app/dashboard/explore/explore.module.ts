@@ -21,7 +21,7 @@ import { StackComponent } from './stack/stack.component';
 import { VitalityComponent } from './vitality/vitality.component';
 import { DailyManagerService } from './hive/service/daily-manager.service';
 import { HourlyManagerService } from './hive/service/hourly-manager.service';
-import { MelliChartsComponent } from './explore.component';
+import { ExploreComponent } from './explore.component';
 import { DailyComponent } from './hive/daily/daily.component';
 import { HourlyComponent } from './hive/hourly/hourly.component';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
@@ -66,7 +66,7 @@ const MY_CUSTOM_FORMATS = {
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
   ],
   declarations: [
-    MelliChartsComponent,
+    ExploreComponent,
     HiveComponent,
     MapComponent,
     StackComponent,
@@ -97,4 +97,4 @@ const MY_CUSTOM_FORMATS = {
     HourlyWeightComponent
   ],
 })
-export class MelliChartsModule { }
+export class ExploreModule { }

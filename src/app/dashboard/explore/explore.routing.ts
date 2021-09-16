@@ -11,7 +11,7 @@ limitations under the License. */
 
 import { Routes, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { MelliChartsComponent } from "./explore.component";
+import { ExploreComponent } from "./explore.component";
 import { NgModule } from "@angular/core";
 import { HiveComponent } from "./hive/hive.component";
 import { AuthGuardService } from "../../auth/auth-guard.service";
@@ -23,7 +23,7 @@ import { EventsComponent } from "./events/events.component";
 
 const routes: Routes = [
     {
-        path: '', component: MelliChartsComponent, children: [
+        path: '', component: ExploreComponent, children: [
             { path: 'hive', component: HiveComponent, canActivate: [AuthGuardService]},
             { path: 'map', component: MapComponent, canActivate: [AuthGuardService]},
             { path: 'brood', component: VitalityComponent, canActivate: [AuthGuardService]},

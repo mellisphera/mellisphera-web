@@ -3,24 +3,3 @@
     margin-left: 5px;
     height: 1400px;
 }
-
-.infoToolip{
-    position: fixed;
-    right: 30px;
-    bottom: 10px;
-}
-@media screen and (max-width: 991px ) {
-    .infoToolip {
-        position: absolute;
-        right: 30px;
-        bottom: 0px;
-    }
-}
-.btn-tooltip{
-    color: #4f4f51;
-    opacity: 1;
-}
-.btn-tooltip:hover{
-    color: rgb(0, 179, 0);
-    opacity: 1;
-}

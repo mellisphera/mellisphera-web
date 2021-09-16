@@ -73,7 +73,7 @@ const PREFIX_PATH = '/dashboard/explore/';
               ],
   encapsulation: ViewEncapsulation.None,
 })
-export class MelliChartsComponent implements OnInit, AfterViewInit {
+export class ExploreComponent implements OnInit, AfterViewInit {
 
   public xPosContextMenu = 0;
   public yPosContextMenu = 0;
@@ -384,7 +384,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   /**
    *
    *
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   nextDate(): void {
     const start: Date = new Date(this.melliChartDate.start);
@@ -400,7 +400,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
   /**
    *
    *
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   previousDate(): void {
     // this.melliChartDate.start.setTime(this.melliChartDate.start.getTime() - this.melliChartDate.end.getTime());
@@ -416,7 +416,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    *
    * @param {DataRange} rangeSelect
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   setRangeSelect(rangeSelect: DataRange): void {
     this.melliChartDate.setRange(rangeSelect);
@@ -477,7 +477,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    * @param {string} type
    * @returns {Array<DataRange>}
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   getRangeByType(type: string): Array<DataRange> {
     let arg: DataRange;
@@ -501,7 +501,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    * @param {DataRange} range
    * @returns {DataRange}
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   getRangeBYLang(range: DataRange): string {
     return this.translateService.instant("MELLICHARTS.DATE."+range.type);
@@ -550,7 +550,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    *
    * @param {string} path
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   navToPage(path: string, _id: string): void {
     if (this.eltOnClick === null) {
@@ -569,7 +569,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    * @param {RucheInterface} hive
    * @param {MouseEvent} event
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   selectHive(hive: RucheInterface, event: MouseEvent): void {
     let length;
@@ -727,7 +727,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    *
    * @returns {string}
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   getStartDate(): string {
     return new Date(this.melliChartDate.start).toISOString().substring(0, 10);
@@ -738,7 +738,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    *
    * @returns {string}
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   getEndDate(): string {
     return new Date(this.melliChartDate.end).toISOString().substring(0, 10);
@@ -749,7 +749,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    * @param {RucheInterface} hive
    * @returns {string}
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   getColor(hive: RucheInterface): string {
     switch (this.router.url) {
@@ -771,7 +771,7 @@ export class MelliChartsComponent implements OnInit, AfterViewInit {
    *
    * @param {string} apiaryId
    * @returns {string}
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   checkApiaryIfAcive(apiaryId: string): string {
     switch (this.router.url) {

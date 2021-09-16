@@ -323,11 +323,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
     return [value];
   }
 
-  openHelp(){
-    let url = this.translateService.instant('HELP.MY_APIARY.HIVE');
-    window.open(url);
-  }
-
   ngOnDestroy() {
     // this.observationService.obsHiveSubject.unsubscribe();
   }

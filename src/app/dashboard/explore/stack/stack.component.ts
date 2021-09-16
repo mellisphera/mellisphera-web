@@ -22,11 +22,6 @@ import { MelliChartsDateService } from '../service/melli-charts-date.service';
 import { SERIES } from '../charts/SERIES';
 import { RucheService } from '../../service/api/ruche.service';
 import { UserParamsService } from '../../preference-config/service/user-params.service';
-import { AtokenStorageService } from '../../../auth/Service/atoken-storage.service';
-import { AdminService } from '../../admin/service/admin.service';
-import { DailyManagerService } from '../hive/service/daily-manager.service';
-import { MelliChartsHiveService } from '../service/melli-charts-hive.service';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-stack',
@@ -41,15 +36,10 @@ export class StackComponent implements OnInit {
   constructor(private unitService: UnitService,
     private stackService: StackMelliChartsService,
     private graphGlobal: GraphGlobal,
-    private tokenService: AtokenStorageService,
     private userPrefService: UserParamsService,
     private recordService: RecordService,
-    private adminService: AdminService,
     private rucheService: RucheService,
-    private melliDate: MelliChartsDateService,
-    private dailyManager: DailyManagerService,
-    private melliHive: MelliChartsHiveService,
-    private translate: TranslateService) { }
+    private melliDate: MelliChartsDateService) { }
 
   ngOnInit() {
 
@@ -411,11 +401,6 @@ export class StackComponent implements OnInit {
     }catch{
       return false;
     }
-  }
-
-  openHelp(){
-    let url = this.translate.instant('HELP.EXPLORE.DATA');
-    window.open(url);
   }
 
   ngOnDestroy() {

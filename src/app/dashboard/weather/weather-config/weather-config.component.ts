@@ -642,9 +642,4 @@ export class WeatherConfigComponent implements OnInit {
     
   }
 
-  openHelp(){
-    let url = this.translate.instant('HELP.WEATHER.CONFIG');
-    window.open(url);
-  }
-
 }
