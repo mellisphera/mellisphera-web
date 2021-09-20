@@ -66,9 +66,4 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
     this.alertsComponent.initCalendar();
   }
 
-  openHelp(){
-    let url = this.translate.instant('HELP.MY_APIARY.APIARY');
-    window.open(url);
-  }
-
 }

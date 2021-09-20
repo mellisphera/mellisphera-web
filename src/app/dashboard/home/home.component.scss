@@ -158,6 +158,13 @@ li:first-child img{
   bottom: 3px;
   color: #4F4F51;
 }
+@media screen and (max-width: 991px ) {
+    .infoToolip {
+        position: absolute;
+        right: 30px;
+        bottom: 0px;
+    }
+}
 .infoToolip i {
   width: 42px;
 }

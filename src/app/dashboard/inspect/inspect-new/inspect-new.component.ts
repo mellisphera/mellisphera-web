@@ -531,6 +531,7 @@ export class InspectNewComponent implements OnInit {
           (<HTMLElement>document.getElementById("btn-save-icon")).style.display ="none";
           (<HTMLElement>document.getElementById("btn-save-text")).style.display ="block";
           (<HTMLButtonElement>document.getElementById("btn-save")).disabled = false;
+          this.cancelInspection();
         }
       )
     }
@@ -1581,10 +1582,4 @@ export class InspectNewComponent implements OnInit {
     }
     return true;
   }
-
-  openHelp(){
-    let url = this.translateService.instant('HELP.INSPECT.NEW');
-    window.open(url);
-  }
-
 }

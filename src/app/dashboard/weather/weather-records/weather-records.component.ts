@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RucherModel } from '../../../_model/rucher-model';
-import { BASE_OPTIONS } from '../../melli-charts/charts/BASE_OPTIONS';
+import { BASE_OPTIONS } from '../../explore/charts/BASE_OPTIONS';
 import * as echarts from 'echarts';
 import { WeatherOptionService } from '../service/weather-option.service';
 import { UnitService } from '../../service/unit.service';
@@ -10,7 +10,7 @@ import { RucherService } from '../../service/api/rucher.service';
 import { UserloggedService } from '../../../userlogged.service';
 import { WeatherService } from '../../service/api/weather.service';
 import { Observable } from 'rxjs';
-import { SERIES } from '../../melli-charts/charts/SERIES';
+import { SERIES } from '../../explore/charts/SERIES';
 import { GraphGlobal } from '../../graph-echarts/GlobalGraph';
 import { WeatherSource } from '../../../_model/weatherSource';
 import { WeatherSrcsService } from '../../service/api/weather-srcs.service';
@@ -1703,11 +1703,6 @@ export class WeatherRecordsComponent implements OnInit {
     else{
       return colors.ws[index];
     }
-  }
-
-  openHelp(){
-    let url = this.translateService.instant('HELP.WEATHER.RECORDS');
-    window.open(url);
   }
 
   ngOnDestroy(){

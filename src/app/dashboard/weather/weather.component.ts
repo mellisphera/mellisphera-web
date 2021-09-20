@@ -165,7 +165,7 @@ export class WeatherComponent implements OnInit {
    *
    * @param {DataRange} range
    * @returns {DataRange}
-   * @memberof MelliChartsComponent
+   * @memberof ExploreComponent
    */
   getRangeBYLang(range: DataRange): string {
     if (this.translateService.currentLang === 'fr') {

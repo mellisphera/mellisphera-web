@@ -66,11 +66,6 @@ hr
     position: relative;
     margin-bottom: 20px;
 }
-.infoToolip{
-    position: fixed;
-    right: 30px;
-    bottom: 10px;
-}
 .btn-tooltip{
     color: #4f4f51;
     opacity: 1;
@@ -117,9 +112,6 @@ and (orientation : landscape) {
     }
     #general{
         width: 300px;
-    }
-    .infoToolip{
-        right: 10px;
     }
 }
 

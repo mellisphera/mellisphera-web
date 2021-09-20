@@ -143,11 +143,6 @@ export class InspectParamsComponent implements OnInit, OnDestroy {
     this.inspUser.inspConf[i].enable = false;
   }
 
-  openHelp(){
-    let url = this.translate.instant('HELP.INSPECT.PARAMS');
-    window.open(url);
-  }
-
   ngOnDestroy(){
     this.inspUserService.updateInspUser(this.inspUser).subscribe(
       _inspUser => {

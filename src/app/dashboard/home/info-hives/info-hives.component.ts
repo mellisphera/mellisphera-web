@@ -30,7 +30,7 @@ import { NotesHivesComponent } from './notes-hives/notes-hives.component';
 import { TranslateService } from '@ngx-translate/core';
 
 import { isUndefined, isArray, isObject } from 'util';
-import { SERIES } from '../../melli-charts/charts/SERIES';
+import { SERIES } from '../../explore/charts/SERIES';
 import { UnitService } from '../../service/unit.service';
 
 export interface Tools {
@@ -321,11 +321,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
       value = _value;
     }
     return [value];
-  }
-
-  openHelp(){
-    let url = this.translateService.instant('HELP.MY_APIARY.HIVE');
-    window.open(url);
   }
 
   ngOnDestroy() {

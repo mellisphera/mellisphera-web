@@ -32,11 +32,11 @@ import { UserloggedService } from '../../userlogged.service';
 import { UnitService } from '../service/unit.service';
 import { isString } from 'util';
 import { MyDate } from '../../class/MyDate';
-import { BASE_OPTIONS } from '../melli-charts/charts/BASE_OPTIONS';
-import { Tools } from '../melli-charts/hive/service/daily-manager.service';
-import { CALENDAR } from '../melli-charts/charts/CALENDAR';
+import { BASE_OPTIONS } from '../explore/charts/BASE_OPTIONS';
+import { Tools } from '../explore/hive/service/daily-manager.service';
+import { CALENDAR } from '../explore/charts/CALENDAR';
 import { WeatherService } from '../service/api/weather.service';
-import { SERIES } from '../melli-charts/charts/SERIES';
+import { SERIES } from '../explore/charts/SERIES';
 //import { MOON_CODE } from '../../../constants/moonTrad';
 //import { FITNESS_CODE } from '../../../constants/fitnessCode';
 

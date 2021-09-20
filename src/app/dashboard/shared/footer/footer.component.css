@@ -9,6 +9,63 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-.marginBottom{
-    margin-bottom: 100px;
+.mainFooter{
+    position: absolute;
+    width: 100%;
+}
+.footer{
+    position: static;
+    margin-bottom : 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.footerLink{
+    position: relative;
+    padding: 20px 20px;
+}
+.footerLink a{
+    text-decoration: none;
+    font-family: Poppins;
+}
+
+.btn-tooltip{
+    color: #4f4f51;
+    opacity: 1;
+}
+.btn-tooltip:hover{
+    color: #43C65F;
+    opacity: 1;
+}
+.infoToolip{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    transform: translate(-85px, 65px);
+}
+.popupText{
+    position: relative;
+    right: 5px;
+    bottom: 6px;
+}
+
+@media (max-width:780px) {
+    .infoToolip {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        transform: translate(0px, 0px);
+    }
+}
+
+.linkHelp{
+    font-size: 15px !important;
+    text-decoration: none;
+}
+
+hr {
+    border-top: 1px solid #acc87b;
+    margin: 6px;
+    padding: 0;
 }

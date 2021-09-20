@@ -11,8 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class WeatherAlertComponent implements OnInit {
 
-  constructor(private alertService: AlertsService,
-    private translate: TranslateService) { }
+  constructor(private alertService: AlertsService) { }
 
   ngOnInit() {
   }
@@ -25,11 +24,6 @@ export class WeatherAlertComponent implements OnInit {
 
   getAlertConf(): AlertUser {
     return this.alertService.alertUser;
-  }
-
-  openHelp(){
-    let url = this.translate.instant('HELP.ALERTS.WEATHER');
-    window.open(url);
   }
 
 }

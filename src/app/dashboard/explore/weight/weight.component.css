@@ -1,0 +1,228 @@
+#raw-weight-title, #norm-weight-title, #gain-weight-title, #hour-raw-weight-title{
+  display: none;
+  margin-bottom: 15px;
+}
+
+#graph-weight{
+  width: 99%;
+  height: 55vh;
+}
+
+.ul-weight{
+  width: 100%;
+  display: flex !important;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.ul-weight > li {
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.ul-weight > li > label{
+  padding-left: 5px;
+  font-size: 18px;
+  display: flex;
+}
+
+.ul-weight > li > label > p{
+  margin-left: 10px;
+  margin-bottom: 0px;
+  font-size: 16px;
+  font-family: 'Poppins' !important;
+}
+
+input[type=checkbox]
+{
+  -ms-transform: scale(1.25); /* IE */
+  -moz-transform: scale(1.25); /* FF */
+  -webkit-transform: scale(1.25); /* Safari and Chrome */
+  -o-transform: scale(1.25); /* Opera */
+  transform: scale(1.25);
+  padding-right: 15px;
+}
+
+.title-active{
+  font-weight: 900;
+  text-decoration: underline;
+}
+
+#ref_date{
+  padding-top: 5px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Poppins';
+  width: 100%;
+}
+
+.calendar-icon{
+  position: absolute;
+  padding-top: 4px;
+  min-width: 40px;
+  font-size: 18px;
+}
+
+.input-wrapper {
+  margin-bottom: 10px;
+  width: 35%;
+  text-align: center;
+}
+
+.weight_ref_date{
+  width: 50%;
+  text-align: center;
+}
+
+.delete-date{
+  padding-top: 2px;
+  width: 10px;
+  border: 0;
+  background-color: transparent;
+  margin-left: -30px;
+}
+
+.delete-date:focus{
+  outline: 0;
+}
+
+.fa-times{
+  position: absolute;
+  font-size: 20px;
+  margin-left: -10px;
+  margin-top: -15px;
+}
+
+.fa-times:hover{
+  color:red;
+}
+
+.weight_ref_date:hover{
+  cursor: pointer;
+}
+
+#weight-table{
+  margin-top: 1%;
+}
+
+#weight-table > table{
+  font-family: 'Poppins' !important;
+  border-collapse: collapse;
+  width: 80%;
+  margin: 0 auto; /* or margin: 0 auto 0 auto */
+}
+
+#weight-table > table td, #weight-table > table th{
+  font-family: 'Poppins' !important;
+  border: 1px solid white;
+  padding: 8px;
+}
+
+#weight-table > table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #c5c5c5;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+
+#separator{
+  height: 100px !important;
+}
+
+::ng-deep .owl-dt-popup {
+  right: 0 !important;
+}
+
+
+
+@media screen and (max-width: 400px) {
+  .input-wrapper {
+    margin-bottom: 10px;
+    width: 60%;
+  }
+  ::ng-deep .owl-dt-popup {
+    right: 0 !important;
+  }
+  .weight_ref_date{
+    width: 100%;
+    text-align: center;
+  }
+  #graph-weight{
+    width: 95%;
+    height: 60vh;
+  }
+  #weight-table{
+    margin-top: 2%;
+  }
+  #weight-table > table{
+    font-family: 'Poppins' !important;
+    width: 90%;
+    border-collapse: collapse;
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+  }
+  #weight-table > table td, #weight-table > table th{
+    font-family: 'Poppins' !important;
+    padding: 8px;
+    font-size: 10px !important;
+  }
+}
+
+@media screen and (max-width: 800px) and (min-width: 400px){
+  .input-wrapper {
+    margin-bottom: 10px;
+    width: 50%;
+    text-align: center;
+  }
+  ::ng-deep .owl-dt-popup {
+    right: 0 !important;
+  }
+  .weight_ref_date{
+    width: 80%;
+    text-align: center;
+  }
+  #graph-weight{
+    width: 100%;
+    height: 70vh;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 800px){
+  .input-wrapper {
+    margin-bottom: 10px;
+    width: 50%;
+    text-align: center;
+  }
+  ::ng-deep .owl-dt-popup {
+    right: 0 !important;
+  }
+  .weight_ref_date{
+    width: 70%;
+    text-align: center;
+  }
+  #graph-weight{
+    width: 100%;
+    height: 70vh;
+  }
+}
+
+
+
+
+.shadow-input {
+  position: absolute;
+  top: 22px;
+  width: 0px;
+  height: 0px;
+  border: none;
+}
+span.remove-date{
+  position: absolute;
+  right: 16px;
+  top: 0px;
+  font-size: 24px;
+  cursor: pointer;
+}

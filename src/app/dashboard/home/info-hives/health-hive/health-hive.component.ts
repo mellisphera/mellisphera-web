@@ -15,7 +15,7 @@ import { DailyRecordService } from '../../../service/api/dailyRecordService';
 import { MyDate } from '../../../../class/MyDate';
 import { UnitService } from '../../../service/unit.service';
 import { GraphGlobal } from '../../../graph-echarts/GlobalGraph';
-import { MEDIA_QUERY_MELLIUX } from '../../../../dashboard/melli-charts/charts/MEDIA';
+import { MEDIA_QUERY_MELLIUX } from '../../../explore/charts/MEDIA';
 import * as echarts from 'echarts';
 
 @Component({

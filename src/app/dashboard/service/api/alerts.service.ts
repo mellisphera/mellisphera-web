@@ -15,7 +15,7 @@ import { AlertInterface } from '../../../_model/alert';
 import { CONFIG } from '../../../../constants/config';
 import { Observable, BehaviorSubject} from 'rxjs';
 import { MyDate } from '../../../class/MyDate';
-import { ALERTS_ICONS } from '../../melli-charts/charts/icons/icons_alerts';
+import { ALERTS_ICONS } from '../../explore/charts/icons/icons_alerts';
 import { AlertUser } from '../../../_model/alertUser';
 import { AlertCat } from '../../../_model/alertCat';
 import { UserloggedService } from '../../../userlogged.service';

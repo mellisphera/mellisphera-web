@@ -7,7 +7,17 @@
         },
         "SIGN_UP": {}
     },
-    "HELP":{
+    "FOOTER_TEXT":{
+        "BLOG": "Blog",
+        "SHOP": "Shop"
+    },
+    "FOOTER_LINK":{
+        "MELLISPHERA": "https://www.mellisphera.com/en/",
+        "BLOG": "https://www.mellisphera.com/en/blog/",
+        "SHOP": "https://www.mellisphera.com/en/plans/"
+    },
+    "HELP_TEXT":"Help on this page",
+    "HELP_LINK":{
         "MY_APIARY":{
             "APIARY":"https://doc.mybroodminder.com/en/mellisphera/#apiary-view",
             "HIVE":"https://doc.mybroodminder.com/en/mellisphera/#hive-overview"
@@ -31,7 +41,7 @@
             "PARAMS":"https://doc.mybroodminder.com/en/mellisphera/#email-settings"
         },
         "WEATHER":{
-            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/",
+            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/#readings",
             "CONFIG":"https://doc.mybroodminder.com/en/mellisphera/#configuration"
         }
     },
@@ -895,7 +905,7 @@
         "MITEFORMICPRO":"Mite treatment: Formic Pro",
         "MITESTRIPADD":"Mite treatment: strip add",
         "MITESTRIPREMOVE":"Mite treatment: strip remove",
-        "MITECOUNTLOUNGE":"Mite count Lounge",
+        "MITECOUNTLOUNGE":"Mite count sticky board",
         "MITECOUNTWASH":"Mite count wash",
         "STARTFEED":"Start feeding",
         "STOPFEED":"Stop feeding",
@@ -921,8 +931,8 @@
         "PUPA":"Capped brood presence",
         "DRONEBROOD":"Drone brood presence",
         "DRONE":"Drone presence",
-        "BUZZINGHIVE":"Buzzing hive",
-        "MOSAICBROOD":"Mosaic brood",
+        "BUZZINGHIVE":"Laying workers",
+        "MOSAICBROOD":"Scattered brood",
         "QUEENCELLSEEN":"Queen cell seen"
     },
     "LOGIN_BM": {

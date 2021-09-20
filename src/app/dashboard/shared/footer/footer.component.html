@@ -8,35 +8,25 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
-
-<footer class="footer marginBottom" >
-    <div class="container-fluid">
-        <nav class="pull-left">
-            <ul>
-                <li>
-                    <a href="#">
-                        
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <p class="copyright pull-right">
-            &copy; {{test | date: 'yyyy'}} <a href="lema-bkr.com">LEMA BKR</a>, Let's make a beekeeping revolution
-        </p>
+<footer class="mainFooter" style="top:{{pageHeight}}px">
+    <div *ngIf="urlHelp != ''" class="infoToolip">
+        <a class="linkHelp" href="{{urlHelp}}" target="_blank">
+            <button class="btn btn-tooltip" style="background-color: transparent; border: 0; outline: 0;">
+                <span class="popupText">{{ 'HELP_TEXT' | translate }}</span>
+                <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+            </button>
+        </a>
+    </div>
+    <hr/>
+    <div class="footer">
+        <div class="footerLink">
+            <a href="{{ 'FOOTER_LINK.MELLISPHERA' | translate }}" target="_blank">Mellisphera.com</a>
+        </div>
+        <div class="footerLink">
+            <a href="{{ 'FOOTER_LINK.BLOG' | translate }}" target="_blank">{{ 'FOOTER_TEXT.BLOG' | translate }}</a>
+        </div>
+        <div class="footerLink">
+            <a href="{{ 'FOOTER_LINK.SHOP' | translate }}" target="_blank">{{ 'FOOTER_TEXT.SHOP' | translate }}</a>
+        </div>
     </div>
 </footer>

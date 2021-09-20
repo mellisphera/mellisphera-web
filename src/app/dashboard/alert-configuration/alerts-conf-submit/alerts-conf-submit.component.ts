@@ -18,8 +18,7 @@ export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
   public frequency: string;
   constructor(private alertService: AlertsService,
     private socketService: SocketService,
-    private notifService: MyNotifierService,
-    private translate: TranslateService) {
+    private notifService: MyNotifierService) {
     this.alertUser = {
       _id: '',
       userId: '',
@@ -58,11 +57,6 @@ export class AlertsConfSubmitComponent implements OnInit, OnDestroy {
         this.notifService.sendSuccessNotif(NotifList.SEND_MAIL_TEST);
       }
     )
-  }
-
-  openHelp(){
-    let url = this.translate.instant('HELP.ALERTS.PARAMS');
-    window.open(url);
   }
 
   ngOnDestroy(): void {

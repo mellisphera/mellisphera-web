@@ -38,17 +38,6 @@ export class InspectHistoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.inspService.getInspectionByUser(this.userService.getIdUserLoged()).subscribe(
-      _inspTab => {
-        this.inspTab = [..._inspTab];
-      },
-      () => {},
-      () => {
-        let arr = new Set<string>(this.inspTab.filter(_i => _i.apiaryInspId != null).map(_i => _i.apiaryInspId));
-        console.log(arr);
-        this.tableData(Array.from(arr));
-      }
-    );
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
         this.user_apiaries = [..._apiaries];
@@ -56,6 +45,17 @@ export class InspectHistoryComponent implements OnInit {
       () => {},
       () => {
         this.user_apiaries.sort(this.compare);
+        this.inspService.getInspectionByUser(this.userService.getIdUserLoged()).subscribe(
+          _inspTab => {
+            this.inspTab = [..._inspTab];
+          },
+          () => {},
+          () => {
+            let arr = new Set<string>(this.inspTab.filter(_i => _i.apiaryInspId != null).map(_i => _i.apiaryInspId));
+            //console.log(arr);
+            this.tableData(Array.from(arr));
+          }
+        );
       }
     );
   }
@@ -161,11 +161,6 @@ export class InspectHistoryComponent implements OnInit {
       }
     });
     return;
-  }
-
-  openHelp(){
-    let url = this.translate.instant('HELP.INSPECT.HISTORY');
-    window.open(url);
   }
 
 }
