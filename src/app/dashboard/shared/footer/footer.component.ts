@@ -10,7 +10,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { Component, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
@@ -35,12 +35,13 @@ export class FooterComponent implements OnInit {
     ngOnInit(){
         this.changeHelpUrl(this.router.url);
         this.routerSubscribe = this.router.events.subscribe((val) => {
-            if(val instanceof NavigationStart) {
-                this.changeHelpUrl(val.url);
+            if(val instanceof NavigationEnd) {
+                this.changeHelpUrl(val.urlAfterRedirects);
             }
         });
     }
     changeHelpUrl(url: String){
+        console.log(url);
         switch(url) { 
             case '/dashboard/home/info-apiary': { 
                 this.urlHelp = this.translate.instant('HELP_LINK.MY_APIARY.APIARY');
