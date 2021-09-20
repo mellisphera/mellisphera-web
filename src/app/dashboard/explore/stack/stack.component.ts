@@ -66,7 +66,7 @@ export class StackComponent implements OnInit {
           this.setOptionForStackChart();
         } */
 
-        this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack'),{},{height: '1400px'}));
+        this.stackService.setEchartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-stack'),{},{}));
         if (!this.checkIfChartIsUpdate()) {
           this.setOptionForStackChart();
           this.loadAfterRangeChanged((options: any) => {
