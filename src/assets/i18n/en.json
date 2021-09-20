@@ -905,7 +905,7 @@
         "MITEFORMICPRO":"Mite treatment: Formic Pro",
         "MITESTRIPADD":"Mite treatment: strip add",
         "MITESTRIPREMOVE":"Mite treatment: strip remove",
-        "MITECOUNTLOUNGE":"Mite count Lounge",
+        "MITECOUNTLOUNGE":"Mite count sticky board",
         "MITECOUNTWASH":"Mite count wash",
         "STARTFEED":"Start feeding",
         "STOPFEED":"Stop feeding",
@@ -931,8 +931,8 @@
         "PUPA":"Capped brood presence",
         "DRONEBROOD":"Drone brood presence",
         "DRONE":"Drone presence",
-        "BUZZINGHIVE":"Buzzing hive",
-        "MOSAICBROOD":"Mosaic brood",
+        "BUZZINGHIVE":"Laying workers",
+        "MOSAICBROOD":"Scattered brood",
         "QUEENCELLSEEN":"Queen cell seen"
     },
     "LOGIN_BM": {
