@@ -51,6 +51,18 @@ limitations under the License. -->
         </ul>
     </nav>
 
+    <ul class="nav navbar-nav navbar-left" id="apiary-group">
+        <li>
+        <select [(ngModel)]="rucherService.rucher" class="form-control" (change)="onSelectRucher()"
+            id="select-Apiary">
+            <option *ngFor="let rucher of rucherService.allApiaryAccount" [ngValue]="rucher">
+            {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
+                style="color:red;"> => {{ rucher.username }}</span>
+            </option>
+        </select>
+        </li>
+    </ul>
+
     <!-- No data hive -->
     <!-- <div *ngIf="(hiveNoDataList() != '') && (rucheService.ruches.length > 0)" class="alert alert-warning alert-dismissible fade in alertNoData">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
