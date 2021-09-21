@@ -414,15 +414,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   onClick(ruche: RucheInterface) {
-    // active button name
-    // this.clickName();
-    // Desactive alerts buttons
-    this.eltOnClickId = document.getElementById('infoApiaryButton');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
-
-    // remove higlight for last highlighted hive
-
-
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
     this.inspService.inspHive = this.inspService.getInspectionCurrentHive(ruche._id)
@@ -600,7 +591,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
 
-  collapseAllActiveButton(class1: string, class2: string, class3: string, idButtonActive: string) {
+  collapseAllActiveButton(idButtonActive: string) {
+    let class1 = (idButtonActive=='sensorsNav' ? 'weight' : 'sensors');
+    let class2 = (idButtonActive=='nameNav' ? 'weight' : 'name');
+    let class3 = (idButtonActive=='broodNav' ? 'weight' : 'brood');
     // Desactive the three collapses div that we don't want
     this.eltOnClickClass = document.getElementsByClassName(class1);
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
@@ -614,24 +608,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
       this.eltOnClickClass[i].classList.remove('in');
     }
-
-    // Active/Desactive the button clicked
-
-    this.eltOnClickId = document.getElementById(idButtonActive);
-    if (document.getElementById(idButtonActive).classList.contains('active')){
-      this.renderer.removeClass(this.eltOnClickId, 'active');
-    } else {
-      this.renderer.addClass(this.eltOnClickId, 'active');
-    }
-
-    // desactive the other buttons
-    const elt = document.getElementsByClassName('button1');
-    for (let i = 0; i < elt.length; i++) {
-      if (elt[i].id !== idButtonActive) {
-        elt[i].classList.remove('active');
-      }
-    }
-
   }
 
   clickName() {
@@ -817,78 +793,41 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
   onSelectRucher() {
     this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
-        const location = this.location['_platformStrategy']._platformLocation.location.pathname;
-        this.dailyWService.getDailyWeightMaxByApiary(this.rucherService.rucher._id);
-        // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
-        //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-        switch (location) {
-            case '/dashboard/ruche-et-rucher':
-                break;
-            case '/dashboard/home':
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.desactiveButtonHomePageActiveName();
-                break;
-            case '/dashboard/home/info-hives':
-                this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
-                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.desactiveButtonHomePageActiveName();
-                this.router.navigate(['dashboard/home/info-apiary']);
-                break;
-            case '/dashboard/home/info-apiary':
-                this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
-                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                this.apiaryChange.emit(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
-                this.router.navigate(['dashboard/home/info-apiary']);
-                this.desactiveButtonHomePageActiveNameAndAlerts();
-                break;
-            case '/dashboard/fleurs-floraison':
-                break;
-            /*             case '/meteo':
-                            this.meteoService.getWeather(this.rucherService.rucher.codePostal);
-                            break; */
-            case '/dashboard/ruche-detail':
-                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                break;
-            case '/dashboard/stack-apiary':
-                // this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                break;
-            default:
-                break;
-        }
-  }
-
-  desactiveButtonHomePageActiveName() {
-    this.eltOnClickId = document.getElementById('nameNav');
-    this.renderer.addClass(this.eltOnClickId, 'active');
-    this.eltOnClickId = document.getElementById('broodNav');
-    this.renderer.removeClass(this.eltOnClickId, 'active');
-    this.eltOnClickId = document.getElementById('weightNav');
-    this.renderer.removeClass(this.eltOnClickId, 'active');
-    this.eltOnClickId = document.getElementById('sensorsNav');
-    this.renderer.removeClass(this.eltOnClickId, 'active');
-
-    // Desactive alerts
-    this.eltOnClickId = document.getElementById('infoApiaryButton');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
-  }
-
-  // Desactive the 'active' class from buttons in homePage, Active the name one
-  desactiveButtonHomePageActiveNameAndAlerts() {
-      this.eltOnClickId = document.getElementById('nameNav');
-      this.renderer.addClass(this.eltOnClickId, 'active');
-      this.eltOnClickId = document.getElementById('broodNav');
-      this.renderer.removeClass(this.eltOnClickId, 'active');
-      this.eltOnClickId = document.getElementById('weightNav');
-      this.renderer.removeClass(this.eltOnClickId, 'active');
-      this.eltOnClickId = document.getElementById('sensorsNav');
-      this.renderer.removeClass(this.eltOnClickId, 'active');
-
-      // active alerts
-      this.eltOnClickId = document.getElementById('infoApiaryButton');
-      this.renderer.addClass(this.eltOnClickId, 'active0');
+    const location = this.location['_platformStrategy']._platformLocation.location.pathname;
+    this.dailyWService.getDailyWeightMaxByApiary(this.rucherService.rucher._id);
+    // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+    //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+    switch (location) {
+        case '/dashboard/ruche-et-rucher':
+            break;
+        case '/dashboard/home':
+            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+            break;
+        case '/dashboard/home/info-hives':
+            this.rucheService.saveCurrentHive({});
+            this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+            console.log('okkkk');
+            this.router.navigate(['dashboard/home/info-apiary']);
+            break;
+        case '/dashboard/home/info-apiary':
+            this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            this.apiaryChange.emit(this.rucherService.getCurrentApiary());
+            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+            this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
+            this.router.navigate(['dashboard/home/info-apiary']);
+            break;
+        case '/dashboard/ruche-detail':
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            break;
+        case '/dashboard/stack-apiary':
+            // this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            break;
+        default:
+            break;
+    }
   }
 
 

@@ -9,66 +9,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 <ng-container *ngIf="this.rucherService.allApiaryAccount.length > 0">
-
-    <!-- Nav bar for page melliUX -->
-    <nav class="navbar navbar-default home-navbar">
-        <ul class="nav navbar-nav buttonLeft">
-            <li><button (click)="onclickInfoApiary()" id="infoApiaryButton" type="button"
-                    class="button button0">{{ 'HOME.NAVBAR.APIARY' | translate}}</button>
-                <!-- <span
-                    *ngIf="numberActiveNotifByApiary() !== 0"
-                    class="badge badge-button">{{ numberActiveNotifByApiary() }}</span> -->
-            </li>
-            <!--             <li>
-                <button type="button" [id]="btn.path" (click)="navToPage(btn.path, btn.path)"
-                    class="button button0">{{ btn.name }}
-                </button>
-            </li> -->
-            <li (click)="collapseAllActiveButton('sensors','weight','brood','nameNav')"><button id="nameNav"
-                    type="button" class="button button1 active" data-toggle="collapse"
-                    data-target=".name">{{ 'HOME.NAVBAR.NAME' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('sensors','name','weight','broodNav')"><button id="broodNav"
-                    type="button" class="button button1" data-toggle="collapse"
-                    data-target=".brood">{{ 'HOME.NAVBAR.BROOD' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('sensors','name','brood','weightNav')"><button id="weightNav"
-                    type="button" class="button button1" data-toggle="collapse"
-                    data-target=".weight">{{ 'HOME.NAVBAR.WEIGHT' | translate}}</button></li>
-            <li (click)="collapseAllActiveButton('weight','name','brood','sensorsNav')"><button id="sensorsNav"
-                    type="button" class="button button1" data-toggle="collapse"
-                    data-target=".sensors">{{ 'HOME.NAVBAR.SENSORS' | translate}}</button></li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-date navbar-right home-datebar">
-            <li width="35" class="range-date" (click)="onClickPreviousDay()">
-                <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-left"
-                        id="previous-date"></i></button>
-            </li>
-            <li id="date">{{ getDateDaily() }}</li>
-            <li class="range-date" (click)="onClickNextDay()">
-                <button type="button" class="btn btn-info date-arrow btn_info"><i id="next-date"
-                        class="fa fa-arrow-circle-right"></i></button>
-            </li>
-        </ul>
-    </nav>
-
-    <ul class="nav navbar-nav navbar-left" id="apiary-group">
-        <li>
-        <select [(ngModel)]="rucherService.rucher" class="form-control" (change)="onSelectRucher()"
-            id="select-Apiary">
+    <div id="apiary-group" style="width: 100%; padding:10px">
+        <select [(ngModel)]="rucherService.rucher" class="form-control" (change)="onSelectRucher()" id="select-Apiary">
             <option *ngFor="let rucher of rucherService.allApiaryAccount" [ngValue]="rucher">
             {{rucher.name}} <span class="admin_userApiary" *ngIf="tokenService.checkAuthorities('ROLE_ADMIN')"
                 style="color:red;"> => {{ rucher.username }}</span>
             </option>
         </select>
-        </li>
-    </ul>
-
-    <!-- No data hive -->
-    <!-- <div *ngIf="(hiveNoDataList() != '') && (rucheService.ruches.length > 0)" class="alert alert-warning alert-dismissible fade in alertNoData">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>{{ 'HOME.WARNING' | translate}} </strong>{{hiveNoDataList()}}
-</div> -->
-    <!-- End of No data hive -->
+    </div>
+    <!-- Nav bar for page melliUX -->
+    <div class="date-div">
+        <div width="35" class="range-date left-arrow" (click)="onClickPreviousDay()">
+            <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-left" id="previous-date"></i></button>
+        </div>
+        <div id="date">{{ getDateDaily() }}</div>
+        <div class="range-date" (click)="onClickNextDay()">
+            <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-right" id="next-date"></i></button>
+        </div>
+    </div>
     <div id="global">
         <popover-content #pictureTooltip class="homePopover" placement="left" [animation]="true" [closeOnClickOutside]="false">
             <span class="helpTooltip" class="helpTooltip">
@@ -185,8 +143,33 @@ limitations under the License. -->
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <input (click)="collapseAllActiveButton('nameNav')" data-toggle="collapse" data-target=".name" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="nameNav" checked>
+                <label class="form-check-label" for="nameNav">
+                    {{ 'HOME.NAVBAR.NAME' | translate}}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input (click)="collapseAllActiveButton('broodNav')" data-toggle="collapse" data-target=".brood" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="broodNav">
+                <label class="form-check-label" for="broodNav">
+                    {{ 'HOME.NAVBAR.BROOD' | translate}}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input (click)="collapseAllActiveButton('weightNav')" data-toggle="collapse" data-target=".weight" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="weightNav">
+                <label class="form-check-label" for="weightNav">
+                    {{ 'HOME.NAVBAR.WEIGHT' | translate}}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input (click)="collapseAllActiveButton('sensorsNav')" data-toggle="collapse" data-target=".sensors" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="sensorsNav">
+                <label class="form-check-label" for="sensorsNav">
+                    {{ 'HOME.NAVBAR.SENSORS' | translate}}
+                </label>
+            </div>
+        </div>
 
-        <div id="scroll"></div>
         <div id="right">
             <router-outlet (activate)="setRouterPage($event)"></router-outlet>
         </div>

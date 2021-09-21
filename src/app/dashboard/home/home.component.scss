@@ -23,13 +23,25 @@ limitations under the License. */
 }
 
 #date{
-    color: white;
+    color: gray;
     text-align: center;
     font-size: medium;
 }
 
+.date-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .range-date{
     cursor: pointer;
+    margin: 0px;
+}
+
+.left-arrow{
+  margin-right: 7px;
 }
 
 li:first-child img{
@@ -131,7 +143,7 @@ li:first-child img{
 #global{
   position: relative;
   margin : 0px;
-  margin-left: 13px;
+  padding-left: 13px;
 }
 // FOR A CELLPHONE SIZE
 #print{
@@ -806,7 +818,7 @@ li:first-child img{
 
 .date-arrow{
   border: none;
-  color: white;
+  color: grey;
   padding: 0px !important;
 }
 
@@ -916,4 +928,13 @@ li:first-child img{
   #modalMsNewConnection{
     width: 100%;
   }
+}
+
+.form-check-input{
+  margin-left: 5px;
+}
+
+.form-check-label{
+  font-family: Poppins;
+  margin-left: 5px;
 }
