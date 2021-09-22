@@ -61,7 +61,6 @@ limitations under the License. */
     flex-wrap: wrap;
 }
 .panel{
-    width: 100%;
     margin-bottom:1px !important;
     padding: 4px;
 }

@@ -55,6 +55,7 @@ import { HubService } from '../service/api/hub.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import { isUndefined } from 'util';
 import { InspectionService } from '../service/api/inspection.service';
+import { RucherModel } from '../../_model/rucher-model';
 
 @Component({
   selector: 'app-home',
@@ -791,10 +792,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
   }
 
-  onSelectRucher() {
-    this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
+  onSelectRucher(apiary: RucherModel) {
+    this.rucherService.rucher = apiary;
+    this.rucherService.saveCurrentApiaryId(apiary._id);
     const location = this.location['_platformStrategy']._platformLocation.location.pathname;
-    this.dailyWService.getDailyWeightMaxByApiary(this.rucherService.rucher._id);
+    this.dailyWService.getDailyWeightMaxByApiary(apiary._id);
     // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
     //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
     switch (location) {
@@ -830,5 +832,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     }
   }
 
+  checkApiaryIfActive(apiaryId: string): string{
+    if(this.rucherService.rucher._id == apiaryId){
+      return 'apiary-active';
+    }
+    return '';
+  }
 
+  getColorApiary(apiaryId: string): string{
+    if(this.rucherService.rucher._id == apiaryId){
+      return 'rgb(50,160,210)';
+    }
+    else{
+      return 'white';
+    }
+  }
 }

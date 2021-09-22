@@ -10,6 +10,11 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <div id="apiaryGeneral">
+  <div id="apiaryLeft">
+    <div id="apiarynotes">
+      <app-notes (noteChange)="onChangeNote()"></app-notes>
+    </div>
+  </div>
   <div id="graph">
     <!-- <div class="title">
       <img src="../../assets/img/apiary-icon.png" style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;" />
@@ -30,11 +35,6 @@ limitations under the License. -->
           <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
         </div>
       </div>-->
-    </div>
-  </div>
-  <div id="apiaryLeft">
-    <div id="apiarynotes">
-      <app-notes (noteChange)="onChangeNote()"></app-notes>
     </div>
   </div>
   <div id="states">

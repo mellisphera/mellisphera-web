@@ -242,10 +242,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
-    if (this.screenWidth > 990) {
-      const height = document.getElementById('cadre').offsetHeight;
-      document.getElementById('left').style.top = '' + (0 + height) + 'px';
-    }
   }
 
   onChangeNote(): void {

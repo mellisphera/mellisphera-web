@@ -33,11 +33,13 @@ limitations under the License. */
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
 }
 
 .range-date{
     cursor: pointer;
     margin: 0px;
+    width: 35px;
 }
 
 .left-arrow{
@@ -143,7 +145,6 @@ li:first-child img{
 #global{
   position: relative;
   margin : 0px;
-  padding-left: 13px;
 }
 // FOR A CELLPHONE SIZE
 #print{
@@ -155,6 +156,7 @@ li:first-child img{
 // PICTURE
 #cadre {
   margin: 0px;
+  margin-top: 10px;
   overflow: hidden;
   //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
   position: relative;
@@ -184,6 +186,7 @@ li:first-child img{
   max-height: 75vh;
   width: 100%;
   border: 2px solid #4F4F51;
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 1000px){
@@ -193,30 +196,15 @@ li:first-child img{
 // FOR A NORMAL SCREEN
 @media (min-width : 990px){
   #cadre {
-    float: left;
-    // height: 50vh;
-    // background-color: #4F4F51;
-    width: 50%;
-    margin: 0px;
-    margin-top: -8px;
+    width: 100%;
     overflow: hidden;
     position: relative;
     border-bottom: 5px solid transparent;
     border-color: white;
-
-    // transform: rotate(0deg);
   }
 
   .photo{
-/*     max-height: 40vh;
- */    max-width: 100%;
-
-  }
-
-  #right{
-    margin : 0px;
-    margin-left:50%;
-    margin-top: 20px;
+    max-width: 100%;
   }
 }
 @media print{
@@ -366,10 +354,6 @@ li:first-child img{
 .fa-times{
   margin-left: 40px;
 }
-
-// .grid-container{
-//   text-align: center;
-// }
 
 .my-drop-zone{
   text-align:center;
@@ -932,9 +916,89 @@ li:first-child img{
 
 .form-check-input{
   margin-left: 5px;
+  
 }
 
 .form-check-label{
   font-family: Poppins;
   margin-left: 5px;
+}
+
+.optionsInfos{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  div{
+    margin-right: 20px;
+  }
+}
+
+.circle{
+  border: 1px solid black;
+  display: inline-block;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+  margin-top: 2px;
+}
+
+.apiaryGroup{
+  position: relative;
+  top:0;
+  margin-top: 56px;
+  width: 300px;
+}
+@media (max-width: 770px) {
+  .apiaryGroup{
+    margin-top: 5px;
+    width: 100%;
+  }
+}
+
+.apiaryGroup, .list-group-item {
+  color: black;
+  cursor: pointer;
+}
+
+.circle:hover{
+  background-color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+
+.header-home{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.apiary-img-div{
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 13px;
+}
+
+@media (max-width: 770px) {
+  .header-home{
+    flex-direction: column;
+  }
+  .apiary-img-div{
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
+
+.list-group-hive-item{
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.apiary-active{
+  background-color: #eafffd;
+}
+
+.apiary-active a span{
+  font-weight: bold;
 }
