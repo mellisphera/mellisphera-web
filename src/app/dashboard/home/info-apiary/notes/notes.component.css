@@ -1179,3 +1179,19 @@ th{
     font-size: 12px;
   }
 }
+
+.note-heading{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+@media screen and (max-width: 1000px){
+  .note-heading{
+    flex-direction: column;
+  }
+  .btn-add-event{
+    margin-top: 5px;
+    width: auto !important;
+    float: right;
+  }
+}
