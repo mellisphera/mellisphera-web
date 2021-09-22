@@ -928,7 +928,7 @@ li:first-child img{
 .optionsInfos{
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   div{
     margin-right: 20px;
   }
@@ -979,8 +979,6 @@ li:first-child img{
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  align-content: center;
   padding-left: 15px;
   padding-right: 13px;
 }
@@ -1006,11 +1004,4 @@ li:first-child img{
 
 .apiary-active a span{
   font-weight: bold;
-}
-
-.separator-home{
-  margin-top: 0px;
-  margin-bottom: 20px;
-  border-color: #ACC87B;
-  border-width: 5px;
 }

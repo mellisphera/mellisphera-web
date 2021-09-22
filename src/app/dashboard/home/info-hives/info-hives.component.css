@@ -47,18 +47,13 @@ hr
 }
 #left{
     width: 100%;
-    padding-left: 13px;
 }
 #graphs{
     width: 100%;
 }
-@media (max-width: 770px) {
+@media (max-width: 1240px) {
     #general{
         flex-direction: column-reverse;
-    }
-    #left{
-        padding-left: 5px;
-        padding-right: 5px;
     }
 }
 .calendar{
@@ -127,7 +122,7 @@ and (orientation : portrait) {
 @media only screen
 and (min-width : 1224px) {
     .calendar{
-        height: 280px;
+        height: 310px;
     }
 /* Styles */
 }
@@ -136,7 +131,7 @@ and (min-width : 1224px) {
 @media only screen
 and (min-width : 1824px) {
     .calendar{
-        height: 285px;
+        height: 320px;
     }
 }
 

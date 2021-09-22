@@ -172,11 +172,10 @@ limitations under the License. -->
                         </label>
                     </div>
                 </div>
+                <div>
+                    <router-outlet (activate)="setRouterPage($event)"></router-outlet>
+                </div>
             </div>
-        </div>
-        <hr class="separator-home"/>
-        <div>
-            <router-outlet (activate)="setRouterPage($event)"></router-outlet>
         </div>
 
     </div>

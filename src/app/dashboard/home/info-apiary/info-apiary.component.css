@@ -40,19 +40,14 @@ hr
 }
 #apiaryLeft{
     width: 100%;
-    padding-left: 13px;
 }
 #graph{
     width: 100%;
 }
 
-@media (max-width: 770px) {
+@media (max-width: 920px) {
     #apiaryGeneral{
         flex-direction: column-reverse;
-    }
-    #apiaryLeft{
-        padding-left: 5px;
-        padding-right: 5px;
     }
 }
 
