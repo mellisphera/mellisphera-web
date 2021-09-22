@@ -331,67 +331,6 @@ export class NavbarComponent implements OnInit {
 
     }
 
-    // setRouterPage(event) {
-    //     if (event instanceof InfoApiaryComponent) {
-    //       this.infoApiaryComponent = event;
-    //     }
-    //   }
-
-    // checkIfInfoApiaryComponent(): Promise<Boolean> {
-    //     return new Promise((resolve, reject) => {
-    //       if (this.infoApiaryComponent instanceof InfoApiaryComponent) {
-    //         resolve(true);
-    //       } else {
-    //         reject(false);
-    //       }
-    //     })
-    //   }
-
-    onSelectRucher() {
-        this.rucherService.saveCurrentApiaryId(this.rucherService.rucher._id);
-        const location = this.location['_platformStrategy']._platformLocation.location.pathname;
-        this.dailyWService.getDailyWeightMaxByApiary(this.rucherService.rucher._id);
-        // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
-        //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-        switch (location) {
-            case '/dashboard/ruche-et-rucher':
-                break;
-            case '/dashboard/home':
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.desactiveButtonHomePageActiveName();
-                break;
-            case '/dashboard/home/info-hives':
-                this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
-                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.desactiveButtonHomePageActiveName();
-                this.router.navigate(['dashboard/home/info-apiary']);
-                break;
-            case '/dashboard/home/info-apiary':
-                this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
-                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                this.apiaryChange.emit(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-                this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
-                this.router.navigate(['dashboard/home/info-apiary']);
-                this.desactiveButtonHomePageActiveNameAndAlerts();
-                break;
-            case '/dashboard/fleurs-floraison':
-                break;
-            /*             case '/meteo':
-                            this.meteoService.getWeather(this.rucherService.rucher.codePostal);
-                            break; */
-            case '/dashboard/ruche-detail':
-                this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                break;
-            case '/dashboard/stack-apiary':
-                // this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-                break;
-            default:
-                break;
-        }
-    }
-
     // ###############################################################
     // ###############################################################
     // ###################      MANAGE APIARY      ###################

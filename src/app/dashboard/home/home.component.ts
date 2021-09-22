@@ -10,8 +10,9 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import { User } from '../../_model/user';
-import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, HostListener, Renderer2, ViewChild, ViewChildren, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { UserloggedService } from '../../userlogged.service';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { RucherService } from '../service/api/rucher.service';
 import { Ruche } from './ruche';
 import { DailyRecordService } from '../service/api/dailyRecordService';
@@ -54,6 +55,7 @@ import { HubService } from '../service/api/hub.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 import { isUndefined } from 'util';
 import { InspectionService } from '../service/api/inspection.service';
+import { RucherModel } from '../../_model/rucher-model';
 
 @Component({
   selector: 'app-home',
@@ -62,6 +64,7 @@ import { InspectionService } from '../service/api/inspection.service';
 
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
+  @Output() apiaryChange = new EventEmitter<string>();
   private eltOnClickClass: HTMLCollectionOf<Element>;
   private eltOnClickId: EventTarget;
   infoRuche: any = null;
@@ -106,32 +109,36 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   screenWidth: any;
   lastHighlightFix: string;
   lastHighlightHandle: string;
+  location: Location;
 
-  constructor(public dailyRecTh: DailyRecordService,
-    public userService: UserloggedService,
-    private translateService: TranslateService,
-    private notifyService: NotifierService,
-    private formBuilder: FormBuilder,
-    public login: UserloggedService,
-    public graphGlobal: GraphGlobal,
-    public rucheService: RucheService,
-    public rucherService: RucherService,
-    public dailyRecordWservice: DailyRecordsWService,
-    public router: Router,
-    private unitService: UnitService,
-    public authService: AuthService,
-    public fitnessService: FitnessService,
-    public tokenService: AtokenStorageService,
-    public capteurService: CapteurService,
-    public adminService: AdminService,
-    private userConfig: UserParamsService,
-    private myNotifier: MyNotifierService,
-    private renderer: Renderer2,
-    public hubService: HubService,
-    public deviceSatusService: DeviceStatusService,
-    public alertsService: AlertsService,
-    public inspService: InspectionService) {
-
+  constructor(location: Location,
+      public dailyRecTh: DailyRecordService,
+      public userService: UserloggedService,
+      private translateService: TranslateService,
+      private notifyService: NotifierService,
+      private formBuilder: FormBuilder,
+      public login: UserloggedService,
+      public graphGlobal: GraphGlobal,
+      public rucheService: RucheService,
+      public rucherService: RucherService,
+      public dailyRecordWservice: DailyRecordsWService,
+      public router: Router,
+      private unitService: UnitService,
+      public authService: AuthService,
+      public fitnessService: FitnessService,
+      public tokenService: AtokenStorageService,
+      public capteurService: CapteurService,
+      public adminService: AdminService,
+      private userConfig: UserParamsService,
+      private myNotifier: MyNotifierService,
+      private renderer: Renderer2,
+      public hubService: HubService,
+      public deviceSatusService: DeviceStatusService,
+      public alertsService: AlertsService,
+      public inspService: InspectionService,
+      private dailyWService: DailyRecordsWService,
+      private dailyRecordService: DailyRecordService,) {
+    this.location = location;
     this.notify = notifyService;
     this.eltOnClickClass = null;
     this.lockHive = true;
@@ -408,15 +415,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
   onClick(ruche: RucheInterface) {
-    // active button name
-    // this.clickName();
-    // Desactive alerts buttons
-    this.eltOnClickId = document.getElementById('infoApiaryButton');
-    this.renderer.removeClass(this.eltOnClickId, 'active0');
-
-    // remove higlight for last highlighted hive
-
-
     // Save the hive on dataBase
     this.rucheService.saveCurrentHive(ruche);
     this.inspService.inspHive = this.inspService.getInspectionCurrentHive(ruche._id)
@@ -594,7 +592,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   }
 
 
-  collapseAllActiveButton(class1: string, class2: string, class3: string, idButtonActive: string) {
+  collapseAllActiveButton(idButtonActive: string) {
+    let class1 = (idButtonActive=='sensorsNav' ? 'weight' : 'sensors');
+    let class2 = (idButtonActive=='nameNav' ? 'weight' : 'name');
+    let class3 = (idButtonActive=='broodNav' ? 'weight' : 'brood');
     // Desactive the three collapses div that we don't want
     this.eltOnClickClass = document.getElementsByClassName(class1);
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
@@ -608,24 +609,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     for (let i = 0; i < this.eltOnClickClass.length; i++) {
       this.eltOnClickClass[i].classList.remove('in');
     }
-
-    // Active/Desactive the button clicked
-
-    this.eltOnClickId = document.getElementById(idButtonActive);
-    if (document.getElementById(idButtonActive).classList.contains('active')){
-      this.renderer.removeClass(this.eltOnClickId, 'active');
-    } else {
-      this.renderer.addClass(this.eltOnClickId, 'active');
-    }
-
-    // desactive the other buttons
-    const elt = document.getElementsByClassName('button1');
-    for (let i = 0; i < elt.length; i++) {
-      if (elt[i].id !== idButtonActive) {
-        elt[i].classList.remove('active');
-      }
-    }
-
   }
 
   clickName() {
@@ -809,5 +792,59 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
 
   }
 
+  onSelectRucher(apiary: RucherModel) {
+    this.rucherService.rucher = apiary;
+    this.rucherService.saveCurrentApiaryId(apiary._id);
+    const location = this.location['_platformStrategy']._platformLocation.location.pathname;
+    this.dailyWService.getDailyWeightMaxByApiary(apiary._id);
+    // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
+    //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+    switch (location) {
+        case '/dashboard/ruche-et-rucher':
+            break;
+        case '/dashboard/home':
+            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+            break;
+        case '/dashboard/home/info-hives':
+            this.rucheService.saveCurrentHive({});
+            this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+            console.log('okkkk');
+            this.router.navigate(['dashboard/home/info-apiary']);
+            break;
+        case '/dashboard/home/info-apiary':
+            this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            this.apiaryChange.emit(this.rucherService.getCurrentApiary());
+            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+            this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
+            this.router.navigate(['dashboard/home/info-apiary']);
+            break;
+        case '/dashboard/ruche-detail':
+            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            break;
+        case '/dashboard/stack-apiary':
+            // this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+            break;
+        default:
+            break;
+    }
+  }
 
+  checkApiaryIfActive(apiaryId: string): string{
+    if(this.rucherService.rucher._id == apiaryId){
+      return 'apiary-active';
+    }
+    return '';
+  }
+
+  getColorApiary(apiaryId: string): string{
+    if(this.rucherService.rucher._id == apiaryId){
+      return 'rgb(50,160,210)';
+    }
+    else{
+      return 'white';
+    }
+  }
 }

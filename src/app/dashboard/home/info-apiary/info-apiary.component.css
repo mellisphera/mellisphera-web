@@ -14,11 +14,6 @@ hr
     display: inline-block;
     width: 100%;
 }
-
-#allPage{
-    margin-left: -100%;
-    width: 200%;
-}
 .btn-tooltip{
     color: #4f4f51;
     opacity: 1;
@@ -38,55 +33,21 @@ hr
     font-weight: bold;
 }
 
-/* #apiaryGeneral{
-    margin-top: -30px;
-} */
-
 #apiaryGeneral{
-    width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
 }
 #apiaryLeft{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 50%;
-}
-#apiaryAlerts{
-    height: 350px;
-}
-
-@media (min-width : 990px){
-    #graph{
-        padding-top: 100px;
-    }
-}
-
-#states{
-    position: relative;
-    width: 200%;
-    margin-left: -100%;
-}
-
-
-
-@media (max-width : 990px){
-   #apiaryLeft{
-       position: relative;
-       top: 0px !important;
-       display: block;
-       width: 100%;
-   }
-   #apiaryGeneral{
     width: 100%;
-    }
-    #apiaryAlerts{
-    height: 340px;
-    }
-
-   #states{
-    position: relative;
-    width: 100%;
-    margin-left: 0%;
-    }
-   
 }
+#graph{
+    width: 100%;
+}
+
+@media (max-width: 920px) {
+    #apiaryGeneral{
+        flex-direction: column-reverse;
+    }
+}
+

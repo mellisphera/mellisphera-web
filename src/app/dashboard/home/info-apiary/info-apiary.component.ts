@@ -53,13 +53,6 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
-    if(this.screenWidth > 990){
-      const height = document.getElementById('cadre').offsetHeight;
-      document.getElementById('apiaryLeft').style.top = '' + (0 + height) + 'px';
-      const heightGraph= document.getElementById('graph').offsetHeight;
-      const heightNotes = document.getElementById('apiarynotes').offsetHeight;
-      document.getElementById('states').style.marginTop = '' + (0 + heightNotes + height - heightGraph)+ 'px';
-    }
   }
 
   onChangeNote(): void {

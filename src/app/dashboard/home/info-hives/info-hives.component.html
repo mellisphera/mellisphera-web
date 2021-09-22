@@ -10,14 +10,14 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <div id="general">
+    <div id="left">
+        <div id="notes">
+            <app-notes-hives (noteChange)="onChangeNote()"></app-notes-hives>
+        </div>
+        <div id="sensors">
+        </div>
+    </div>
     <div id="graphs">
-        <!-- <div class="title">
-    <img src="../../assets/img/apiary-icon.png" style="width:45px;height: 45px; margin-left: -7px; margin-top:-10px;" />
-    {{this.rucheService.getCurrentHive().name}}
-    <span
-        *ngIf="this.rucheService.getCurrentHive().description!=''">{{': ' + this.rucheService.getCurrentHive().description}}</span>
-</div>
-<hr /> -->
         <div class="calendar" id="alerts">
             <app-alerts-hive></app-alerts-hive>
         </div>
@@ -28,15 +28,5 @@ limitations under the License. -->
             <app-weight-hives></app-weight-hives>
         </div>
         <br clear="both" />
-    </div>
-    <div id="left">
-        <div id="notes">
-            <app-notes-hives (noteChange)="onChangeNote()"></app-notes-hives>
-        </div>
-        <!-- <hr/> -->
-        <div id="sensors">
-            <!-- <app-sensors-hive></app-sensors-hive>
-            -->
-        </div>
     </div>
 </div>
