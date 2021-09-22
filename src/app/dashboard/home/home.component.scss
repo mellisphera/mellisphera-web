@@ -157,6 +157,7 @@ li:first-child img{
 #cadre {
   margin: 0px;
   margin-top: 10px;
+  max-width: 1100px;
   overflow: hidden;
   //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
   position: relative;
@@ -976,7 +977,11 @@ li:first-child img{
 
 .apiary-img-div{
   width: 100%;
-  padding-left: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  padding-left: 15px;
   padding-right: 13px;
 }
 
@@ -1001,4 +1006,11 @@ li:first-child img{
 
 .apiary-active a span{
   font-weight: bold;
+}
+
+.separator-home{
+  margin-top: 0px;
+  margin-bottom: 20px;
+  border-color: #ACC87B;
+  border-width: 5px;
 }
