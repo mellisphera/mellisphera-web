@@ -24,7 +24,6 @@ const colors: string[] = ['rgb(50,160,210)', 'rgb(0,170,0)', 'rgb(255,0,0)', 'rg
 })
 export class WeatherComponent implements OnInit {
 
-  public user_apiaries: RucherModel[];
   private recordsComponent: WeatherRecordsComponent;
   private configComponent: WeatherConfigComponent;
   private eltOnClick: EventTarget;
@@ -55,7 +54,7 @@ export class WeatherComponent implements OnInit {
    }
 
   ngOnInit() {
-    
+    this.w_o_service.updateUserApiaries();
   }
 
   ngAfterViewInit(): void{
