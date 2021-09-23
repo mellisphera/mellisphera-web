@@ -9,18 +9,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<div id="apiaryGeneral">
-  <div id="apiaryLeft">
-    <div id="apiarynotes">
-      <app-notes (noteChange)="onChangeNote()"></app-notes>
-    </div>
-  </div>
-  <div id="graph">
-    <div class="calendar" id="apiaryAlerts">
-      <app-alerts></app-alerts>
-    </div>
+<div id="apiaryLeft">
+  <div id="apiarynotes">
+    <app-notes (noteChange)="onChangeNote()"></app-notes>
   </div>
 </div>
-<div id="states">
-  <app-states></app-states>
+<div id="graph">
+  <div class="calendar" id="apiaryAlerts">
+    <app-alerts></app-alerts>
+  </div>
 </div>

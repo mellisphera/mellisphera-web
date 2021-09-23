@@ -143,6 +143,8 @@ li:first-child img{
 }
 
 #global{
+  display: flex;
+  flex-direction: row;
   position: relative;
   margin : 0px;
 }
@@ -157,7 +159,6 @@ li:first-child img{
 #cadre {
   margin: 0px;
   margin-top: 10px;
-  max-width: 1100px;
   overflow: hidden;
   //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
   position: relative;
@@ -197,7 +198,6 @@ li:first-child img{
 // FOR A NORMAL SCREEN
 @media (min-width : 990px){
   #cadre {
-    width: 100%;
     overflow: hidden;
     position: relative;
     border-bottom: 5px solid transparent;
@@ -215,11 +215,6 @@ li:first-child img{
   }
 }
 
-@media (max-width: 990px) {
-  #cadre{
-    width: 100%;
-  }
-}
 #clickHive{
   margin-top: 20px;
 }
@@ -480,6 +475,8 @@ li:first-child img{
     font-size: 18px;
   }
   #global{
+    flex-direction: column;
+    align-items: center;
     margin-left: 0px;
   }
   .buttonLeft{
@@ -948,9 +945,10 @@ li:first-child img{
   position: relative;
   top:0;
   margin-top: 56px;
-  width: 300px;
+  width: 200px;
+  min-width: 180px;
 }
-@media (max-width: 770px) {
+@media (max-width: 990px) {
   .apiaryGroup{
     margin-top: 5px;
     width: 100%;
@@ -967,27 +965,22 @@ li:first-child img{
   cursor: pointer;
 }
 
-.header-home{
+.content-home{
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  align-content: flex-start;
-}
-
-.apiary-img-div{
-  width: 100%;
+  max-width: 830px;
   display: flex;
   flex-direction: column;
   padding-left: 15px;
-  padding-right: 13px;
+  padding-right: 15px;
+}
+
+.apiary-img-div{
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 770px) {
-  .header-home{
-    flex-direction: column;
-  }
-  .apiary-img-div{
+  .content-home{
     padding-left: 3px;
     padding-right: 3px;
   }

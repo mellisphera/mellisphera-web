@@ -9,24 +9,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<div id="general">
-    <div id="left">
-        <div id="notes">
-            <app-notes-hives (noteChange)="onChangeNote()"></app-notes-hives>
-        </div>
-        <div id="sensors">
-        </div>
+<div id="left">
+    <div id="notes">
+        <app-notes-hives (noteChange)="onChangeNote()"></app-notes-hives>
     </div>
-    <div id="graphs">
-        <div class="calendar" id="alerts">
-            <app-alerts-hive></app-alerts-hive>
-        </div>
-        <div class="calendar" id="health">
-            <app-health-hive></app-health-hive>
-        </div>
-        <div class="calendar" id="weight">
-            <app-weight-hives></app-weight-hives>
-        </div>
-        <br clear="both" />
+    <div id="sensors">
     </div>
+</div>
+<div id="graphs">
+    <div class="calendar" id="alerts">
+        <app-alerts-hive></app-alerts-hive>
+    </div>
+    <div class="calendar" id="health">
+        <app-health-hive></app-health-hive>
+    </div>
+    <div class="calendar" id="weight">
+        <app-weight-hives></app-weight-hives>
+    </div>
+    <br clear="both" />
 </div>

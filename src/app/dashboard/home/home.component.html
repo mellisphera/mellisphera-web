@@ -10,174 +10,164 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 <ng-container *ngIf="this.rucherService.allApiaryAccount.length > 0">
     <div id="global">
-        <div class="header-home">
-            <div class="apiaryGroup">
-                <div id="main-menu" class="list-group">
-                    <ng-container *ngFor="let apiary of rucherService.allApiaryAccount; let i = index;">
-                        <div [id]="apiary._id" style="display: flex; align-items: center;padding-right: 4px;padding-left: 6px;" data-parent="#main-menu"
-                        [class]="'list-group-item apiary ' + checkApiaryIfActive(apiary._id)" (click)="onSelectRucher(apiary)">
-                            <a class="list-group-hive-item" style="display: flex;">
-                                <i class="circle" [style.background-color]="getColorApiary(apiary._id)"></i>
-                                <span style="width:auto;" class="apiary-group-title dropleft" [id]="apiary._id + '_span'">{{ apiary.name }}</span>
-                            </a>
-                        </div>
-                    </ng-container>
-                </div>
+        <div class="apiaryGroup">
+            <div id="main-menu" class="list-group">
+                <ng-container *ngFor="let apiary of rucherService.allApiaryAccount; let i = index;">
+                    <div [id]="apiary._id" style="display: flex; align-items: center;padding-right: 4px;padding-left: 6px;" data-parent="#main-menu"
+                    [class]="'list-group-item apiary ' + checkApiaryIfActive(apiary._id)" (click)="onSelectRucher(apiary)">
+                        <a class="list-group-hive-item" style="display: flex;">
+                            <i class="circle" [style.background-color]="getColorApiary(apiary._id)"></i>
+                            <span style="width:auto;" class="apiary-group-title dropleft" [id]="apiary._id + '_span'">{{ apiary.name }}</span>
+                        </a>
+                    </div>
+                </ng-container>
             </div>
-            <div class="apiary-img-div">
-                <div class="date-div">
-                    <div width="35" class="range-date left-arrow" (click)="onClickPreviousDay()">
-                        <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-left" id="previous-date"></i></button>
+        </div>
+        <div class="content-home" id="content-home">
+            <div>
+                <div class="apiary-img-div">
+                    <div class="date-div">
+                        <div width="35" class="range-date left-arrow" (click)="onClickPreviousDay()">
+                            <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-left" id="previous-date"></i></button>
+                        </div>
+                        <div id="date">{{ getDateDaily() }}</div>
+                        <div class="range-date" (click)="onClickNextDay()">
+                            <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-right" id="next-date"></i></button>
+                        </div>
                     </div>
-                    <div id="date">{{ getDateDaily() }}</div>
-                    <div class="range-date" (click)="onClickNextDay()">
-                        <button type="button" class="btn btn-info date-arrow btn_info"><i class="fa fa-arrow-circle-right" id="next-date"></i></button>
-                    </div>
-                </div>
-                <popover-content #pictureTooltip class="homePopover" placement="left" [animation]="true" [closeOnClickOutside]="false">
-                    <span class="helpTooltip">
-                        <span *ngFor="let line of 'MELLIUX.HELP.APIARY.APIARY_PICTURE' | translate">{{ line }}<br /></span>
-                    </span>
-                </popover-content>
-                <!-- Apiary picture -->
-                <div class="grid-container" #myBounds id="cadre" ngfDrop [(validDrag)]="baseDropValid" [(file)]="dragPhotoApiary"
-                    class="my-drop-zone" [class.valid-drag]="baseDropValid" (stopped)="onDragEnd($event)"
-                    [(lastBaseUrl)]="rucherService.rucher.photo">
-                    <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" style="position: static;"
-                        id="apiary-photos" class="photo" />
-                    <!-- The button to change hive handle => click -->
-                    <div zIndex="100" class="toolApiaryPicture">
-                        <!--<button data-toggle="tooltip" data-html="true" (click)="exportToCsv()" class="btn-picture"
-                        title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="far fa-file-excel" aria-hidden="true"></i></button>-->
-                        <!-- <button data-toggle="tooltip" data-html="true" class="btn-picture"
-                        title="{{ 'HOME.PRINT' | translate}}" id="print" printSectionId="print-section" [printTitle]="rucherService.rucher.name" ngxPrint [useExistingCss]="true" type="button"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-                        <input style="display: none" type="file" (lastBaseUrlChange)="changePicturePhotos($event)" ngf [(file)]="selectPhotoApiary"
-                        #fileInput>
-                        <button data-toggle="tooltip" (click)="fileInput.click()" data-html="true" class="btn-picture"
-                        title="" id="selectPhotos" type="button"><i class="fa fa-camera"></i></button>
-                        <button data-toggle="tooltip" data-html="true"
-                            title="{{ 'HOME.PLACEMENTMODE' | translate}}" id="locked" type="button" class="btn-picture"
-                            (click)="changeLockHive()"><i class="fa fa-lock"></i></button>
-                    </div>
-                    <!-- The dive for each hive -->
-                    <ng-container>
-                        <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true"
-                            data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
-                            *ngFor="let ruche of rucheService.ruches; let i = index"
-                            (endOffset)="onMoveEnd($event, ruche,i)" [id]="ruche.name" [style.top.%]="ruche.hivePosY"
-                            style="transform: none" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
-                            class="hive-group drag-grid {{i}}">
-                            <!-- The div is show when you right click on a hive -->
-                            <div class="divCliqueDroitCache {{i}}">
-                                <span>{{ 'HOME.MANAGE' | translate}} {{ruche.name.slice(-10)}}</span>
-                                <br />
-                                <!-- EDIT HIVE -->
-                                <button title="{{ 'HIVES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
-                                    (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal" class="btn btn-success "
-                                    style="padding: 0;border: none; background: none;">
-                                    <i class="fa fa-edit fa-2x"></i>
-                                </button>
-                                <!-- DELETE HIVE -->
-                                <button type="button" class="btn btn-warning" mwlConfirmationPopover
-                                    popoverTitle="{{ 'HIVES.FORM.DELETE_ASK' | translate}}" placement="top"
-                                    confirmText="{{ 'HIVES.FORM.CONFIRM' | translate}}"
-                                    cancelText="{{ 'HIVES.FORM.CANCEL' | translate}}" (confirm)="deleteRuche(ruche,i)"
-                                    title="{{ 'HIVES.FORM.DELETE' | translate}}"
-                                    style="padding: 0;border: none; background: none;">
-                                    <i class="fa fa-times fa-2x"></i>
-                                </button>
-                            </div>
-                            <!-- The circle for an hive -->
-                            <!-- Hive Handle -->
-        
-                            <!-- (contextmenu)="onRightClick($event,i)"-->
-                            <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)"
-                                (dblclick)="onClick(ruche);" (click)="onPastilleClick(ruche)" [id]="ruche._id"
-                                [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
-                                [style.background-color]="fitnessService.getFitnessByHiveId(ruche._id).fitcolor">
-                                <!-- notifications -->
-                                <!--                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
-                                    class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
-                            </div>
-                            <!-- Hive click -->
-                            <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
-                            <div (click)="onClick(ruche);" class="name collapse in">
-                                <span class="hive-info">{{ruche.name}}</span>
-                            </div>
-                            <div (click)="onClick(ruche);" class="brood collapse ">
-                                <span class="hive-info">{{ruche.name}}</span><br />
-                                <span class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
-                            </div>
-                            <div (click)="onClick(ruche);" class="weight collapse ">
-                                <span class="hive-info">{{ruche.name}}</span><br />
-                                <span class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getDailyWeightByHive(ruche._id)) }}</span>
-                            </div>
-                            <div (click)="onClick(ruche);" id="collapse1"
-                                [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
-                                <span class="hive-info">{{ruche.name}}</span><br />
-                                <span *ngIf="capteurService.getCapteursByHive(ruche._id).length === 0"
-                                    class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
-                                <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
-                                    <ng-container
-                                        *ngFor="let capt of capteurService.getCapteursByHive(ruche._id); let i = index">
-                                        <span [style.background-color]="checkSensor(capt.sensorRef)"
-                                            [title]="deviceSatusService.getMessageBySensor(capt.sensorRef)" class="hive-info">
-                                            {{ capt.sensorRef }}
-                                        </span><br />
-        
+                    <!-- Apiary picture -->
+                    <div class="grid-container" #myBounds id="cadre" ngfDrop [(validDrag)]="baseDropValid" [(file)]="dragPhotoApiary"
+                        class="my-drop-zone" [class.valid-drag]="baseDropValid" (stopped)="onDragEnd($event)"
+                        [(lastBaseUrl)]="rucherService.rucher.photo">
+                        <img [src]="rucherService.rucher.photo" (click)="hideRightClick($event)" style="position: static;"
+                            id="apiary-photos" class="photo" />
+                        <!-- The button to change hive handle => click -->
+                        <div zIndex="100" class="toolApiaryPicture">
+                            <!--<button data-toggle="tooltip" data-html="true" (click)="exportToCsv()" class="btn-picture"
+                            title="{{ 'HOME.PRINT' | translate}}" id="print" type="button"><i class="far fa-file-excel" aria-hidden="true"></i></button>-->
+                            <!-- <button data-toggle="tooltip" data-html="true" class="btn-picture"
+                            title="{{ 'HOME.PRINT' | translate}}" id="print" printSectionId="print-section" [printTitle]="rucherService.rucher.name" ngxPrint [useExistingCss]="true" type="button"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
+                            <input style="display: none" type="file" (lastBaseUrlChange)="changePicturePhotos($event)" ngf [(file)]="selectPhotoApiary"
+                            #fileInput>
+                            <button data-toggle="tooltip" (click)="fileInput.click()" data-html="true" class="btn-picture"
+                            title="" id="selectPhotos" type="button"><i class="fa fa-camera"></i></button>
+                            <button data-toggle="tooltip" data-html="true"
+                                title="{{ 'HOME.PLACEMENTMODE' | translate}}" id="locked" type="button" class="btn-picture"
+                                (click)="changeLockHive()"><i class="fa fa-lock"></i></button>
+                        </div>
+                        <!-- The dive for each hive -->
+                        <ng-container>
+                            <div inBounds="true" [bounds]="myBounds" [zIndex]="100" [preventDefaultEvent]="true"
+                                data-toggle="tooltip" [ngDraggable]="!lockHive" [handle]="HiveHandle"
+                                *ngFor="let ruche of rucheService.ruches; let i = index"
+                                (endOffset)="onMoveEnd($event, ruche,i)" [id]="ruche.name" [style.top.%]="ruche.hivePosY"
+                                style="transform: none" [style.left.%]="ruche.hivePosX" (mouseover)="onMouseover(ruche)"
+                                class="hive-group drag-grid {{i}}">
+                                <!-- The div is show when you right click on a hive -->
+                                <div class="divCliqueDroitCache {{i}}">
+                                    <span>{{ 'HOME.MANAGE' | translate}} {{ruche.name.slice(-10)}}</span>
+                                    <br />
+                                    <!-- EDIT HIVE -->
+                                    <button title="{{ 'HIVES.FORM.EDIT' | translate}}" data-toggle="modal" type="button"
+                                        (click)="onSelectRuche(ruche, i)" data-target="#editRucheModal" class="btn btn-success "
+                                        style="padding: 0;border: none; background: none;">
+                                        <i class="fa fa-edit fa-2x"></i>
+                                    </button>
+                                    <!-- DELETE HIVE -->
+                                    <button type="button" class="btn btn-warning" mwlConfirmationPopover
+                                        popoverTitle="{{ 'HIVES.FORM.DELETE_ASK' | translate}}" placement="top"
+                                        confirmText="{{ 'HIVES.FORM.CONFIRM' | translate}}"
+                                        cancelText="{{ 'HIVES.FORM.CANCEL' | translate}}" (confirm)="deleteRuche(ruche,i)"
+                                        title="{{ 'HIVES.FORM.DELETE' | translate}}"
+                                        style="padding: 0;border: none; background: none;">
+                                        <i class="fa fa-times fa-2x"></i>
+                                    </button>
+                                </div>
+                                <!-- The circle for an hive -->
+                                <!-- Hive Handle -->
+            
+                                <!-- (contextmenu)="onRightClick($event,i)"-->
+                                <div #HiveHandle data-placement="top" [title]="fitnessService.getMessageByFitnessCode(ruche._id)"
+                                    (dblclick)="onClick(ruche);" (click)="onPastilleClick(ruche)" [id]="ruche._id"
+                                    [class]="'ruche '  + (!lockHive ? 'handleHive ': ' ') + checkHiveIsActive(ruche._id)"
+                                    [style.background-color]="fitnessService.getFitnessByHiveId(ruche._id).fitcolor">
+                                    <!-- notifications -->
+                                    <!--                        <span *ngIf="numberAlertsActivesByHive(ruche._id) !== 0"
+                                        class="badge badge-ruche">{{ numberAlertsActivesByHive(ruche._id) }}</span> -->
+                                </div>
+                                <!-- Hive click -->
+                                <!-- The hidden div when you click on name/Brood/Weight/Sensors -->
+                                <div (click)="onClick(ruche);" class="name collapse in">
+                                    <span class="hive-info">{{ruche.name}}</span>
+                                </div>
+                                <div (click)="onClick(ruche);" class="brood collapse ">
+                                    <span class="hive-info">{{ruche.name}}</span><br />
+                                    <span class="hive-info">{{ dailyRecTh.getPourcentByHive(ruche._id) }}</span>
+                                </div>
+                                <div (click)="onClick(ruche);" class="weight collapse ">
+                                    <span class="hive-info">{{ruche.name}}</span><br />
+                                    <span class="hive-info">{{ graphGlobal.getStringWeightFormat(dailyRecordWservice.getDailyWeightByHive(ruche._id)) }}</span>
+                                </div>
+                                <div (click)="onClick(ruche);" id="collapse1"
+                                    [class]="(capteurService.getCapteursByHive(ruche._id).length !== 0 ? 'has-sensors': 'not-sensors')  + ' sensors collapse'">
+                                    <span class="hive-info">{{ruche.name}}</span><br />
+                                    <span *ngIf="capteurService.getCapteursByHive(ruche._id).length === 0"
+                                        class="hive-info">{{ 'HOME.NOSENSORS' | translate}}</span>
+                                    <ng-container *ngIf="capteurService.getCapteursByHive(ruche._id).length !== 0">
+                                        <ng-container
+                                            *ngFor="let capt of capteurService.getCapteursByHive(ruche._id); let i = index">
+                                            <span [style.background-color]="checkSensor(capt.sensorRef)"
+                                                [title]="deviceSatusService.getMessageBySensor(capt.sensorRef)" class="hive-info">
+                                                {{ capt.sensorRef }}
+                                            </span><br />
+            
+                                        </ng-container>
                                     </ng-container>
-                                </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div class="hub-info" title="Hub" *ngIf="hubService.getHubByApiary(rucherService.getCurrentApiary()) != null">
+                            <div (click)="onClick(ruche);">
+                                <div class="ruche"
+                                [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'red': 'green'">
+                                    <i class="fa fa-wifi" aria-hidden="true"></i>
+                                </div>
+                                <span class="hive-info">
+                                    {{ hubService.getHubByApiary(rucherService.getCurrentApiary()).hubRef }}
+                                </span>
                             </div>
                         </div>
-                    </ng-container>
-                    <!-- <a><i [popover]="p" class="fa fa-question-circle-o fa-1g" aria-hidden="true"></i></a> -->
-                    <div [popover]="pictureTooltip" class="infoToolip btn-picture">
-                        <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
                     </div>
-                    <div class="hub-info" title="Hub" *ngIf="hubService.getHubByApiary(rucherService.getCurrentApiary()) != null">
-                        <div (click)="onClick(ruche);">
-                            <div class="ruche"
-                            [style.background-color]="hubService.getHubByApiary(rucherService.getCurrentApiary()).working === 0? 'red': 'green'">
-                                <i class="fa fa-wifi" aria-hidden="true"></i>
-                            </div>
-                            <span class="hive-info">
-                                {{ hubService.getHubByApiary(rucherService.getCurrentApiary()).hubRef }}
-                            </span>
+                    <div class="form-group optionsInfos">
+                        <div class="form-check form-check-inline">
+                            <input (click)="collapseAllActiveButton('nameNav')" data-toggle="collapse" data-target=".name" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="nameNav" checked>
+                            <label class="form-check-label" for="nameNav">
+                                {{ 'HOME.NAVBAR.NAME' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input (click)="collapseAllActiveButton('broodNav')" data-toggle="collapse" data-target=".brood" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="broodNav">
+                            <label class="form-check-label" for="broodNav">
+                                {{ 'HOME.NAVBAR.BROOD' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input (click)="collapseAllActiveButton('weightNav')" data-toggle="collapse" data-target=".weight" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="weightNav">
+                            <label class="form-check-label" for="weightNav">
+                                {{ 'HOME.NAVBAR.WEIGHT' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input (click)="collapseAllActiveButton('sensorsNav')" data-toggle="collapse" data-target=".sensors" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="sensorsNav">
+                            <label class="form-check-label" for="sensorsNav">
+                                {{ 'HOME.NAVBAR.SENSORS' | translate}}
+                            </label>
                         </div>
                     </div>
-                </div>
-                <div class="form-group optionsInfos">
-                    <div class="form-check form-check-inline">
-                        <input (click)="collapseAllActiveButton('nameNav')" data-toggle="collapse" data-target=".name" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="nameNav" checked>
-                        <label class="form-check-label" for="nameNav">
-                            {{ 'HOME.NAVBAR.NAME' | translate}}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input (click)="collapseAllActiveButton('broodNav')" data-toggle="collapse" data-target=".brood" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="broodNav">
-                        <label class="form-check-label" for="broodNav">
-                            {{ 'HOME.NAVBAR.BROOD' | translate}}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input (click)="collapseAllActiveButton('weightNav')" data-toggle="collapse" data-target=".weight" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="weightNav">
-                        <label class="form-check-label" for="weightNav">
-                            {{ 'HOME.NAVBAR.WEIGHT' | translate}}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input (click)="collapseAllActiveButton('sensorsNav')" data-toggle="collapse" data-target=".sensors" class="form-check-input" type="radio" value="" name="inlineRadioOptions" id="sensorsNav">
-                        <label class="form-check-label" for="sensorsNav">
-                            {{ 'HOME.NAVBAR.SENSORS' | translate}}
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <router-outlet (activate)="setRouterPage($event)"></router-outlet>
                 </div>
             </div>
         </div>
-
+        <router-outlet (activate)="setRouterPage($event)"></router-outlet>
     </div>
     <div *ngIf="dragPhotoApiary!=null || userService.getFristConnection()" class="overlay"></div>
     <div *ngIf="userService.getFristConnection()" class="modalMs" id="modalMsNewConnection">

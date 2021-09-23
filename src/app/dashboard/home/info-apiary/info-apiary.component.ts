@@ -9,7 +9,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import { Component, OnInit, AfterViewChecked,HostListener,ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewChecked,HostListener,ViewChild, Renderer2, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { RucherService } from '../../service/api/rucher.service';
 import { AlertsComponent } from './alerts/alerts.component';
@@ -20,7 +20,7 @@ import { NotesComponent } from './notes/notes.component';
   templateUrl: './info-apiary.component.html',
   styleUrls: ['./info-apiary.component.css']
 })
-export class InfoApiaryComponent implements OnInit, AfterViewChecked {
+export class InfoApiaryComponent implements OnInit, OnDestroy,AfterViewChecked {
 
   screenHeight:any;
   screenWidth:any;
@@ -37,11 +37,20 @@ export class InfoApiaryComponent implements OnInit, AfterViewChecked {
    }
 
   ngOnInit() {
-
+    if(this.screenWidth < 990){
+      document.getElementById('content-home').appendChild(document.getElementById('graph'));
+    }
+    document.getElementById('content-home').appendChild(document.getElementById('apiaryLeft'));
     // Active the alert button
     this.eltOnClickId = document.getElementById('infoApiaryButton');
     this.renderer.addClass(this.eltOnClickId, 'active0');
+  }
 
+  ngOnDestroy() {
+    document.getElementById('content-home').removeChild(document.getElementById('apiaryLeft'));
+    if(this.screenWidth < 990){
+      document.getElementById('content-home').removeChild(document.getElementById('graph'));
+    }
   }
 
   @HostListener('window:resize', ['$event'])

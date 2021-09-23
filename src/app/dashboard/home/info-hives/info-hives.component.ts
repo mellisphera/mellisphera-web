@@ -69,8 +69,11 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   }
 
-
   ngOnInit() {
+    if(this.screenWidth < 990){
+      document.getElementById('content-home').appendChild(document.getElementById('graphs'));
+    }
+    document.getElementById('content-home').appendChild(document.getElementById('left'));
     // this.observationService.getObservationByhiveId(this.userService.getIdUserLoged());
     // this.observationService.obsHiveSubject.subscribe();
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(this.rucheService.getCurrentHive()._id);
@@ -320,7 +323,10 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnDestroy() {
-    // this.observationService.obsHiveSubject.unsubscribe();
+    document.getElementById('content-home').removeChild(document.getElementById('left'));
+    if(this.screenWidth < 990){
+      document.getElementById('content-home').removeChild(document.getElementById('graphs'));
+    }
   }
 
 }

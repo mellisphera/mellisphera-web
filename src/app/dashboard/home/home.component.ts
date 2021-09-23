@@ -260,13 +260,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecordWservice.getDailyWeightMaxByApiary(this.rucherService.getCurrentApiary());
     this.loadAlert();
     MyDate.init();
-/*     if (!this.rucherService.rucherSubject.closed) {
-      this.rucherService.rucherSubject.subscribe(() => { }, () => { }, () => {
-        this.dailyRecTh.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-        this.dailyRecordWservice.getDailyWeightMaxByApiary(this.rucherService.getCurrentApiary());
-        this.loadAlert();
-      });
-    } */
+    this.rucherService.getApiaryByUser(this.userService.getIdUserLoged());
 
     if (!this.rucheService.getCurrentHive()) {
       this.rucheService.saveCurrentHive();
@@ -795,41 +789,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
   onSelectRucher(apiary: RucherModel) {
     this.rucherService.rucher = apiary;
     this.rucherService.saveCurrentApiaryId(apiary._id);
-    const location = this.location['_platformStrategy']._platformLocation.location.pathname;
     this.dailyWService.getDailyWeightMaxByApiary(apiary._id);
     // this.observationService.getObservationByapiaryId(this.rucherService.getCurrentApiary());
     //this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-    switch (location) {
-        case '/dashboard/ruche-et-rucher':
-            break;
-        case '/dashboard/home':
-            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-            break;
-        case '/dashboard/home/info-hives':
-            this.rucheService.saveCurrentHive({});
-            this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
-            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-            console.log('okkkk');
-            this.router.navigate(['dashboard/home/info-apiary']);
-            break;
-        case '/dashboard/home/info-apiary':
-            this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
-            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-            this.apiaryChange.emit(this.rucherService.getCurrentApiary());
-            this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
-            this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
-            this.router.navigate(['dashboard/home/info-apiary']);
-            break;
-        case '/dashboard/ruche-detail':
-            this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-            break;
-        case '/dashboard/stack-apiary':
-            // this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
-            break;
-        default:
-            break;
-    }
+    this.rucheService.saveCurrentHive({});
+    this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+    this.rucheService.loadHiveByApiary(this.rucherService.getCurrentApiary());
+    this.apiaryChange.emit(this.rucherService.getCurrentApiary());
+    this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
+    this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
+    this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
+    this.router.navigate(['dashboard/home/info-apiary']);
   }
 
   checkApiaryIfActive(apiaryId: string): string{
