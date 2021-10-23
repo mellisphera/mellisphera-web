@@ -41,9 +41,6 @@ export class InfoApiaryComponent implements OnInit, OnDestroy,AfterViewChecked {
       document.getElementById('content-home').appendChild(document.getElementById('graph'));
     }
     document.getElementById('content-home').appendChild(document.getElementById('apiaryLeft'));
-    // Active the alert button
-    this.eltOnClickId = document.getElementById('infoApiaryButton');
-    this.renderer.addClass(this.eltOnClickId, 'active0');
   }
 
   ngOnDestroy() {
