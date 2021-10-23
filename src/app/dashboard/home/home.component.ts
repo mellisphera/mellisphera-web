@@ -799,7 +799,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked, After
     this.dailyRecordService.getDailyRecThByApiary(this.rucherService.getCurrentApiary());
     this.dailyRecordService.getRecThByApiaryByDateD3D7(this.rucherService.getCurrentApiary(), (new Date()));
     this.inspService.getInspectionByUserId(this.userService.getIdUserLoged());
-    this.router.navigate(['dashboard/home/info-apiary']);
+    if(this.router.url == '/dashboard/home/info-apiary'){
+      this.infoApiaryComponent.alertsComponent.initCalendar();
+    } else {
+      this.router.navigate(['dashboard/home/info-apiary']);
+    }
   }
 
   checkApiaryIfActive(apiaryId: string): string{
