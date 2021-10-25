@@ -287,7 +287,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
           type: 'obs'
         })
       }
-    )   
+    );
   }
 
   compare(a, b) {
@@ -979,6 +979,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
     else{
       this.inspCat.getInspCat().subscribe(
         _inspCat => {
+          this.PICTOS_HIVES_OBS = [];
           let arr = [..._inspCat].sort((a:InspCat, b:InspCat) => { return a.code - b.code });
           arr.forEach(_cat => {
             if(_cat.applies.indexOf("apiary") !== -1 && _cat.img !== "Default" && this.notConstant(_cat)){
@@ -1015,18 +1016,6 @@ export class ExploreComponent implements OnInit, AfterViewInit {
           (<HTMLInputElement>document.getElementsByClassName('add-event-minutes-input')[0]).value = this.newEventDate.getMinutes().toString();
           (<HTMLTextAreaElement>document.getElementsByClassName('add-event-notes-textarea')[0]).value = null;
           (<HTMLTextAreaElement>document.getElementsByClassName('add-event-todo-textarea')[0]).value = null;
-          (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
-          (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
           this.addObsList();
         }
       )   
@@ -1302,11 +1291,6 @@ export class ExploreComponent implements OnInit, AfterViewInit {
       (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'flex';
       return;
     }
-    this.new_event.obs = this.new_event.obs.sort((a,b) => {
-      let iA = this.inspCats.find(_i => _i.name.toLowerCase() === a.name.toLowerCase());
-      let iB = this.inspCats.find(_i => _i.name.toLowerCase() === b.name.toLowerCase());
-      return iA.code - iB.code;
-    });
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
     this.inspService.insertHiveEvent(this.new_event).subscribe(
       _insp => {

@@ -41,7 +41,7 @@
             "PARAMS":"https://doc.mellisphera.com/fr/mellisphera/#parametres-demail"
         },
         "WEATHER":{
-            "RECORDS":"https://doc.mellisphera.com/fr/mellisphera/#releves",
+            "RECORDS":"https://doc.mellisphera.com/fr/mellisphera/#meteo_1",
             "CONFIG":"https://doc.mellisphera.com/fr/mellisphera/#configuration-des-sources-locales"
         }
     },
@@ -1062,6 +1062,38 @@
         "UNDER INNER COVER":{
             "COLOR":"#665191",
             "MSG":"Sous le couvre-cadres"
+        },
+        "CUSTOM (1)":{
+            "COLOR":"#ffa600",
+            "MSG":"Personnalisé (1)"
+        },
+        "CUSTOM (2)":{
+            "COLOR":"#ffa600",
+            "MSG":"Personnalisé (2)"
+        },
+        "CUSTOM (3)":{
+            "COLOR":"#ffa600",
+            "MSG":"Personnalisé (3)"
+        },
+        "CUSTOM (4)":{
+            "COLOR":"#ffa600",
+            "MSG":"Personnalisé (4)"
+        },
+        "CUSTOM (5)":{
+            "COLOR":"#ffa600",
+            "MSG":"Personnalisé (5)"
+        },
+        "CUSTOM (6)":{
+            "COLOR":"#ffa600",
+            "MSG":"Personnalisé (6)"
+        },
+        "CUSTOM (7)":{
+            "COLOR":"#ffa600",
+            "MSG":"Personnalisé (7)"
+        },
+        "UNKNOWN":{
+            "COLOR":"#ffa600",
+            "MSG":"Inconnu"
         }
     },
     "MESSAGES":{

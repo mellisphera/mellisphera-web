@@ -219,7 +219,7 @@ limitations under the License. -->
         </div>
       </div>
       <div class="modal-body">
-        <table style="table-layout: fixed;" id="new_event_table">
+        <table *ngIf="typeEvent === 'hive'" style="table-layout: fixed;" id="new_event_table">
           <thead>
             <tr>
               <th></th>
