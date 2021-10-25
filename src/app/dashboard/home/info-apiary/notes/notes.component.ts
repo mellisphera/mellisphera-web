@@ -697,11 +697,6 @@ export class NotesComponent implements OnInit,AfterViewChecked {
 
   editEvent(): void{
     this.inspectionService.inspectionsApiary[ this.inspectionService.inspectionsApiary.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
-    this.new_event.obs = this.new_event.obs.sort((a,b) => {
-      let iA = this.inspCats.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
-      let iB = this.inspCats.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
-      return iA.code - iB.code;
-    });
     this.inspService.updateEvent(this.new_event).subscribe(
       _insp => {
         let index = this.inspectionService.inspectionsApiary.findIndex( _i => _i._id === _insp._id);
