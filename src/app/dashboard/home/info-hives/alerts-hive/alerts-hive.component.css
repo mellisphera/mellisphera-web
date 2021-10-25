@@ -38,11 +38,11 @@ hr
   margin-top: 25px;
 }
 
- #noAlert{
-   text-align: center;
-   font-size: medium;
-   margin-bottom: 25px;
- }
+#noAlert{
+  text-align: center;
+  font-size: medium;
+  margin-bottom: 25px;
+}
 
 
 .hideCalendar{

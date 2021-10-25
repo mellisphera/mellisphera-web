@@ -13,9 +13,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer.component';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { SharedModule } from '../shared.module';
+import { ngfModule } from 'angular-file';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    imports: [ RouterModule, CommonModule],
+    imports: [
+        RouterModule,
+        CommonModule,
+        TranslateModule,
+        ngfModule,
+        SharedModule,
+        ConfirmationPopoverModule.forRoot({
+            confirmButtonType: 'danger' // set defaults here
+        })
+    ],
     declarations: [ FooterComponent ],
     exports: [ FooterComponent ]
 })

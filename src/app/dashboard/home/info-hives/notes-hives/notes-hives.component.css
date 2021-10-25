@@ -61,7 +61,6 @@ limitations under the License. */
     flex-wrap: wrap;
 }
 .panel{
-    width: 100%;
     margin-bottom:1px !important;
     padding: 4px;
 }
@@ -1195,9 +1194,25 @@ th{
     }
  }
 
- @media screen and (max-width: 400px){
+@media screen and (max-width: 400px){
   .dropdownDelButton, .editButton, .cancelButton{
     width: 90px !important;
     font-size: 12px;
+  }
+}
+
+.note-heading{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+@media screen and (max-width: 1000px){
+  .note-heading{
+    flex-direction: column;
+  }
+  .btn-add-event{
+    margin-top: 5px;
+    width: auto !important;
+    float: right;
   }
 }

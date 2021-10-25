@@ -64,6 +64,7 @@ import { HomeModule } from './home/home.module';
 import { ExploreModule } from './explore/explore.module';
 import { WeatherComponent } from './weather/weather.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { FooterModule } from './shared/footer/footer.module';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { FooterComponent } from './shared/footer/footer.component';
     ArchwizardModule,
     HomeModule,
     ExploreModule,
+    FooterModule
   ],
   providers: [
     RucherService,
@@ -115,7 +117,6 @@ import { FooterComponent } from './shared/footer/footer.component';
     ManageHivesComponent,
     ManageApiarysComponent,
     FeedbackComponent,
-    FooterComponent,
     ManageSensorsComponent,
     ManageNotesComponent,
   ]

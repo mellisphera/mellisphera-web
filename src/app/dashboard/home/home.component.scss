@@ -23,13 +23,27 @@ limitations under the License. */
 }
 
 #date{
-    color: white;
+    color: gray;
     text-align: center;
     font-size: medium;
 }
 
+.date-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
 .range-date{
     cursor: pointer;
+    margin: 0px;
+    width: 35px;
+}
+
+.left-arrow{
+  margin-right: 7px;
 }
 
 li:first-child img{
@@ -129,9 +143,10 @@ li:first-child img{
 }
 
 #global{
+  display: flex;
+  flex-direction: row;
   position: relative;
   margin : 0px;
-  margin-left: 13px;
 }
 // FOR A CELLPHONE SIZE
 #print{
@@ -143,6 +158,7 @@ li:first-child img{
 // PICTURE
 #cadre {
   margin: 0px;
+  margin-top: 10px;
   overflow: hidden;
   //background: url("../../../assets/imageClient/testAccount.png") no-repeat center;
   position: relative;
@@ -172,6 +188,7 @@ li:first-child img{
   max-height: 75vh;
   width: 100%;
   border: 2px solid #4F4F51;
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 1000px){
@@ -181,30 +198,14 @@ li:first-child img{
 // FOR A NORMAL SCREEN
 @media (min-width : 990px){
   #cadre {
-    float: left;
-    // height: 50vh;
-    // background-color: #4F4F51;
-    width: 50%;
-    margin: 0px;
-    margin-top: -8px;
     overflow: hidden;
     position: relative;
     border-bottom: 5px solid transparent;
     border-color: white;
-
-    // transform: rotate(0deg);
   }
 
   .photo{
-/*     max-height: 40vh;
- */    max-width: 100%;
-
-  }
-
-  #right{
-    margin : 0px;
-    margin-left:50%;
-    margin-top: 20px;
+    max-width: 100%;
   }
 }
 @media print{
@@ -214,11 +215,6 @@ li:first-child img{
   }
 }
 
-@media (max-width: 990px) {
-  #cadre{
-    width: 100%;
-  }
-}
 #clickHive{
   margin-top: 20px;
 }
@@ -355,10 +351,6 @@ li:first-child img{
   margin-left: 40px;
 }
 
-// .grid-container{
-//   text-align: center;
-// }
-
 .my-drop-zone{
   text-align:center;
   //width: 100%;
@@ -483,6 +475,8 @@ li:first-child img{
     font-size: 18px;
   }
   #global{
+    flex-direction: column;
+    align-items: center;
     margin-left: 0px;
   }
   .buttonLeft{
@@ -806,7 +800,7 @@ li:first-child img{
 
 .date-arrow{
   border: none;
-  color: white;
+  color: grey;
   padding: 0px !important;
 }
 
@@ -916,4 +910,91 @@ li:first-child img{
   #modalMsNewConnection{
     width: 100%;
   }
+}
+
+.form-check-input{
+  margin-left: 5px;
+  
+}
+
+.form-check-label{
+  font-family: Poppins;
+  margin-left: 5px;
+}
+
+.optionsInfos{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 35px;
+  div{
+    margin-right: 20px;
+  }
+}
+
+.circle{
+  border: 1px solid black;
+  display: inline-block;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+  margin-top: 2px;
+}
+
+.apiaryGroup{
+  position: relative;
+  top:0;
+  margin-top: 56px;
+  width: 200px;
+  min-width: 180px;
+}
+@media (max-width: 990px) {
+  .apiaryGroup{
+    margin-top: 5px;
+    width: 100%;
+  }
+}
+
+.apiaryGroup, .list-group-item {
+  color: black;
+  cursor: pointer;
+}
+
+.circle:hover{
+  background-color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+
+.content-home{
+  width: 100%;
+  max-width: 830px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.apiary-img-div{
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 770px) {
+  .content-home{
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
+
+.list-group-hive-item{
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.apiary-active{
+  background-color: #eafffd;
+}
+
+.apiary-active a span{
+  font-weight: bold;
 }

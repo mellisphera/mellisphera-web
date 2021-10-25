@@ -16,6 +16,10 @@ export class WeatherOptionService {
   public user_apiaries: RucherModel[] = [];
 
   constructor(private rucherService: RucherService, private userService: UserloggedService) {
+    this.updateUserApiaries();
+  }
+
+  updateUserApiaries(){
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
         this.user_apiaries = [..._apiaries].sort(this.compare);

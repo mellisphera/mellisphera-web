@@ -40,26 +40,17 @@ hr
     color: #70A8B2;
 }
 
- #general{
-     margin: 0px;
-     width: 500px;
- }
-
- #left{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 50%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#notes{
+#left{
     width: 100%;
 }
-
-#sensors{
-    width: 50%;
+#graphs{
+    width: 400px;
+    margin-top: 20px;
+}
+@media (max-width: 990px) {
+    #graphs{
+        width: 100%;
+    }
 }
 .calendar{
     height: 310px;
@@ -110,9 +101,6 @@ and (orientation : landscape) {
     .calendar{
         height: 280px;
     }
-    #general{
-        width: 300px;
-    }
 }
 
 /* iPads (portrait) ----------- */
@@ -130,10 +118,7 @@ and (orientation : portrait) {
 @media only screen
 and (min-width : 1224px) {
     .calendar{
-        height: 280px;
-    }
-    #general{
-        width: 350px;
+        height: 310px;
     }
 /* Styles */
 }
@@ -142,7 +127,7 @@ and (min-width : 1224px) {
 @media only screen
 and (min-width : 1824px) {
     .calendar{
-        height: 285px;
+        height: 320px;
     }
 }
 
@@ -153,48 +138,10 @@ only screen and (min-device-pixel-ratio : 1.5) {
 /* Styles */
 }
 
-/* @media (min-width : 990px) and (max-width : 1550px){
-    #notes,#sensors{
-        min-width: 100%;
-    }
-} */
 @media (max-width : 990px){
     #left{
         position: relative;
         top: 0px !important;
         display: block;
     }
-
-    #notes{
-        width: 200%;
-    }
-    #general{
-        width: 100%;
-    }
-    #sensors{
-        width: 200%;
-    }
 }
-/* @media (max-height : 400px){
-#alerts{
-    height: 24vh;
-    }
-}
-
-
-
-@media (max-width : 990px){
-    #left{
-        position: relative;
-        top: 0px !important;
-        display: block;
-    }
-
-    #notes{
-        width: 200%;
-    }
-    
-    #sensors{
-        width: 200%;
-    }
-} */

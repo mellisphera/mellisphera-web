@@ -22,21 +22,12 @@ limitations under the License. -->
             style="width:25px;margin-left:-5px;" />
           {{this.rucherService.rucher.name}}</span>
       </div>
-      <div class="notes-add-div dropleft" style="float: right;">
-        <button [disabled]="rucherService.rucher._id == null"
-          style="float:right; width:45px; height: 45px; padding:0 !important; border:none; background: none; margin-top: -11px;"
-          [disabled]="!(this.userService.checkWriteObject(this.rucherService.rucher.userId))"
-          class="btn btn-success btn_add dropdown-toggle" [innerHTML]="more_icon_white | safeHtml"
-          [id]="'dropdownAddMenu'" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div>
+        <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default btn-add-event"
+          data-toggle="modal" data-target="#newObservationModal" (click)="showAddEvent()">
+          <i style="margin-left: 0px; margin-right: 5px;" class="fas fa-plus"></i>
+          {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
         </button>
-        <div class="dropdown-menu dropdown-menu-right" [attr.aria-labelledby]="'dropdownAddMenu'"
-          style="top:6%; right:1%; padding:0; background-color: white; width: auto;">
-          <button style="width: 100%; border: 0; text-align: left;" class="btn btn-default dropdown-item"
-            data-toggle="modal" data-target="#newObservationModal" (click)="showAddEvent()">
-            <i style="margin-left: 0px; margin-right: 10px;" class="fas fa-plus"></i>
-            {{'MELLICHARTS.EVENT.ADD.TITLE' | translate}}
-          </button>
-        </div>
       </div>
 
     </div>

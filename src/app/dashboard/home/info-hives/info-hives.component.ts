@@ -69,8 +69,11 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   }
 
-
   ngOnInit() {
+    if(this.screenWidth < 990){
+      document.getElementById('content-home').appendChild(document.getElementById('graphs'));
+    }
+    document.getElementById('content-home').appendChild(document.getElementById('left'));
     // this.observationService.getObservationByhiveId(this.userService.getIdUserLoged());
     // this.observationService.obsHiveSubject.subscribe();
     this.dailyRecordWservice.getDailyRecordsWbyhiveId(this.rucheService.getCurrentHive()._id);
@@ -242,10 +245,6 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
-    if (this.screenWidth > 990) {
-      const height = document.getElementById('cadre').offsetHeight;
-      document.getElementById('left').style.top = '' + (0 + height) + 'px';
-    }
   }
 
   onChangeNote(): void {
@@ -324,7 +323,10 @@ export class InfoHivesComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnDestroy() {
-    // this.observationService.obsHiveSubject.unsubscribe();
+    document.getElementById('content-home').removeChild(document.getElementById('left'));
+    if(this.screenWidth < 990){
+      document.getElementById('content-home').removeChild(document.getElementById('graphs'));
+    }
   }
 
 }

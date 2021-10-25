@@ -232,7 +232,7 @@ export class WeatherRecordsComponent implements OnInit {
     yAxisRain.min = 0;
     yAxisRain.max = this.unitService.getUserPref().unitSystem == "METRIC" ? 10 : 0.4;
     yAxisRain.gridIndex = 4;
-    yAxisRain.interval = 1;
+    yAxisRain.interval = this.unitService.getUserPref().unitSystem == "METRIC" ? 1 : 0.05;
     yAxisRain.axisLabel.margin = 5;
     this.options.yAxis.push(yAxisRain);
 

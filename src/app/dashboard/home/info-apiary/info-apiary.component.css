@@ -14,11 +14,6 @@ hr
     display: inline-block;
     width: 100%;
 }
-
-#allPage{
-    margin-left: -100%;
-    width: 200%;
-}
 .btn-tooltip{
     color: #4f4f51;
     opacity: 1;
@@ -38,55 +33,23 @@ hr
     font-weight: bold;
 }
 
-/* #apiaryGeneral{
-    margin-top: -30px;
-} */
-
-#apiaryGeneral{
-    width: 500px;
-}
 #apiaryLeft{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 50%;
+    width: 100%;
 }
-#apiaryAlerts{
-    height: 350px;
+#graph{
+    width: 400px;
+    margin-top: 20px;
 }
 
-@media (min-width : 990px){
+@media (max-width: 990px) {
     #graph{
-        padding-top: 100px;
+        width: 100%;
     }
 }
 
-#states{
-    position: relative;
-    width: 200%;
-    margin-left: -100%;
+@media (max-width: 920px) {
+    #apiaryGeneral{
+        flex-direction: column-reverse;
+    }
 }
 
-
-
-@media (max-width : 990px){
-   #apiaryLeft{
-       position: relative;
-       top: 0px !important;
-       display: block;
-       width: 100%;
-   }
-   #apiaryGeneral{
-    width: 100%;
-    }
-    #apiaryAlerts{
-    height: 340px;
-    }
-
-   #states{
-    position: relative;
-    width: 100%;
-    margin-left: 0%;
-    }
-   
-}
