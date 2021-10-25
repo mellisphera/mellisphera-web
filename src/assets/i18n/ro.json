@@ -41,7 +41,7 @@
             "PARAMS":"https://doc.mybroodminder.com/en/mellisphera/#email-settings"
         },
         "WEATHER":{
-            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/#readings",
+            "RECORDS":"https://doc.mybroodminder.com/en/mellisphera/#weather_1",
             "CONFIG":"https://doc.mybroodminder.com/en/mellisphera/#configuration"
         }
     },

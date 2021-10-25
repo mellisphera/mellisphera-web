@@ -41,7 +41,7 @@
             "PARAMS":"https://doc.mellisphera.com/fr/mellisphera/#parametres-demail"
         },
         "WEATHER":{
-            "RECORDS":"https://doc.mellisphera.com/fr/mellisphera/#releves",
+            "RECORDS":"https://doc.mellisphera.com/fr/mellisphera/#meteo_1",
             "CONFIG":"https://doc.mellisphera.com/fr/mellisphera/#configuration-des-sources-locales"
         }
     },
