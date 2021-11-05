@@ -247,14 +247,14 @@ th{
 
 .add-event-choice-obs,
 .edit-event-choice-obs{
-  width: 92%;
+  width: 100%;
   white-space: nowrap;
   overflow: auto;
 }
 
 .add-event-notes, .add-event-todo,
 .edit-event-notes, .edit-event-todo{
-  width: 92%;
+  width: 100%;
   height: 16%;
   margin-top: 6px;
   display: flex;
