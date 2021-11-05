@@ -699,9 +699,7 @@ export class EventsComponent implements OnInit {
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
     this.updateRowInsp(this.eventToEdit, rowIndex);
     this.eventToEdit.obs.sort((a,b) => {
-      let iA = this.inspCats.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
-      let iB = this.inspCats.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
-      return iA.code - iB.code;
+      return a.code - b.code;
     });
     this.inspService.updateEvent(this.eventToEdit).subscribe(
       () => {},
