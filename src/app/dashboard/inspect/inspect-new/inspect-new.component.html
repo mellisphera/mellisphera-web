@@ -132,9 +132,9 @@
                             </td>
                             <td>
                               <p style="font-family: 'Poppins'; font-size: 14px; margin: 0;"
-                                *ngFor="let brood of (brood_by_apiary | filterBy: 'hiveId':ruche._id);" >
+                                *ngFor="let brood of (brood_by_apiary | filterBy: 'hiveId':ruche._id);">
                                 {{ brood ? brood.brood.toFixed(0) + '%' : '' }}
-                            </p>
+                              </p>
                             </td>
                           </tr>
                           <tr>

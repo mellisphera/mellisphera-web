@@ -1416,7 +1416,9 @@ export class InspectNewComponent implements OnInit {
       this.pdf.circle(63, startY+20+(mult*30), 1.5, "S");
 
       this.pdf.setFontSize(9);
-      this.pdf.text( brood ? brood.brood.toFixed(0) + '%' : '', 67, startY+16+(mult*30));
+      if (brood){
+        this.pdf.text( brood.brood ? brood.brood.toFixed(0) + '%' : '', 67, startY+16+(mult*30));
+      }
       let textW = weight ? this.unitService.convertWeightFromuserPref(weight.weight_23f, this.unitService.getUserPref().unitSystem, true).toFixed(0) + (this.unitService.getUserPref().unitSystem === 'IMPERIAL' ? 'lbs':'Kg') : '';
       this.pdf.text(textW, 67, startY+21+(mult*30));
 
@@ -1458,7 +1460,10 @@ export class InspectNewComponent implements OnInit {
 
       (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + loading + "%";
 
+      console.log(loading);
+
     }
+    console.log("OK");
 
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "100%";
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.READY_DL');
