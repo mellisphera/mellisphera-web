@@ -1460,10 +1460,7 @@ export class InspectNewComponent implements OnInit {
 
       (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + loading + "%";
 
-      console.log(loading);
-
     }
-    console.log("OK");
 
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "100%";
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.READY_DL');
