@@ -86,8 +86,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     type: null,
     description: null,
     tags: [],
-    tasks: [],
-    obs: [],
+    events: [],
     todo: null
   };
 
@@ -368,8 +367,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       type: null,
       description: null,
       tags: [],
-      tasks: [],
-      obs: [],
+      events: [],
       todo: null
     };
 
@@ -398,7 +396,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     this.new_event.userId = this.userService.getIdUserLoged();
     this.new_event.createDate = new Date();
     this.new_event.opsDate = new Date();
-    this.new_event.obs = [];
+    this.new_event.events = [];
     this.newEventDate = new Date();
     this.new_event.type = 'hive';
     (<HTMLInputElement>document.getElementsByClassName('add-event-time-input')[0]).value = this.unitService.getDailyDate(this.newEventDate);
@@ -453,12 +451,12 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     const button = (<HTMLButtonElement> evt.target);
     if ( button.classList.contains(this.PICTOS_HIVES_OBS[btnIndex].class + '-active') ) {
       button.classList.remove(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
-      const i = this.new_event.obs.findIndex(e => e.name === this.PICTOS_HIVES_OBS[btnIndex].name);
-      this.new_event.obs.splice(i, 1);
+      const i = this.new_event.events.findIndex(e => e.name === this.PICTOS_HIVES_OBS[btnIndex].name);
+      this.new_event.events.splice(i, 1);
       return;
     }
     button.classList.add(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
-    this.new_event.obs.push({name: this.PICTOS_HIVES_OBS[btnIndex].name, img: this.PICTOS_HIVES_OBS[btnIndex].img});
+    this.new_event.events.push({name: this.PICTOS_HIVES_OBS[btnIndex].name, img: this.PICTOS_HIVES_OBS[btnIndex].img});
     return;
   }
 
@@ -558,9 +556,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       return;
     }
     (<HTMLElement>document.getElementsByClassName('add-event-time-error')[0]).style.display = 'none';
-    this.new_event.obs = this.new_event.obs.sort((a,b) => {
-      let iA = this.inspCats.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
-      let iB = this.inspCats.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
+    this.new_event.events = this.new_event.events.sort((a,b) => {
+      let iA = this.inspCats.find(_c => _c.name.toLowerCase() === a.name.toLowerCase()) || {code: 0};
+      let iB = this.inspCats.find(_c => _c.name.toLowerCase() === b.name.toLowerCase()) || {code: 0};
       return iA.code - iB.code;
     });
     this.inspectionService.insertHiveEvent(this.new_event).subscribe(
@@ -608,89 +606,88 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       type: insp.type.valueOf(),
       description: insp.description != null ? insp.description.valueOf() : null,
       tags: insp.tags != null ? [...insp.tags] : [],
-      tasks: insp.tasks != null ? [...insp.tasks] : [],
-      obs: insp.obs != null ? [...insp.obs] : [],
+      events: insp.events != null ? [...insp.events] : [],
       todo: insp.todo != null ? insp.todo.valueOf() : null
     };
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Nobees') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Nobees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Lowbees') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Lowbees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
     }
     
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Normbees') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Normbees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Highbees') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Highbees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = true;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Nobrood') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Nobrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Lowbrood') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Lowbrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Normbrood') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Normbrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Highbrood') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Highbrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = true;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Nores') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Nores') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Lowres') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Lowres') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Normres') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Normres') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
     }
 
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Highres') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Highres') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
@@ -717,7 +714,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
       }
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
 
-      if(this.new_event.obs != null && this.new_event.obs.findIndex( _o => _o.name === this.PICTOS_HIVES_OBS[i].name ) !== -1){
+      if(this.new_event.events != null && this.new_event.events.findIndex( _o => _o.name === this.PICTOS_HIVES_OBS[i].name ) !== -1){
         button.classList.add(this.PICTOS_HIVES_OBS[i].class + '-active');
       }
 
@@ -740,19 +737,19 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     (<HTMLButtonElement>document.getElementsByClassName('brood-drone')[1]).classList.remove('brood-drone-active');*/
     
 
-    /*if(this.new_event.obs.findIndex(_o => _o.name === 'Nonebrood') !== -1){
+    /*if(this.new_event.events.findIndex(_o => _o.name === 'Nonebrood') !== -1){
       (<HTMLButtonElement>document.getElementsByClassName('brood-none')[1]).classList.add('brood-none-active')
     }
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Egg') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Egg') !== -1){
       (<HTMLButtonElement>document.getElementsByClassName('brood-egg')[1]).classList.add('brood-egg-active');
     }
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Larva') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Larva') !== -1){
       (<HTMLButtonElement>document.getElementsByClassName('brood-larva')[1]).classList.add('brood-larva-active');
     }
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Pupa') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Pupa') !== -1){
       (<HTMLButtonElement>document.getElementsByClassName('brood-pupa')[1]).classList.add('brood-pupa-active');
     }
-    if(this.new_event.obs.findIndex(_o => _o.name === 'Drone') !== -1){
+    if(this.new_event.events.findIndex(_o => _o.name === 'Drone') !== -1){
       (<HTMLButtonElement>document.getElementsByClassName('brood-drone')[1]).classList.add('brood-drone-active');
     }*/
   }
@@ -764,13 +761,13 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
     tr.cells[1].innerHTML = this.new_event.description;
     const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
     obsDiv.innerHTML = '';
-    if(this.new_event.obs != null){
-      for (let i=0; i < this.new_event.obs.length; i++){
+    if(this.new_event.events != null){
+      for (let i=0; i < this.new_event.events.length; i++){
 
         const button = document.createElement('button');
         button.className = 'hives-obs-add';
 
-        let index = this.PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.obs[i].name);
+        let index = this.PICTOS_HIVES_OBS.findIndex(_picto => _picto.name === this.new_event.events[i].name);
         button.classList.add(this.PICTOS_HIVES_OBS[index].class);
         button.classList.add(this.PICTOS_HIVES_OBS[index].class + '-active');
 
@@ -786,9 +783,9 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
 
   editEvent(): void{
     this.inspectionService.inspectionsHive[ this.inspectionService.inspectionsHive.findIndex(_insp => _insp._id === this.new_event._id) ] = Object.assign({}, this.new_event);
-    this.new_event.obs = this.new_event.obs.sort((a,b) => {
-      let iA = this.inspCats.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
-      let iB = this.inspCats.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
+    this.new_event.events = this.new_event.events.sort((a,b) => {
+      let iA = this.inspCats.find(_c => _c.name.toLowerCase() === a.name.toLowerCase()) || {code: 0};
+      let iB = this.inspCats.find(_c => _c.name.toLowerCase() === b.name.toLowerCase()) || {code: 0};
       return iA.code - iB.code;
     });
     this.inspectionService.updateEvent(this.new_event).subscribe(
@@ -838,41 +835,41 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+        this.new_event.events.push({name:'Lowbees', img:'lowbees_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normbees', img:'normbees_b.svg'});
+        this.new_event.events.push({name:'Normbees', img:'normbees_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highbees', img:'highbees_b.svg'});
+        this.new_event.events.push({name:'Highbees', img:'highbees_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nobees', img:'nobees_b.svg'});
+        this.new_event.events.push({name:'Nobees', img:'nobees_b.svg'});
         break;
     }
     return;
@@ -885,41 +882,41 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+        this.new_event.events.push({name:'Lowbees', img:'lowbees_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normbees', img:'normbees_b.svg'});
+        this.new_event.events.push({name:'Normbees', img:'normbees_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highbees', img:'highbees_b.svg'});
+        this.new_event.events.push({name:'Highbees', img:'highbees_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nobees', img:'nobees_b.svg'});
+        this.new_event.events.push({name:'Nobees', img:'nobees_b.svg'});
         break;
     }
     return;
@@ -932,41 +929,41 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+        this.new_event.events.push({name:'Lowbrood', img:'lowbrood_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+        this.new_event.events.push({name:'Normbrood', img:'normbrood_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+        this.new_event.events.push({name:'Highbrood', img:'highbrood_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+        this.new_event.events.push({name:'Nobrood', img:'nobrood_b.svg'});
         break;
     }
     return;
@@ -979,41 +976,41 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+        this.new_event.events.push({name:'Lowbrood', img:'lowbrood_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+        this.new_event.events.push({name:'Normbrood', img:'normbrood_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+        this.new_event.events.push({name:'Highbrood', img:'highbrood_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+        this.new_event.events.push({name:'Nobrood', img:'nobrood_b.svg'});
         break;
     }
     return;
@@ -1026,41 +1023,41 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowres', img:'lowres_b.svg'});
+        this.new_event.events.push({name:'Lowres', img:'lowres_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normres', img:'normres_b.svg'});
+        this.new_event.events.push({name:'Normres', img:'normres_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highres', img:'highres_b.svg'});
+        this.new_event.events.push({name:'Highres', img:'highres_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nores', img:'nores_b.svg'});
+        this.new_event.events.push({name:'Nores', img:'nores_b.svg'});
         break;
       }
       return;
@@ -1073,41 +1070,41 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
           (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
-          index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+          index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.new_event.obs.splice(index,1);
+            this.new_event.events.splice(index,1);
           }
-          this.new_event.obs.push({name:'Lowres', img:'lowres_b.svg'});
+          this.new_event.events.push({name:'Lowres', img:'lowres_b.svg'});
           break;
         case 'avg':
           (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
-          index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+          index = this.new_event.events.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.new_event.obs.splice(index,1);
+            this.new_event.events.splice(index,1);
           }
-          this.new_event.obs.push({name:'Normres', img:'normres_b.svg'});
+          this.new_event.events.push({name:'Normres', img:'normres_b.svg'});
           break;
         case 'high':
           (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
-          index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
+          index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.new_event.obs.splice(index,1);
+            this.new_event.events.splice(index,1);
           }
-          this.new_event.obs.push({name:'Highres', img:'highres_b.svg'});
+          this.new_event.events.push({name:'Highres', img:'highres_b.svg'});
           break;
         case 'none':
           (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
-          index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
+          index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
           if(index > -1){
-            this.new_event.obs.splice(index,1);
+            this.new_event.events.splice(index,1);
           }
-          this.new_event.obs.push({name:'Nores', img:'nores_b.svg'});
+          this.new_event.events.push({name:'Nores', img:'nores_b.svg'});
           break;
       }
       return;

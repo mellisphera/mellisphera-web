@@ -65,8 +65,7 @@ export class InspectNewComponent implements OnInit {
     opsDate: null,
     type: 'apiary',
     tags: [],
-    tasks: [],
-    obs: [],
+    events: [],
     description: null,
     todo: null
   }
@@ -81,8 +80,7 @@ export class InspectNewComponent implements OnInit {
     opsDate: null,
     type: 'hive',
     tags: [],
-    tasks: [],
-    obs: [],
+    events: [],
     description: null,
     todo: null
   }
@@ -254,48 +252,26 @@ export class InspectNewComponent implements OnInit {
       button.className = button.className.slice(0, -3);
       button.className += '_b';
       if(type === 'apiary'){
-        if(nameCat === 'act'){
-          index = this.new_apiary_insp.tasks.findIndex(_t => _t.name === inspCat.name)
-          this.new_apiary_insp.tasks.splice(index, 1);
-        }
-        if(nameCat === 'obs'){
-          index = this.new_apiary_insp.obs.findIndex(_t => _t.name === inspCat.name)
-          this.new_apiary_insp.obs.splice(index, 1);
-        }
+        index = this.new_apiary_insp.events.findIndex(_t => _t.name === inspCat.name)
+        this.new_apiary_insp.events.splice(index, 1);
         return;
       }
       if( type === 'hive' ){
         let indexInsp = this.hive_insps.findIndex( _i => _i.hiveId === ruche._id );
-        if(nameCat === 'act'){
-          index = this.hive_insps[indexInsp].tasks.findIndex(_t => _t.name === inspCat.name)
-          this.hive_insps[indexInsp].tasks.splice(index, 1);
-        }
-        if(nameCat === 'obs'){
-          index = this.hive_insps[indexInsp].obs.findIndex(_t => _t.name === inspCat.name)
-          this.hive_insps[indexInsp].obs.splice(index, 1);
-        }
+        index = this.hive_insps[indexInsp].events.findIndex(_t => _t.name === inspCat.name)
+        this.hive_insps[indexInsp].events.splice(index, 1);
         return;
       }
     }
     button.className = button.className.slice(0, -2);
     button.className += '_cb';
     if(type === 'apiary'){
-      if(nameCat === 'act'){
-        this.new_apiary_insp.tasks.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
-      }
-      if(nameCat === 'obs'){
-        this.new_apiary_insp.obs.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
-      }
+      this.new_apiary_insp.events.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
       return;
     }
     if( type === 'hive' ){
       let indexInsp = this.hive_insps.findIndex( _i => _i.hiveId === ruche._id );
-      if(nameCat === 'act'){
-        index = this.hive_insps[indexInsp].tasks.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
-      }
-      if(nameCat === 'obs'){
-        index = this.hive_insps[indexInsp].obs.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'})
-      }
+      index = this.hive_insps[indexInsp].events.push({name:inspCat.name, img:inspCat.img.toLocaleLowerCase() + '_b.svg'});
       return;
     }
 
@@ -320,8 +296,7 @@ export class InspectNewComponent implements OnInit {
             opsDate: this.new_apiary_insp.opsDate,
             type: 'hive',
             tags: [],
-            tasks: [],
-            obs: [],
+            events: [],
             description: null,
             todo: null
           }
@@ -468,8 +443,7 @@ export class InspectNewComponent implements OnInit {
   }
 
   ifHiveInspEmpty(insp: Inspection): boolean{
-    return insp.obs.length === 0 &&
-           insp.tasks.length === 0 &&
+    return insp.events.length === 0 &&
            (insp.description === '' || insp.description == null || insp.description == undefined)  &&
            (insp.todo === '' || insp.todo == null || insp.todo == undefined);
   }
@@ -485,6 +459,7 @@ export class InspectNewComponent implements OnInit {
       (<HTMLElement>document.getElementById("btn-save-text")).style.display ="none";
       (<HTMLButtonElement>document.getElementById("btn-save")).disabled = true;
       let inspHivesToPush = [...this.hive_insps];
+      console.log("this.hive_insps", this.hive_insps); // TODO: remove
       let i = 0;
       while(i < inspHivesToPush.length){
         let insp : Inspection = inspHivesToPush[i];
@@ -496,18 +471,19 @@ export class InspectNewComponent implements OnInit {
         }
       }
       this.new_apiary_insp.createDate = new Date();
-      this.new_apiary_insp.obs = this.new_apiary_insp.obs.sort((a,b) => {
-        let iA = this.inspCat.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
-        let iB = this.inspCat.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
+      this.new_apiary_insp.events = this.new_apiary_insp.events.sort((a,b) => {
+        let iA = this.inspCat.find(_c => _c.name.toLowerCase() === a.name.toLowerCase()) || {code: 0};
+        let iB = this.inspCat.find(_c => _c.name.toLowerCase() === b.name.toLowerCase()) || {code: 0};
         return iA.code - iB.code;
       });
+      console.log("inspHivesToPush", inspHivesToPush); // TODO: remove
       this.inspService.insertApiaryInsp(this.new_apiary_insp).subscribe(
         _api_insp => {
           //console.log(_api_insp);
           inspHivesToPush.forEach(_h => {
-            _h.obs = _h.obs.sort((a,b) => {
-              let iA = this.inspCat.find(_c => _c.name.toLowerCase() === a.name.toLowerCase());
-              let iB = this.inspCat.find(_c => _c.name.toLowerCase() === b.name.toLowerCase());
+            _h.events = _h.events.sort((a,b) => {
+              let iA = this.inspCat.find(_c => _c.name.toLowerCase() === a.name.toLowerCase()) || {code: 0};
+              let iB = this.inspCat.find(_c => _c.name.toLowerCase() === b.name.toLowerCase()) || {code: 0};
               return iA.code - iB.code;
             });
             _h.apiaryInspId = _api_insp._id;
@@ -551,21 +527,21 @@ export class InspectNewComponent implements OnInit {
       case 'bad':
         if( <HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0] != null ){
           (<HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0]).classList.remove('btn-normal-active');
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalnormal"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Generalnormal"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
         }
         if( <HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0] != null ){
           (<HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0]).classList.remove('btn-happy-active');
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalgood"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Generalgood"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
         }
 
         if(<HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0] == null){
-          this.new_apiary_insp.obs.push({name:'Generallow', img:'generallow_b.svg'});
+          this.new_apiary_insp.events.push({name:'Generallow', img:'generallow_b.svg'});
           (<HTMLButtonElement>document.getElementsByClassName('btn-sad')[0]).classList.add('btn-sad-active');
         }
 
@@ -573,21 +549,21 @@ export class InspectNewComponent implements OnInit {
       case 'normal':
         if( <HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0] != null ){
           (<HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0]).classList.remove('btn-sad-active');
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generallow"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Generallow"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
         }
         if( <HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0] != null ){
           (<HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0]).classList.remove('btn-happy-active');
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalgood"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Generalgood"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
         }
 
         if( <HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0] == null ){
-          this.new_apiary_insp.obs.push({name:'Generalnormal', img:'generalnormal_b.svg'});
+          this.new_apiary_insp.events.push({name:'Generalnormal', img:'generalnormal_b.svg'});
           (<HTMLButtonElement>document.getElementsByClassName('btn-normal')[0]).classList.add('btn-normal-active');
         }
 
@@ -595,21 +571,21 @@ export class InspectNewComponent implements OnInit {
       case 'good':
         if( <HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0] != null ){
           (<HTMLButtonElement>document.getElementsByClassName('btn-sad-active')[0]).classList.remove('btn-sad-active');
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generallow"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Generallow"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
         }
         if( <HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0] != null ){
           (<HTMLButtonElement>document.getElementsByClassName('btn-normal-active')[0]).classList.remove('btn-normal-active');
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Generalnormal"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Generalnormal"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
         }
 
         if( <HTMLButtonElement>document.getElementsByClassName('btn-happy-active')[0] == null ){
-          this.new_apiary_insp.obs.push({name:'Generalgood', img:'generalgood_b.svg'});
+          this.new_apiary_insp.events.push({name:'Generalgood', img:'generalgood_b.svg'});
           (<HTMLButtonElement>document.getElementsByClassName('btn-happy')[0]).classList.add('btn-happy-active');
         }
 
@@ -625,41 +601,41 @@ export class InspectNewComponent implements OnInit {
           (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+          this.new_apiary_insp.events.push({name:'Lowbees', img:'lowbees_b.svg'});
           break;
         case 'avg':
           (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Normbees', img:'normbees_b.svg'});
+          this.new_apiary_insp.events.push({name:'Normbees', img:'normbees_b.svg'});
           break;
         case 'high':
           (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Highbees', img:'highbees_b.svg'});
+          this.new_apiary_insp.events.push({name:'Highbees', img:'highbees_b.svg'});
           break;
         case 'none':
           (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Nobees', img:'nobees_b.svg'});
+          this.new_apiary_insp.events.push({name:'Nobees', img:'nobees_b.svg'});
           break;
       }
       return;
@@ -671,41 +647,41 @@ export class InspectNewComponent implements OnInit {
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Lowbees', img:'lowbees_b.svg'});
           break;
         case 'avg':
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Normbees', img:'normbees_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Normbees', img:'normbees_b.svg'});
           break;
         case 'high':
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Highbees', img:'highbees_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Highbees', img:'highbees_b.svg'});
           break;
         case 'none':
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_bees_high_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Nobees', img:'nobees_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Nobees', img:'nobees_b.svg'});
           break;
       }
       return;
@@ -721,41 +697,41 @@ export class InspectNewComponent implements OnInit {
           (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+          this.new_apiary_insp.events.push({name:'Lowbrood', img:'lowbrood_b.svg'});
           break;
         case 'avg':
           (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+          this.new_apiary_insp.events.push({name:'Normbrood', img:'normbrood_b.svg'});
           break;
         case 'high':
           (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+          this.new_apiary_insp.events.push({name:'Highbrood', img:'highbrood_b.svg'});
           break;
         case 'none':
           (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+          this.new_apiary_insp.events.push({name:'Nobrood', img:'nobrood_b.svg'});
           break;
       }
       return;
@@ -767,41 +743,41 @@ export class InspectNewComponent implements OnInit {
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Lowbrood', img:'lowbrood_b.svg'});
           break;
         case 'avg':
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Normbrood', img:'normbrood_b.svg'});
           break;
         case 'high':
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Highbrood', img:'highbrood_b.svg'});
           break;
         case 'none':
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_brood_high_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Nobrood', img:'nobrood_b.svg'});
           break;
       }
       return;
@@ -816,41 +792,41 @@ export class InspectNewComponent implements OnInit {
           (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Lowres', img:'lowres_b.svg'});
+          this.new_apiary_insp.events.push({name:'Lowres', img:'lowres_b.svg'});
           break;
         case 'avg':
           (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Normres', img:'normres_b.svg'});
+          this.new_apiary_insp.events.push({name:'Normres', img:'normres_b.svg'});
           break;
         case 'high':
           (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Highres', img:'highres_b.svg'});
+          this.new_apiary_insp.events.push({name:'Highres', img:'highres_b.svg'});
           break;
         case 'none':
           (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
-          index = this.new_apiary_insp.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
+          index = this.new_apiary_insp.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
           if(index > -1){
-            this.new_apiary_insp.obs.splice(index,1);
+            this.new_apiary_insp.events.splice(index,1);
           }
-          this.new_apiary_insp.obs.push({name:'Nores', img:'nores_b.svg'});
+          this.new_apiary_insp.events.push({name:'Nores', img:'nores_b.svg'});
           break;
       }
       return;
@@ -862,41 +838,41 @@ export class InspectNewComponent implements OnInit {
           (<HTMLInputElement>document.getElementById(hive.name + "_res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Lowres', img:'lowres_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Lowres', img:'lowres_b.svg'});
           break;
         case 'avg':
           (<HTMLInputElement>document.getElementById(hive.name + "_res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_high_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Normres', img:'normres_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Normres', img:'normres_b.svg'});
           break;
         case 'high':
           (<HTMLInputElement>document.getElementById(hive.name + "_res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_none_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Highres', img:'highres_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Highres', img:'highres_b.svg'});
           break;
         case 'none':
           (<HTMLInputElement>document.getElementById(hive.name + "_res_low_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_avg_check")).checked = false;
           (<HTMLInputElement>document.getElementById(hive.name + "_res_high_check")).checked = false;
-          index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
+          index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
           if(index > -1){
-            this.hive_insps[inspIndex].obs.splice(index,1);
+            this.hive_insps[inspIndex].events.splice(index,1);
           }
-          this.hive_insps[inspIndex].obs.push({name:'Nores', img:'nores_b.svg'});
+          this.hive_insps[inspIndex].events.push({name:'Nores', img:'nores_b.svg'});
           break;
       }
       return;
@@ -910,109 +886,109 @@ export class InspectNewComponent implements OnInit {
         case 'egg':
           if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.remove('brood-none-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.events.splice(index, 1);
           }
           button = <HTMLButtonElement>document.getElementsByClassName('brood-egg')[0];
           if(!button.classList.contains('brood-egg-active')){
             button.classList.add('brood-egg-active');
-            this.new_apiary_insp.obs.push({name:'Egg', img:'egg_cb.svg'});
+            this.new_apiary_insp.events.push({name:'Egg', img:'egg_cb.svg'});
           }
           else{
             button.classList.remove('brood-egg-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Egg')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Egg')
+            this.new_apiary_insp.events.splice(index, 1);
           }
 
           break;
         case 'larva':
           if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.remove('brood-none-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-larva')[0];
           if(!button.classList.contains('brood-larva-active')){
             button.classList.add('brood-larva-active');
-            this.new_apiary_insp.obs.push({name:'Larva', img:'larva_cb.svg'});
+            this.new_apiary_insp.events.push({name:'Larva', img:'larva_cb.svg'});
           }
           else{
             button.classList.remove('brood-larva-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Larva')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Larva')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
         case 'pupa':
           if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.remove('brood-none-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-pupa')[0];
           if(!button.classList.contains('brood-pupa-active')){
             button.classList.add('brood-pupa-active');
-            this.new_apiary_insp.obs.push({name:'Pupa', img:'pupa_cb.svg'});
-            console.log(this.new_apiary_insp.obs);
+            this.new_apiary_insp.events.push({name:'Pupa', img:'pupa_cb.svg'});
+            console.log(this.new_apiary_insp.events);
           }
           else{
             button.classList.remove('brood-pupa-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Pupa')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Pupa')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
         case 'drone':
           if((<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName('brood-none')[0]).classList.remove('brood-none-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Nonebrood');
+            this.new_apiary_insp.events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-drone')[0];
           if(!button.classList.contains('brood-drone-active')){
             button.classList.add('brood-drone-active');
-            this.new_apiary_insp.obs.push({name:'Drone', img:'drone_cb.svg'});
-            console.log(this.new_apiary_insp.obs);
+            this.new_apiary_insp.events.push({name:'Drone', img:'drone_cb.svg'});
+            console.log(this.new_apiary_insp.events);
           }
           else{
             button.classList.remove('brood-drone-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Drone')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Drone')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
         case 'none':
           if(<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0] != null){
             (<HTMLButtonElement>document.getElementsByClassName('brood-egg-active')[0]).classList.remove('brood-egg-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Egg');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Egg');
+            this.new_apiary_insp.events.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0] != null){
             (<HTMLButtonElement>document.getElementsByClassName('brood-larva-active')[0]).classList.remove('brood-larva-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Larva');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Larva');
+            this.new_apiary_insp.events.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0] != null){
             (<HTMLButtonElement>document.getElementsByClassName('brood-pupa-active')[0]).classList.remove('brood-pupa-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Pupa');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Pupa');
+            this.new_apiary_insp.events.splice(index, 1);
           }
           if(<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0] != null){
             (<HTMLButtonElement>document.getElementsByClassName('brood-drone-active')[0]).classList.remove('brood-drone-active');
-            index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Drone');
-            this.new_apiary_insp.obs.splice(index, 1);
+            index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Drone');
+            this.new_apiary_insp.events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName('brood-none')[0];
           if(!button.classList.contains('brood-none-active')){
             button.classList.add('brood-none-active');
-            this.new_apiary_insp.obs.push({name:'Nonebrood', img:'nobrood_cb.svg'});
-            console.log(this.new_apiary_insp.obs);
+            this.new_apiary_insp.events.push({name:'Nonebrood', img:'nobrood_cb.svg'});
+            console.log(this.new_apiary_insp.events);
           }
           else{
             button.classList.remove('brood-none-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Nonebrood')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Nonebrood')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
       }
@@ -1024,106 +1000,106 @@ export class InspectNewComponent implements OnInit {
         case 'egg':
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0];
           if(!button.classList.contains('brood-egg-active')){
             button.classList.add('brood-egg-active');
-            this.hive_insps[inspIndex].obs.push({name:'Egg', img:'egg_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Egg', img:'egg_cb.svg'});
           }
           else{
             button.classList.remove('brood-egg-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Egg')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Egg')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
         case 'larva':
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0];
           if(!button.classList.contains('brood-larva-active')){
             button.classList.add('brood-larva-active');
-            this.hive_insps[inspIndex].obs.push({name:'Larva', img:'larva_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Larva', img:'larva_cb.svg'});
           }
           else{
             button.classList.remove('brood-larva-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Larva')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Larva')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
         case 'pupa':
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0];
           if(!button.classList.contains('brood-pupa-active')){
             button.classList.add('brood-pupa-active');
-            this.hive_insps[inspIndex].obs.push({name:'Pupa', img:'pupa_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Pupa', img:'pupa_cb.svg'});
           }
           else{
             button.classList.remove('brood-pupa-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Pupa')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Pupa')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
         case 'drone':
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.contains('brood-none-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0]).classList.remove('brood-none-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Nonebrood');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0];
           if(!button.classList.contains('brood-drone-active')){
             button.classList.add('brood-drone-active');
-            this.hive_insps[inspIndex].obs.push({name:'Drone', img:'drone_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Drone', img:'drone_cb.svg'});
           }
           else{
             button.classList.remove('brood-drone-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Drone')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Drone')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
         case 'none':
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.contains('brood-egg-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_egg')[0]).classList.remove('brood-egg-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Egg');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Egg');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.contains('brood-larva-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_larva')[0]).classList.remove('brood-larva-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Larva');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Larva');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.contains('brood-pupa-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_pupa')[0]).classList.remove('brood-pupa-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Pupa');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Pupa');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           if((<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.contains('brood-drone-active')){
             (<HTMLButtonElement>document.getElementsByClassName(hive.name + '_drone')[0]).classList.remove('brood-drone-active');
-            index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Drone');
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Drone');
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
 
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_none')[0];
           if(!button.classList.contains('brood-none-active')){
             button.classList.add('brood-none-active');
-            this.hive_insps[inspIndex].obs.push({name:'Nonebrood', img:'nobrood_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Nonebrood', img:'nobrood_cb.svg'});
           }
           else{
             button.classList.remove('brood-none-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Nonebrood')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Nonebrood')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
       }
@@ -1140,61 +1116,61 @@ export class InspectNewComponent implements OnInit {
           button = <HTMLButtonElement>document.getElementsByClassName('health-buzz')[0];
           if(!button.classList.contains('health-buzz-active')){
             button.classList.add('health-buzz-active');
-            this.new_apiary_insp.obs.push({name:'Buzzinghive', img:'buzzinghive_cb.svg'});
+            this.new_apiary_insp.events.push({name:'Buzzinghive', img:'buzzinghive_cb.svg'});
           }
           else{
             button.classList.remove('health-buzz-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Buzzinghive')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Buzzinghive')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
         case 'sick':
           button = <HTMLButtonElement>document.getElementsByClassName('health-sick')[0];
           if(!button.classList.contains('health-sick-active')){
             button.classList.add('health-sick-active');
-            this.new_apiary_insp.obs.push({name:'Sick', img:'sick_cb.svg'});
+            this.new_apiary_insp.events.push({name:'Sick', img:'sick_cb.svg'});
           }
           else{
             button.classList.remove('health-sick-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Sick')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Sick')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
         case 'mosaic':
           button = <HTMLButtonElement>document.getElementsByClassName('health-mosaic')[0];
           if(!button.classList.contains('health-mosaic-active')){
             button.classList.add('health-mosaic-active');
-            this.new_apiary_insp.obs.push({name:'Mosaichive', img:'mosaichive_cb.svg'});
+            this.new_apiary_insp.events.push({name:'Mosaichive', img:'mosaichive_cb.svg'});
           }
           else{
             button.classList.remove('health-mosaic-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Mosaichive')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Mosaichive')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
         case 'queenseen':
           button = <HTMLButtonElement>document.getElementsByClassName('health-queen')[0];
           if(!button.classList.contains('health-queen-active')){
             button.classList.add('health-queen-active');
-            this.new_apiary_insp.obs.push({name:'Queenseen', img:'queenseen_cb.svg'});
-            console.log(this.new_apiary_insp.obs);
+            this.new_apiary_insp.events.push({name:'Queenseen', img:'queenseen_cb.svg'});
+            //console.log(this.new_apiary_insp.events);
           }
           else{
             button.classList.remove('health-queen-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Queenseen')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Queenseen')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
         case 'swarm':
           button = <HTMLButtonElement>document.getElementsByClassName('health-swarm')[0];
           if(!button.classList.contains('health-swarm-active')){
             button.classList.add('health-swarm-active');
-            this.new_apiary_insp.obs.push({name:'Swarm', img:'swarm_cb.svg'});
+            this.new_apiary_insp.events.push({name:'Swarm', img:'swarm_cb.svg'});
           }
           else{
             button.classList.remove('health-swarm-active');
-            let index = this.new_apiary_insp.obs.findIndex(_o => _o.name === 'Swarm')
-            this.new_apiary_insp.obs.splice(index, 1);
+            let index = this.new_apiary_insp.events.findIndex(_o => _o.name === 'Swarm')
+            this.new_apiary_insp.events.splice(index, 1);
           }
           break;
       }
@@ -1207,12 +1183,12 @@ export class InspectNewComponent implements OnInit {
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_buzz')[0];
           if(!button.classList.contains('health-buzz-active')){
             button.classList.add('health-buzz-active');
-            this.hive_insps[inspIndex].obs.push({name:'Buzzinghive', img:'buzzinghive_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Buzzinghive', img:'buzzinghive_cb.svg'});
           }
           else{
             button.classList.remove('health-buzz-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Buzzinghive')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Buzzinghive')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
 
           break;
@@ -1220,47 +1196,47 @@ export class InspectNewComponent implements OnInit {
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_sick')[0];
           if(!button.classList.contains('health-sick-active')){
             button.classList.add('health-sick-active');
-            this.hive_insps[inspIndex].obs.push({name:'Sick', img:'sick_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Sick', img:'sick_cb.svg'});
           }
           else{
             button.classList.remove('health-sick-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Sick')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Sick')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
         case 'mosaic':
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_mosaic')[0];
           if(!button.classList.contains('health-mosaic-active')){
             button.classList.add('health-mosaic-active');
-            this.hive_insps[inspIndex].obs.push({name:'Mosaichive', img:'mosaichive_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Mosaichive', img:'mosaichive_cb.svg'});
           }
           else{
             button.classList.remove('health-mosaic-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Mosaichive')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Mosaichive')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
         case 'queenseen':
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_queen')[0];
           if(!button.classList.contains('health-queen-active')){
             button.classList.add('health-queen-active');
-            this.hive_insps[inspIndex].obs.push({name:'Queenseen', img:'queenseen_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Queenseen', img:'queenseen_cb.svg'});
           }
           else{
             button.classList.remove('health-queen-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Queenseen')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Queenseen')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
         case 'swarm':
           button = <HTMLButtonElement>document.getElementsByClassName(hive.name + '_swarm')[0];
           if(!button.classList.contains('health-swarm-active')){
             button.classList.add('health-swarm-active');
-            this.hive_insps[inspIndex].obs.push({name:'Swarm', img:'swarm_cb.svg'});
+            this.hive_insps[inspIndex].events.push({name:'Swarm', img:'swarm_cb.svg'});
           }else{
             button.classList.remove('health-swarm-active');
-            let index = this.hive_insps[inspIndex].obs.findIndex(_o => _o.name === 'Swarm')
-            this.hive_insps[inspIndex].obs.splice(index, 1);
+            let index = this.hive_insps[inspIndex].events.findIndex(_o => _o.name === 'Swarm')
+            this.hive_insps[inspIndex].events.splice(index, 1);
           }
           break;
       }
@@ -1487,8 +1463,7 @@ export class InspectNewComponent implements OnInit {
       opsDate: null,
       type: 'apiary',
       tags: [],
-      tasks: [],
-      obs: [],
+      events: [],
       description: null,
       todo: null
     }
@@ -1503,8 +1478,7 @@ export class InspectNewComponent implements OnInit {
       opsDate: null,
       type: 'hive',
       tags: [],
-      tasks: [],
-      obs: [],
+      events: [],
       description: null,
       todo: null
     }

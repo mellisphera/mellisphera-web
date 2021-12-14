@@ -103,8 +103,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
     type: null,
     description: null,
     tags: [],
-    tasks: [],
-    obs: [],
+    events: [],
     todo: null
   };
 
@@ -363,10 +362,10 @@ export class ExploreComponent implements OnInit, AfterViewInit {
       if (document.getElementById('' + index).classList.contains('in')) {
         return 'fa-rotate-90';
       }
-      return '';
     } catch {
       return '';
     }
+    return '';
   }
 
   ifCurrentApiary(apiaryId: string): string {
@@ -871,8 +870,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
       type: null,
       description: null,
       tags: [],
-      tasks: [],
-      obs: [],
+      events: [],
       todo: null
     };
 
@@ -919,8 +917,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
       type: null,
       description: null,
       tags: [],
-      tasks: [],
-      obs: [],
+      events: [],
       todo: null
     };
 
@@ -1056,12 +1053,12 @@ export class ExploreComponent implements OnInit, AfterViewInit {
     const button = (<HTMLButtonElement> evt.target);
     if ( button.classList.contains(this.PICTOS_HIVES_OBS[btnIndex].class + '-active') ) {
       button.classList.remove(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
-      const i = this.new_event.obs.findIndex(e => e.name === this.PICTOS_HIVES_OBS[btnIndex].name);
-      this.new_event.obs.splice(i, 1);
+      const i = this.new_event.events.findIndex(e => e.name === this.PICTOS_HIVES_OBS[btnIndex].name);
+      this.new_event.events.splice(i, 1);
       return;
     }
     button.classList.add(this.PICTOS_HIVES_OBS[btnIndex].class + '-active');
-    this.new_event.obs.push({name: this.PICTOS_HIVES_OBS[btnIndex].name, img: this.PICTOS_HIVES_OBS[btnIndex].img});
+    this.new_event.events.push({name: this.PICTOS_HIVES_OBS[btnIndex].name, img: this.PICTOS_HIVES_OBS[btnIndex].img});
     return;
   }
 
@@ -1150,41 +1147,41 @@ export class ExploreComponent implements OnInit, AfterViewInit {
         (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+        this.new_event.events.push({name:'Lowbees', img:'lowbees_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normbees', img:'normbees_b.svg'});
+        this.new_event.events.push({name:'Normbees', img:'normbees_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highbees', img:'highbees_b.svg'});
+        this.new_event.events.push({name:'Highbees', img:'highbees_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("bees_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nobees', img:'nobees_b.svg'});
+        this.new_event.events.push({name:'Nobees', img:'nobees_b.svg'});
         break;
     }
     return;
@@ -1197,41 +1194,41 @@ export class ExploreComponent implements OnInit, AfterViewInit {
         (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+        this.new_event.events.push({name:'Lowbrood', img:'lowbrood_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+        this.new_event.events.push({name:'Normbrood', img:'normbrood_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+        this.new_event.events.push({name:'Highbrood', img:'highbrood_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("brood_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+        this.new_event.events.push({name:'Nobrood', img:'nobrood_b.svg'});
         break;
     }
     return;
@@ -1244,41 +1241,41 @@ export class ExploreComponent implements OnInit, AfterViewInit {
         (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Lowres', img:'lowres_b.svg'});
+        this.new_event.events.push({name:'Lowres', img:'lowres_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Normres', img:'normres_b.svg'});
+        this.new_event.events.push({name:'Normres', img:'normres_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_none_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Highres', img:'highres_b.svg'});
+        this.new_event.events.push({name:'Highres', img:'highres_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("res_high_check")).checked = false;
-        index = this.new_event.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
+        index = this.new_event.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
         if(index > -1){
-          this.new_event.obs.splice(index,1);
+          this.new_event.events.splice(index,1);
         }
-        this.new_event.obs.push({name:'Nores', img:'nores_b.svg'});
+        this.new_event.events.push({name:'Nores', img:'nores_b.svg'});
         break;
     }
     return;

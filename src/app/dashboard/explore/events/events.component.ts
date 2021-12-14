@@ -200,9 +200,9 @@ export class EventsComponent implements OnInit {
       locations.push('Hive');
       locations.push('Apiary');
     }
-    const obsInsp = this.getApiariesId().map(_id => {
+    const eventsInsp = this.getApiariesId().map(_id => {
       return { _id: _id,
-               obs: this.inspService.getInspectionByFilters(_id,
+               events: this.inspService.getInspectionByFilters(_id,
                                                             this.stackService.getHiveSelectIds(),
                                                             this.melliDate.getRangeForReqest(),
                                                             this.melliFilters.getEventArrayFilter(),
@@ -210,9 +210,9 @@ export class EventsComponent implements OnInit {
                                                            )
               }
     });
-    const obsAlert = this.getApiariesId().map(_id => {
+    const eventsAlert = this.getApiariesId().map(_id => {
       return { _id: _id,
-               obs: this.alertService.getAlertsByFilters(_id,
+               events: this.alertService.getAlertsByFilters(_id,
                                                          this.stackService.getHiveSelectIds(),
                                                          this.melliDate.getRangeForReqest(),
                                                          this.melliFilters.getPictosArrayFilter(),
@@ -220,7 +220,7 @@ export class EventsComponent implements OnInit {
                                                         )
               }
     });
-    Observable.forkJoin(obsInsp.map(_elt => _elt.obs)).subscribe(
+    Observable.forkJoin(eventsInsp.map(_elt => _elt.events)).subscribe(
       insps_events => {
         insps_events.forEach(_elt => {
           _elt.forEach((_insp,i) => {
@@ -231,7 +231,7 @@ export class EventsComponent implements OnInit {
       },
       () => {},
       () => {
-        Observable.forkJoin(obsAlert.map(_elt => _elt.obs)).subscribe(
+        Observable.forkJoin(eventsAlert.map(_elt => _elt.events)).subscribe(
           alerts => {
             //console.log(alerts);
             alerts.forEach(_elt => {
@@ -408,9 +408,9 @@ export class EventsComponent implements OnInit {
   addByFilter(filter: string): void{
     switch(filter){
       case 'inspection':
-        const obsInsp = this.getApiariesId().map(_id => {
+        const eventsInsp = this.getApiariesId().map(_id => {
           return { _id: _id,
-                   obs: this.inspService.getInspectionByFilters(_id,
+                   events: this.inspService.getInspectionByFilters(_id,
                                                                 this.stackService.getHiveSelectIds(),
                                                                 this.melliDate.getRangeForReqest(),
                                                                 ['apiary'],
@@ -418,7 +418,7 @@ export class EventsComponent implements OnInit {
                                                                )
                   }
           });
-          Observable.forkJoin(obsInsp.map(_elt => _elt.obs)).subscribe(
+          Observable.forkJoin(eventsInsp.map(_elt => _elt.events)).subscribe(
             _insps_apiary => {
               _insps_apiary.forEach(_elt => {
                 _elt.forEach((_insp,i) => {
@@ -432,9 +432,9 @@ export class EventsComponent implements OnInit {
           );
         break;
       case 'event':
-        const obsEvent = this.getApiariesId().map(_id => {
+        const eventsEvent = this.getApiariesId().map(_id => {
           return { _id: _id,
-                   obs: this.inspService.getInspectionByFilters(_id,
+                   events: this.inspService.getInspectionByFilters(_id,
                                                                 this.stackService.getHiveSelectIds(),
                                                                 this.melliDate.getRangeForReqest(),
                                                                 ['hive'],
@@ -442,7 +442,7 @@ export class EventsComponent implements OnInit {
                                                                )
                   }
           });
-          Observable.forkJoin(obsEvent.map(_elt => _elt.obs)).subscribe(
+          Observable.forkJoin(eventsEvent.map(_elt => _elt.events)).subscribe(
             _insps_hive => {
               _insps_hive.forEach(_elt => {
                 _elt.forEach((_insp, i) => {
@@ -457,9 +457,9 @@ export class EventsComponent implements OnInit {
         break;
       case 'alert':
         let locations = ['Apiary','Hive'];
-        const obsAlert = this.getApiariesId().map(_id => {
+        const eventsAlert = this.getApiariesId().map(_id => {
           return { _id: _id,
-                   obs: this.alertService.getAlertsByFilters(_id,
+                   events: this.alertService.getAlertsByFilters(_id,
                                                              this.stackService.getHiveSelectIds(),
                                                              this.melliDate.getRangeForReqest(),
                                                              this.melliFilters.getPictosArrayFilter(),
@@ -467,7 +467,7 @@ export class EventsComponent implements OnInit {
                                                             )
                   }
           });
-          Observable.forkJoin(obsAlert.map(_elt => _elt.obs)).subscribe(
+          Observable.forkJoin(eventsAlert.map(_elt => _elt.events)).subscribe(
             _alerts => {
               _alerts.forEach(_elt => {
                 _elt.forEach((_alt, i) => {
@@ -546,9 +546,9 @@ export class EventsComponent implements OnInit {
       locations.push('Hive');
       locations.push('Apiary');
     }
-    const obsInsp = this.getApiariesId().map(_id => {
+    const eventsInsp = this.getApiariesId().map(_id => {
       return { _id: _id,
-               obs: this.inspService.getInspectionByFilters(_id,
+               events: this.inspService.getInspectionByFilters(_id,
                                                             this.stackService.getHiveSelectIds(),
                                                             this.melliDate.getRangeForReqest(),
                                                             this.melliFilters.getEventArrayFilter(),
@@ -556,9 +556,9 @@ export class EventsComponent implements OnInit {
                                                            )
               }
       });;
-    const obsAlert = this.getApiariesId().map(_id => {
+    const eventsAlert = this.getApiariesId().map(_id => {
       return { _id: _id,
-               obs: this.alertService.getAlertsByFilters(_id,
+               events: this.alertService.getAlertsByFilters(_id,
                                                          this.stackService.getHiveSelectIds(),
                                                          this.melliDate.getRangeForReqest(),
                                                          [display],
@@ -566,7 +566,7 @@ export class EventsComponent implements OnInit {
                                                         )
               }
     });
-    Observable.forkJoin(obsInsp.map(_elt => _elt.obs)).subscribe(
+    Observable.forkJoin(eventsInsp.map(_elt => _elt.events)).subscribe(
       insps_events => {
         insps_events.forEach(_elt => {
           _elt.forEach((_insp, i) => {
@@ -578,7 +578,7 @@ export class EventsComponent implements OnInit {
       () => {},
       () => {}
     );
-    Observable.forkJoin(obsAlert.map(_elt => _elt.obs)).subscribe(
+    Observable.forkJoin(eventsAlert.map(_elt => _elt.events)).subscribe(
       _alerts => {
         _alerts.forEach(_elt => {
           _elt.forEach((_alt, i) => {
@@ -624,7 +624,7 @@ export class EventsComponent implements OnInit {
               img: 'default_b.svg',
               img_active:'default_cb.svg',
               class: 'hives-default-img',
-              type: 'obs',
+              type: 'events',
               code: 9999
             })
           },
@@ -659,7 +659,7 @@ export class EventsComponent implements OnInit {
               img: 'default_b.svg',
               img_active:'default_cb.svg',
               class: 'hives-default-img',
-              type: 'obs'
+              type: 'events'
             })
           },
           () => {},
@@ -698,7 +698,7 @@ export class EventsComponent implements OnInit {
     this.events[index] = Object.assign({},this.eventToEdit);
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.eventToEdit._id);
     this.updateRowInsp(this.eventToEdit, rowIndex);
-    this.eventToEdit.obs.sort((a,b) => {
+    this.eventToEdit.events.sort((a,b) => {
       return a.code - b.code;
     });
     this.inspService.updateEvent(this.eventToEdit).subscribe(
@@ -849,15 +849,15 @@ export class EventsComponent implements OnInit {
     // Liste des pictos
     let cell5 = document.createElement('td');
     let container = document.createElement('div');
-    container.className = "event-obs-container";
-    if(_insp.obs != null){
-      _insp.obs.forEach(_obs => {
+    container.className = "event-events-container";
+    if(_insp.events != null){
+      _insp.events.forEach(_events => {
         let div = document.createElement('div');
-        let name = _obs.name.split('');
+        let name = _events.name.split('');
         name[0] = name[0].toUpperCase();
-        div.className = "event-obs-item " + name.join('');
+        div.className = "event-events-item " + name.join('');
         div.setAttribute('data-toogle', 'tooltip');
-        div.setAttribute('title', this.translate.instant('INSP_CONF.'+_obs.name.toUpperCase()));
+        div.setAttribute('title', this.translate.instant('INSP_CONF.'+_events.name.toUpperCase()));
         container.appendChild(div);
 
       });
@@ -989,16 +989,16 @@ export class EventsComponent implements OnInit {
     }
     this.tbody.rows[rowIndex].cells[2].innerHTML = this.unitService.getDailyDate(insp.opsDate) + '<br />' + hours + ':' +  minutes;
 
-    this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-obs-container')[0].innerHTML = '';
-    if(insp.obs != null){
-      insp.obs.forEach(_obs => {
+    this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-events-container')[0].innerHTML = '';
+    if(insp.events != null){
+      insp.events.forEach(_events => {
         let div = document.createElement('div');
-        let name = _obs.name.split('');
+        let name = _events.name.split('');
         name[0] = name[0].toUpperCase();
-        div.className = "event-obs-item " + name.join('');
+        div.className = "event-events-item " + name.join('');
         div.setAttribute('data-toogle', 'tooltip');
-        div.setAttribute('title', this.translate.instant('INSP_CONF.'+_obs.name.toUpperCase()));
-        this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-obs-container')[0].appendChild(div);
+        div.setAttribute('title', this.translate.instant('INSP_CONF.'+_events.name.toUpperCase()));
+        this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-events-container')[0].appendChild(div);
       });
     }
 
@@ -1035,100 +1035,100 @@ export class EventsComponent implements OnInit {
   }
 
   addObsList(): void {
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Nobees') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Nobees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Lowbees') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Lowbees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
     }
     
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Normbees') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Normbees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Highbees') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Highbees') !== -1){
       (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = true;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Nobrood') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Nobrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Lowbrood') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Lowbrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Normbrood') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Normbrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Highbrood') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Highbrood') !== -1){
       (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = true;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Nores') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Nores') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Lowres') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Lowres') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Normres') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Normres') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = true;
       (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
     }
 
-    if(this.eventToEdit.obs.findIndex(_o => _o.name === 'Highres') !== -1){
+    if(this.eventToEdit.events.findIndex(_o => _o.name === 'Highres') !== -1){
       (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
       (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = true;
     }
 
-    const obsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-obs')[0]);
-    obsDiv.innerHTML = '';
+    const eventsDiv = (<HTMLElement>document.getElementsByClassName('edit-event-choice-events')[0]);
+    eventsDiv.innerHTML = '';
 
     for (let i=0; i < this.PICTOS_HIVES_OBS.length; i++){
 
       const button = document.createElement('button');
-      button.className = 'hives-obs-add';
+      button.className = 'hives-events-add';
       button.classList.add(this.PICTOS_HIVES_OBS[i].class);
       
-      if(this.eventToEdit.obs != null && this.eventToEdit.obs.findIndex( _o => _o.name.toLowerCase() === this.PICTOS_HIVES_OBS[i].name.toLowerCase() ) !== -1){
+      if(this.eventToEdit.events != null && this.eventToEdit.events.findIndex( _o => _o.name.toLowerCase() === this.PICTOS_HIVES_OBS[i].name.toLowerCase() ) !== -1){
         button.classList.add(this.PICTOS_HIVES_OBS[i].class + '-active');
       }
 
@@ -1140,7 +1140,7 @@ export class EventsComponent implements OnInit {
         this.hiveButton(evt, this.PICTOS_HIVES_OBS[i].name);
       }
 
-      obsDiv.appendChild(button);
+      eventsDiv.appendChild(button);
     }
 
 
@@ -1152,12 +1152,12 @@ export class EventsComponent implements OnInit {
     let index: number = this.PICTOS_HIVES_OBS.findIndex(_pictos => _pictos.name === name);
     if ( button.classList.contains(this.PICTOS_HIVES_OBS[index].class + '-active') ) {
       button.classList.remove(this.PICTOS_HIVES_OBS[index].class + '-active');
-      const i = this.eventToEdit.obs.findIndex(e => e.name === this.PICTOS_HIVES_OBS[index].name);
-      this.eventToEdit.obs.splice(i, 1);
+      const i = this.eventToEdit.events.findIndex(e => e.name === this.PICTOS_HIVES_OBS[index].name);
+      this.eventToEdit.events.splice(i, 1);
       return;
     }
     button.classList.add(this.PICTOS_HIVES_OBS[index].class + '-active');
-    this.eventToEdit.obs.push({name: this.PICTOS_HIVES_OBS[index].name, img: this.PICTOS_HIVES_OBS[index].img});
+    this.eventToEdit.events.push({name: this.PICTOS_HIVES_OBS[index].name, img: this.PICTOS_HIVES_OBS[index].img});
     return;
   }
 
@@ -1221,7 +1221,7 @@ export class EventsComponent implements OnInit {
 
 
   addAlertList(): void {
-    const alertDiv = (<HTMLElement>document.getElementsByClassName('edit-alert-choice-obs')[0]);
+    const alertDiv = (<HTMLElement>document.getElementsByClassName('edit-alert-choice-events')[0]);
     alertDiv.innerHTML = '';
 
     let alerts = this.melliFilters.alertsDisplay;
@@ -1266,7 +1266,7 @@ export class EventsComponent implements OnInit {
   hiveAlertButton(evt: Event, name: string): void{
     let button = <HTMLButtonElement>evt.target;
     let desc = <HTMLParagraphElement>document.getElementsByClassName('edit-alert-desc')[0];
-    const alertDiv = (<HTMLElement>document.getElementsByClassName('edit-alert-choice-obs')[0]);
+    const alertDiv = (<HTMLElement>document.getElementsByClassName('edit-alert-choice-events')[0]);
     if(button.className.includes('active')){
       button.className = button.className.slice(0, -7);
       desc.innerHTML = '';
@@ -1293,41 +1293,41 @@ export class EventsComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Lowbees', img:'lowbees_b.svg'});
+        this.eventToEdit.events.push({name:'Lowbees', img:'lowbees_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Lowbees") || _o.name.includes("Highbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Normbees', img:'normbees_b.svg'});
+        this.eventToEdit.events.push({name:'Normbees', img:'normbees_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Lowbees") || _o.name.includes("Nobees"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Highbees', img:'highbees_b.svg'});
+        this.eventToEdit.events.push({name:'Highbees', img:'highbees_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("edit_bees_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_bees_high_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normbees") || _o.name.includes("Highbees") || _o.name.includes("Lowbees"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Nobees', img:'nobees_b.svg'});
+        this.eventToEdit.events.push({name:'Nobees', img:'nobees_b.svg'});
         break;
     }
     return;
@@ -1340,41 +1340,41 @@ export class EventsComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Lowbrood', img:'lowbrood_b.svg'});
+        this.eventToEdit.events.push({name:'Lowbrood', img:'lowbrood_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Lowbrood") || _o.name.includes("Highbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Normbrood', img:'normbrood_b.svg'});
+        this.eventToEdit.events.push({name:'Normbrood', img:'normbrood_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Lowbrood") || _o.name.includes("Nobrood"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Highbrood', img:'highbrood_b.svg'});
+        this.eventToEdit.events.push({name:'Highbrood', img:'highbrood_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("edit_brood_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_brood_high_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normbrood") || _o.name.includes("Highbrood") || _o.name.includes("Lowbrood"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Nobrood', img:'nobrood_b.svg'});
+        this.eventToEdit.events.push({name:'Nobrood', img:'nobrood_b.svg'});
         break;
     }
     return;
@@ -1387,41 +1387,41 @@ export class EventsComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Lowres', img:'lowres_b.svg'});
+        this.eventToEdit.events.push({name:'Lowres', img:'lowres_b.svg'});
         break;
       case 'avg':
         (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Lowres") || _o.name.includes("Highres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Normres', img:'normres_b.svg'});
+        this.eventToEdit.events.push({name:'Normres', img:'normres_b.svg'});
         break;
       case 'high':
         (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_none_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Lowres") || _o.name.includes("Nores"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Highres', img:'highres_b.svg'});
+        this.eventToEdit.events.push({name:'Highres', img:'highres_b.svg'});
         break;
       case 'none':
         (<HTMLInputElement>document.getElementById("edit_res_low_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_avg_check")).checked = false;
         (<HTMLInputElement>document.getElementById("edit_res_high_check")).checked = false;
-        index = this.eventToEdit.obs.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
+        index = this.eventToEdit.events.findIndex(_o => _o.name.includes("Normres") || _o.name.includes("Highres") || _o.name.includes("Lowres"));
         if(index > -1){
-          this.eventToEdit.obs.splice(index,1);
+          this.eventToEdit.events.splice(index,1);
         }
-        this.eventToEdit.obs.push({name:'Nores', img:'nores_b.svg'});
+        this.eventToEdit.events.push({name:'Nores', img:'nores_b.svg'});
         break;
     }
     return;

@@ -78,8 +78,8 @@ export class InspectHistoryComponent implements OnInit {
     array.forEach(_id => {
       let insp = this.inspTab.filter(_i => _i.apiaryInspId === _id)[0];
       let health = "";
-      if(insp.obs.find(_o => _o.name.includes('General')) != undefined){
-        health = insp.obs.find(_o => _o.name.includes('General')).name.toLowerCase();
+      if(insp.events.find(_o => _o.name.includes('General')) != undefined){
+        health = insp.events.find(_o => _o.name.includes('General')).name.toLowerCase();
       }
       this.inspInfoTab.push({
         apiary : this.user_apiaries.find(_api => _api._id === insp.apiaryId).name, 
