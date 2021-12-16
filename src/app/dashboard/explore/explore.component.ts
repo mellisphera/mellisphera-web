@@ -30,7 +30,7 @@ import { DailyStockHoneyService } from '../service/api/daily-stock-honey.service
 import { WeatherService } from '../service/api/weather.service';
 import { StackMelliChartsService } from './stack/service/stack-melli-charts.service';
 import { StackComponent } from './stack/stack.component';
-import { VitalityComponent } from './vitality/vitality.component';
+import { BroodComponent } from './brood/brood.component';
 import { TranslateService } from '@ngx-translate/core';
 import { WeightComponent } from './weight/weight.component';
 import { UnitService } from '../service/unit.service';
@@ -120,7 +120,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
   private hiveComponent: HiveComponent;
   private stackComponent: StackComponent;
   private dateDropdown: HTMLElement;
-  private broodComponent: VitalityComponent;
+  private broodComponent: BroodComponent;
   private weightComponent: WeightComponent;
   private eventsComponent: EventsComponent;
   private eltOnClick: EventTarget;
@@ -462,7 +462,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
       this.hiveComponent = componentRef;
     } else if (componentRef instanceof StackComponent) {
       this.stackComponent = componentRef;
-    } else if (componentRef instanceof VitalityComponent) {
+    } else if (componentRef instanceof BroodComponent) {
       this.broodComponent = componentRef;
     } else if (componentRef instanceof WeightComponent) {
       this.weightComponent = componentRef;

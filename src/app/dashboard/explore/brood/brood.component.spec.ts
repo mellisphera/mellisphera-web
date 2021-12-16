@@ -11,21 +11,21 @@ limitations under the License. */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VitalityComponent } from './vitality.component';
+import { BroodComponent } from './brood.component';
 
-describe('VitalityComponent', () => {
-  let component: VitalityComponent;
-  let fixture: ComponentFixture<VitalityComponent>;
+describe('BroodComponent', () => {
+  let component: BroodComponent;
+  let fixture: ComponentFixture<BroodComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VitalityComponent ]
+      declarations: [ BroodComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VitalityComponent);
+    fixture = TestBed.createComponent(BroodComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

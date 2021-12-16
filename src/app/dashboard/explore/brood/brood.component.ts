@@ -56,11 +56,11 @@ class AlertHiveItem{
 }
 
 @Component({
-  selector: 'app-vitality',
-  templateUrl: './vitality.component.html',
-  styleUrls: ['./vitality.component.css']
+  selector: 'app-brood',
+  templateUrl: './brood.component.html',
+  styleUrls: ['./brood.component.css']
 })
-export class VitalityComponent implements OnInit, OnDestroy{
+export class BroodComponent implements OnInit, OnDestroy{
 
   private inspHives: InspHiveItem[];
   private alertHives: AlertHiveItem[];
@@ -475,7 +475,7 @@ export class VitalityComponent implements OnInit, OnDestroy{
    *
    *
    * @param {RucheInterface} hive
-   * @memberof VitalityComponent
+   * @memberof BroodComponent
    */
   loadDataByHive(hive: RucheInterface): void{
     let serie;

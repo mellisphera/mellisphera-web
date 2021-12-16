@@ -18,7 +18,7 @@ import { HiveComponent } from './hive/hive.component';
 import { RouterModule } from '@angular/router';
 import { MapComponent } from './map/map.component';
 import { StackComponent } from './stack/stack.component';
-import { VitalityComponent } from './vitality/vitality.component';
+import { BroodComponent } from './brood/brood.component';
 import { DailyManagerService } from './hive/service/daily-manager.service';
 import { HourlyManagerService } from './hive/service/hourly-manager.service';
 import { ExploreComponent } from './explore.component';
@@ -70,7 +70,7 @@ const MY_CUSTOM_FORMATS = {
     HiveComponent,
     MapComponent,
     StackComponent,
-    VitalityComponent,
+    BroodComponent,
     DailyComponent,
     HourlyComponent,
     WeightComponent,
