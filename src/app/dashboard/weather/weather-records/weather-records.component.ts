@@ -914,7 +914,7 @@ export class WeatherRecordsComponent implements OnInit {
               ))
             )
             temp = _arr.map(_elt =>{
-              return { date:_elt.recordDate, value: this.unitService.convertTempFromUsePref(_elt.temp_int, this.userService.getJwtReponse().userPref.unitSystem, true), sensorRef: _elt.sensorRef, type: "temp" }
+              return { date:_elt.recordDate, value: this.unitService.convertTempFromUsePref(_elt.temp_int ? _elt.temp_int : _elt.temp_ext, this.userService.getJwtReponse().userPref.unitSystem, true), sensorRef: _elt.sensorRef, type: "temp" }
             });
             this.getSerieByData(temp, obsArray[i].name, (serieComplete) => {
                 serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
