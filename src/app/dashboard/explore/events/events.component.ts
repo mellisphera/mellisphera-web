@@ -849,13 +849,13 @@ export class EventsComponent implements OnInit {
     // Liste des pictos
     let cell5 = document.createElement('td');
     let container = document.createElement('div');
-    container.className = "event-events-container";
+    container.className = "event-obs-container";
     if(_insp.events != null){
       _insp.events.forEach(_events => {
         let div = document.createElement('div');
         let name = _events.name.split('');
         name[0] = name[0].toUpperCase();
-        div.className = "event-events-item " + name.join('');
+        div.className = "event-obs-item " + name.join('');
         div.setAttribute('data-toogle', 'tooltip');
         div.setAttribute('title', this.translate.instant('INSP_CONF.'+_events.name.toUpperCase()));
         container.appendChild(div);
@@ -989,16 +989,16 @@ export class EventsComponent implements OnInit {
     }
     this.tbody.rows[rowIndex].cells[2].innerHTML = this.unitService.getDailyDate(insp.opsDate) + '<br />' + hours + ':' +  minutes;
 
-    this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-events-container')[0].innerHTML = '';
+    this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-obs-container')[0].innerHTML = '';
     if(insp.events != null){
       insp.events.forEach(_events => {
         let div = document.createElement('div');
         let name = _events.name.split('');
         name[0] = name[0].toUpperCase();
-        div.className = "event-events-item " + name.join('');
+        div.className = "event-obs-item " + name.join('');
         div.setAttribute('data-toogle', 'tooltip');
         div.setAttribute('title', this.translate.instant('INSP_CONF.'+_events.name.toUpperCase()));
-        this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-events-container')[0].appendChild(div);
+        this.tbody.rows[rowIndex].cells[4].getElementsByClassName('event-obs-container')[0].appendChild(div);
       });
     }
 

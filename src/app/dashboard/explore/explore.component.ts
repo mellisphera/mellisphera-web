@@ -356,16 +356,18 @@ export class ExploreComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // check if apiary is active, if yes, add class to rotate chevron
   ifActiveIcon(apiaryId: string): string {
+    let valueClass = ''
     try {
       const index = this.rucherService.allApiaryAccount.findIndex(_apiary => _apiary._id === apiaryId);
       if (document.getElementById('' + index).classList.contains('in')) {
-        return 'fa-rotate-90';
+        let valueClass = 'fa-rotate-90';
       }
     } catch {
-      return '';
+      
     }
-    return '';
+    return valueClass;
   }
 
   ifCurrentApiary(apiaryId: string): string {
