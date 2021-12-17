@@ -1322,10 +1322,10 @@ export class InspectNewComponent implements OnInit {
 
     (<HTMLElement>document.getElementById("loading-text")).innerHTML = this.translateService.instant('INSPECT.NEW.GEN_DL') + "40%";
 
-    nbElt = 5;
+    nbElt = 1;
     this.inspConf.forEach(conf => {
       if(conf.enable && conf.inspCat.applies.findIndex(_ap => _ap === 'apiary') !== -1 && conf.inspCat.type === 'act' && conf.inspCat.seasons.findIndex(_s => _s === this.seasonService.getSeason()) !== -1 && conf.inspCat.img !== 'Default'){
-        this.pdf.addImage("../../../../assets/ms-pics/inspects/"+ conf.inspCat.img.toLowerCase() +"_b.png", "PNG", 17 + 15*nbElt, 42, 8, 8);
+        this.pdf.addImage("../../../../assets/ms-pics/inspects/"+ conf.inspCat.img.toLowerCase() +"_b.png", "PNG", 5 + 15*nbElt, 70, 8, 8);
         nbElt++;
       }
     });
