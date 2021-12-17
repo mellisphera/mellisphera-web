@@ -138,7 +138,7 @@ export class NotesHivesComponent implements OnInit,AfterViewChecked {
         arr.forEach(_cat => {
           if(_cat.applies.indexOf("hive") !== -1 && _cat.img !== "Default" && this.notConstant(_cat) && _cat.seasons.findIndex(_s => _s === this.season.getSeason()) !== -1){
             this.PICTOS_HIVES_OBS.push({
-              name:_cat.name.toLowerCase(),
+              name:_cat.name,
               img: _cat.img.toLowerCase() + '_b.svg',
               img_active: _cat.img.toLowerCase() + '_cb.svg',
               class: 'hives-' + _cat.name.toLowerCase() + '-img',
