@@ -509,7 +509,7 @@ export class NotesComponent implements OnInit,AfterViewChecked {
   }
 
   showTodo(evt: Event){
-    let textArea = <HTMLTextAreaElement>(<HTMLElement>evt.target).parentNode.parentNode.parentNode.children[2].children[1];
+    let textArea = document.getElementsByClassName('edit-home-event-todo-textarea')[0];
     if (textArea.classList.contains('hives-todo-textarea-add-active')) {
         textArea.classList.remove('hives-todo-textarea-add-active');
     } else {
