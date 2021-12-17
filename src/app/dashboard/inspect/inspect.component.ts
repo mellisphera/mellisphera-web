@@ -1,6 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { InspectHistoryComponent } from './inspect-history/inspect-history.component';
 import { InspectNewComponent } from './inspect-new/inspect-new.component';
 import { InspectParamsComponent } from './inspect-params/inspect-params.component';
 
@@ -15,7 +14,6 @@ export class InspectComponent implements OnInit {
 
   private eltOnClick: EventTarget;
   private inspNewComponent: InspectNewComponent;
-  private inspHistoryComponent: InspectHistoryComponent;
   private inspParamsComponent: InspectParamsComponent;
 
   constructor(
