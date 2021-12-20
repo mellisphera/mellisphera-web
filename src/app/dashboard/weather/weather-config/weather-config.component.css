@@ -37,6 +37,9 @@
         max-width: 95%;
     }
 }
+.clickable {
+    cursor: pointer;
+}
 
 .tr-add:hover{
     background-color: rgb(242, 253, 241);

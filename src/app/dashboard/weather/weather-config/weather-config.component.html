@@ -23,7 +23,7 @@
         <td class="td-del" data-toggle="modal" data-target="#deleteSourceModal"(click)="openDeleteModal(w_srcs)"><i class="fas fa-trash"></i></td>
         <td style="display: none;">{{ w_srcs._id }}</td>
       </tr>
-      <tr class="tr-add" data-toggle="modal" data-target="#newSourceModal" (click)="reset()">
+      <tr href="#" class="tr-add clickable" data-toggle="modal" data-target="#newSourceModal" (click)="reset()">
         <td colspan="7">
           <i class="fas fa-plus-circle td-more" style="font-size: 18px; color:green; margin-right: 20px;"></i>
           <span>{{ 'WEATHER.CONFIG.ADD_NEW_SOURCE' | translate }}</span> 
