@@ -9,7 +9,6 @@ export interface Inspection{
   type: string,
   tags: string[],
   description: string,
-  tasks: any[],
-  obs: any[],
+  events: any[],
   todo: string
 }

@@ -41,7 +41,7 @@ limitations under the License. -->
                 <div>{{ obs.description }}</div>
                 <div *ngIf="obs.todo && obs.todo !== ''" style="color:blue;">{{ obs.todo }}</div>
                 <div style="width: 100%; display: flex; flex-wrap: wrap;">
-                  <div *ngFor="let item of obs?.obs" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'" 
+                  <div *ngFor="let item of obs?.events" [class]="'hives-obs-item hives-'+item.name.toLowerCase()+'-img'" 
                   data-toggle="tooltip" title="{{ 'INSP_CONF.'+item.name.toUpperCase() | translate }}"></div>
                 </div>
               </td>

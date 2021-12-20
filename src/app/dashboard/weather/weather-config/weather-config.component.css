@@ -3,10 +3,9 @@
 }
 
 #weather-table{
-    width: 98%;
+    width: 100%;
     text-align: center;
-    font-size: 16px;
-    min-width: 500px;
+    font-size: 14px;
 }
 
 #weather-table th{
@@ -25,6 +24,20 @@
     vertical-align: middle;
 }
 
+#modal-small{
+    width: 360px;
+}
+
+@media (max-width: 568px) {
+    .tr-add{
+        width: 100%;
+        text-align: left;
+    }
+    #modal-small{
+        max-width: 95%;
+    }
+}
+
 .tr-add:hover{
     background-color: rgb(242, 253, 241);
     cursor: pointer;
@@ -40,9 +53,6 @@
     cursor: pointer;
 }
 
-#modal-small{
-    width: 360px;
-}
 
 .weather-modal-flex{
     display:flex;

@@ -8,7 +8,6 @@ import { UserParamsService } from '../preference-config/service/user-params.serv
 import { RucheService } from '../service/api/ruche.service';
 import { RucherService } from '../service/api/rucher.service';
 import { UnitService } from '../service/unit.service';
-import { InspectHistoryComponent } from './inspect-history/inspect-history.component';
 import { InspectNewComponent } from './inspect-new/inspect-new.component';
 import { InspectParamsComponent } from './inspect-params/inspect-params.component';
 import { InspectComponent } from './inspect.component';
@@ -53,7 +52,6 @@ const MY_CUSTOM_FORMATS = {
   declarations: [
     InspectComponent,
     InspectNewComponent,
-    InspectHistoryComponent,
     InspectParamsComponent,
     FilterPipe
   ]

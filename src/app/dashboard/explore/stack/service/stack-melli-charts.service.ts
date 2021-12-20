@@ -31,6 +31,7 @@ export class StackMelliChartsService {
   constructor(private httpClient: HttpClient) {
     this.arrayHiveSelect = [];
     this.colorByHive = [];
+    this.arrayColor = [];
     this.getColor();
     this.stackEchartInstance = null;
   }
