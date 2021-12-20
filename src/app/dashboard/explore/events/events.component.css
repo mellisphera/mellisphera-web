@@ -110,7 +110,7 @@
     margin-top: 20px;
 }
 
-.edit-alert-choice-obs{
+.edit-alert-choice-events{
     width: 60%;
     display: flex;
     align-items: center;
@@ -164,7 +164,7 @@
   margin-top: 20px;
 }
 
-.edit-event-choice-obs{
+.edit-event-choice-events{
   width: 92%;
   white-space: nowrap;
   overflow-x: auto;
@@ -239,7 +239,7 @@
   display: block;
 }
 
-.hives-obs-add{
+.hives-events-add{
   margin: 5px 5px;
   height: 40px;
   width: 40px;
@@ -248,7 +248,7 @@
   background-color: transparent;
 }
 
-.hives-obs-add:hover{
+.hives-events-add:hover{
   border: 2px solid #4f4f51;
 }
 
@@ -1194,7 +1194,7 @@
   border: 2px solid #4f4f51
 }
 
-.hives-obs-add.Super\+, .event-obs-item.Super\+{
+.hives-events-add.Super\+, .event-obs-item.Super\+{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -1257,7 +1257,7 @@
   border: 2px solid #4f4f51
 }
 
-.hives-obs-add.Super\+-active, .event-obs-item.Super\+-active{
+.hives-events-add.Super\+-active, .event-obs-item.Super\+-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -1266,7 +1266,7 @@
   border: 2px solid #4f4f51
 }
 
-.hives-obs-add.Super-, .event-obs-item.Super-{
+.hives-events-add.Super-, .event-obs-item.Super-{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -1274,7 +1274,7 @@
   background-size: 35px;
 }
 
-.hives-obs-add.Super--active, .event-obs-item.Super--active{
+.hives-events-add.Super--active, .event-obs-item.Super--active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -1283,7 +1283,7 @@
   border: 2px solid #4f4f51
 }
 
-.hives-obs-add.Swarm, .event-obs-item.Swarm{
+.hives-events-add.Swarm, .event-obs-item.Swarm{
   width: 40px;
   height: 40px;
   border-radius: 5px;
@@ -1291,7 +1291,7 @@
   background-size: 33px;
 }
 
-.hives-obs-add.Swarm-active, .event-obs-item.Swarm-active{
+.hives-events-add.Swarm-active, .event-obs-item.Swarm-active{
   width: 40px;
   height: 40px;
   border-radius: 5px;
