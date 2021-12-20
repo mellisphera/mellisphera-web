@@ -137,6 +137,7 @@ export class WeatherConfigComponent implements OnInit {
   }
 
   reset(){
+    $("#newSourceModal").modal("show");
     this.edit = false;
 
     this.wS = {
