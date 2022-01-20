@@ -14,25 +14,18 @@ export class SeasonsService {
 
   init(): void{
     let date = new Date();
-    switch(date.getMonth()){
-      case 12:
-      case 1:
-      case 2:
+    const seasonNumber = Math.floor((date.getMonth() / 12 * 4)) % 4
+    switch(seasonNumber){
+      case 0:
           this.season = 'winter';
         break;
-      case 3:
-      case 4:
-      case 5:
+      case 1:
         this.season = 'spring';
         break;
-      case 6:
-      case 7:
-      case 8:
+      case 2:
         this.season = 'summer';
         break;
-      case 9:
-      case 10: 
-      case 11:
+      case 3:
         this.season = 'autumn';
         break;
     } 
