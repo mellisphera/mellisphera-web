@@ -42,6 +42,7 @@ export class InspectNewComponent implements OnInit {
   public inspUser: InspUser = {_id: null, idUser: null, inspConf: []};
   public inspConf: InspConf[];
   public inspCat: InspCat[];
+  public finishLoadingPicto : boolean;
 
   public user_pref : UserPref;
 
@@ -108,6 +109,7 @@ export class InspectNewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.finishLoadingPicto = false;
     this.inspect_date = new Date();
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).value = this.inspect_date.getHours().toString();
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).value = this.inspect_date.getMinutes().toString();
@@ -125,12 +127,14 @@ export class InspectNewComponent implements OnInit {
             if(_exists){
               this.getInspUser(() => {
                 this.inspConf = [...this.inspUser.inspConf];
+                this.finishLoadingPicto = true;
               });
             }
             else{
               this.createInspUser((aux) => {
                 this.inspUser = Object.assign({}, aux);
                 this.inspConf = [...this.inspUser.inspConf];
+                this.finishLoadingPicto = true;
               });
             }
           },
