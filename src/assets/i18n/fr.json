@@ -376,7 +376,7 @@
         "TITLE" : "Support",
         "TITLE_MODAL" : "On peut vous aider ?",
         "COMMENT" : "Votre message",
-        "MSG": "Contactez nous par <a href=mailto:support@mellisphera.com>email</a>, sur <a href=https://mellisphera.slack.com/messages/mellisphera_fr/ target=_blank>slack</a> ou écrivez nous ci-dessous.",
+        "MSG": "Contactez nous par <a href=mailto:support@mellisphera.com>email</a>, ou écrivez nous ci-dessous.",
         "SLACK" : "Vous pouvez aussi rejoindre notre conversation sur Slack en",
         "SIGNUP" : "créant un compte",
         "OR" : "ou",
