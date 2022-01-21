@@ -112,6 +112,33 @@ export class InspectNewComponent implements OnInit {
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-hours')[0]).value = this.inspect_date.getHours().toString();
     (<HTMLInputElement>document.getElementsByClassName('inspect-time-input-minutes')[0]).value = this.inspect_date.getMinutes().toString();
     this.active_apiary_index = 0;
+    this.inspCatService.getInspCat().subscribe(
+      _inspCat => {
+        this.inspCat = [..._inspCat].sort((a,b) => {
+          return a.code - b.code;
+        });
+      },
+      () => {},
+      () => {
+        this.inspUserService.existsInspUser(this.userService.getIdUserLoged()).subscribe(
+          _exists => {
+            if(_exists){
+              this.getInspUser(() => {
+                this.inspConf = [...this.inspUser.inspConf];
+              });
+            }
+            else{
+              this.createInspUser((aux) => {
+                this.inspUser = Object.assign({}, aux);
+                this.inspConf = [...this.inspUser.inspConf];
+              });
+            }
+          },
+          () => {},
+          () => {}
+        )
+      }
+    );
     this.userPrefsService.getUserPrefs().subscribe(
       _userPrefs => {
         this.user_pref = _userPrefs;
@@ -161,33 +188,6 @@ export class InspectNewComponent implements OnInit {
               _recW => { this.weight_by_apiary = _recW; }
             );
           }
-        )
-      }
-    );
-    this.inspCatService.getInspCat().subscribe(
-      _inspCat => {
-        this.inspCat = [..._inspCat].sort((a,b) => {
-          return a.code - b.code;
-        });
-      },
-      () => {},
-      () => {
-        this.inspUserService.existsInspUser(this.userService.getIdUserLoged()).subscribe(
-          _exists => {
-            if(_exists){
-              this.getInspUser(() => {
-                this.inspConf = [...this.inspUser.inspConf];
-              });
-            }
-            else{
-              this.createInspUser((aux) => {
-                this.inspUser = Object.assign({}, aux);
-                this.inspConf = [...this.inspUser.inspConf];
-              });
-            }
-          },
-          () => {},
-          () => {}
         )
       }
     );
