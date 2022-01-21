@@ -51,7 +51,7 @@
           </div>  
         </div>
         <div style="margin-left: 10px;">
-          <div class="apiary-op" style="margin-bottom: 10px;">
+          <div  *ngIf="finishLoadingPicto" class="apiary-op" style="margin-bottom: 10px;">
             <div id="not-brood-stage" style="overflow-x: auto; white-space: nowrap;">
               <!--<button class="apiary-obs brood-none" (click)="setBroodStage('none', 'apiary')"
               data-toggle="tooltip" data-placement="top" title="{{ 'INSP_CONF.NOBROOD' | translate }}"></button>-->
@@ -175,7 +175,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="hive-op">
+                  <div *ngIf="finishLoadingPicto" class="hive-op">
                       
                     <div style="overflow-x: auto; white-space: nowrap;">
 
