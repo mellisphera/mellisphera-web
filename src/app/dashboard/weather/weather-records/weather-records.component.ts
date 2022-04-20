@@ -20,10 +20,7 @@ import { CurrentIndexService } from '../../service/api/current-index.service';
 import { ForecastIndexService } from '../../service/api/forecast-index.service';
 import { WSAEACCES } from 'constants';
 
-const colors: any = {
-  local: ['rgb(50,160,210)', 'rgb(0,170,0)', 'rgb(255,0,0)', 'rgb(150,0,255)', 'rgb(220,150,0)', 'rgb(0,0,220)', 'rgb(150,0,150)', 'rgb(120,80,0)', 'rgb(150,150,150)'],
-  ws: ['rgb(140,219,255)', 'rgb(122,223,134)', 'rgb(255,170,170)', 'rgb(200,130,255)', 'rgb(255,210,125)', 'rgb(130,130,255)', 'rgb(240,110,240)', 'rgb(190, 160, 90)', 'rgb(210,210,210)']
-};
+const colors: string[] = ["#3588d1", "#9ff973", "#7125bd", "#c9dd87", "#751718", "#34f50e", "#2e3478", "#24ffcd", "#f7306e", "#4fa075", "#801967", "#d0a8f9", "#5ab220", "#ee0d0e", "#096013", "#f75ef0", "#a3c9fe", "#466cf0"];
 
 @Component({
   selector: 'app-weather-records',
@@ -1698,10 +1695,10 @@ export class WeatherRecordsComponent implements OnInit {
   getColor(apiary: RucherModel, type: string): string{
     let index = this.user_apiaries.findIndex(_a => _a._id === apiary._id);
     if(type === 'Local'){
-      return colors.local[index];
+      return colors[index];
     }
     else{
-      return colors.ws[index];
+      return colors[index] + '88'; // add a transparency value to the initial color
     }
   }
 

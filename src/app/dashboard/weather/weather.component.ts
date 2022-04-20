@@ -15,7 +15,7 @@ import { WeatherService } from '../service/api/weather.service';
 import { range } from 'rxjs';
 
 const PREFIX_PATH = '/dashboard/weather/';
-const colors: string[] = ['rgb(50,160,210)', 'rgb(0,170,0)', 'rgb(255,0,0)', 'rgb(150,0,255)', 'rgb(220,150,0)', 'rgb(0,0,220)', 'rgb(150,0,150)', 'rgb(120,80,0)', 'rgb(150,150,150)'];
+const colors: string[] = ["#3588d1", "#9ff973", "#7125bd", "#c9dd87", "#751718", "#34f50e", "#2e3478", "#24ffcd", "#f7306e", "#4fa075", "#801967", "#d0a8f9", "#5ab220", "#ee0d0e", "#096013", "#f75ef0", "#a3c9fe", "#466cf0"];
 
 @Component({
   selector: 'app-weather',
