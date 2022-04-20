@@ -172,8 +172,7 @@ export class WeatherRecordsComponent implements OnInit {
     yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = function (value) {
       if(value.min < 0){
-        let nb = Math.ceil(value.min) / 5;
-        return Math.ceil(nb) * 5;
+        return value.min;
       }
       else{
         return 0;
@@ -181,9 +180,8 @@ export class WeatherRecordsComponent implements OnInit {
     };
 
     yAxisTemp.max = function (value) {
-      if(value.max > 5){
-        let nb = Math.ceil(value.max) / 5;
-        return Math.ceil(nb) * 5;
+      if(value.max > 40){
+        return value.max;
       }
       else{
         return 40;
@@ -227,7 +225,7 @@ export class WeatherRecordsComponent implements OnInit {
     let yAxisRain = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisRain.name = this.translateService.instant('WEATHER.GRAPH.RAIN_YAXIS') + '(' + this.graphGlobal.rain.unitT + ')';
     yAxisRain.min = 0;
-    yAxisRain.max = this.unitService.getUserPref().unitSystem == "METRIC" ? 10 : 0.4;
+    yAxisRain.max = this.unitService.getUserPref().unitSystem == "METRIC" ? 5 : 0.2;
     yAxisRain.gridIndex = 4;
     yAxisRain.interval = this.unitService.getUserPref().unitSystem == "METRIC" ? 1 : 0.05;
     yAxisRain.axisLabel.margin = 5;
@@ -1698,7 +1696,7 @@ export class WeatherRecordsComponent implements OnInit {
       return colors[index];
     }
     else{
-      return colors[index] + '88'; // add a transparency value to the initial color
+      return colors[index] + '99'; // add a transparency value to the initial color
     }
   }
 
