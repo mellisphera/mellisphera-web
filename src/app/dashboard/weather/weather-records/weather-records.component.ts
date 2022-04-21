@@ -263,10 +263,12 @@ export class WeatherRecordsComponent implements OnInit {
 
     this.options.tooltip.formatter = (params) => {
       return params.filter(_p => _p.seriesId.split(" ")[0] === params[0].seriesId.split(" ")[0]).map((_elt, index) => {
+        //console.log(_elt);
         let date = (index === 0 ? _elt.seriesId.split(" ")[0] === "Nectar" || _elt.seriesId.split(" ")[0] === "Flight" ? this.unitService.getHourlyDate(_elt.data.name).substr(0, 10) + " 12:00" : this.unitService.getHourlyDate(_elt.data.name) : '')
         return this.getTooltipFormater(_elt.marker, date, new Array(
           {
             name: _elt.seriesName,
+            deg: _elt.data.value[3],
             value: this.unitService.getValRound(_elt.data.value[1]),
             unit: this.graphGlobal.getWeatherUnitBySerieName(_elt.seriesId),
             sensorRef: _elt.data.value[2]
@@ -598,11 +600,11 @@ export class WeatherRecordsComponent implements OnInit {
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
-    let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';
+    let templateValue = '{*} {n}: {d}<B>{v} {u}</B> {R}';
     let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
       let sensor = _serie.name.split('|')[1] === 'WeatherS' ? 'WeatherS' : _serie.sensorRef;
-      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' + sensor);
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{d}/g, (_serie.deg != null ? _serie.deg : '')).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' + sensor);
     }).join('');
 
     return tooltipGlobal;
@@ -634,7 +636,6 @@ export class WeatherRecordsComponent implements OnInit {
   loadAllWithWeatherSource(next: Function) {
     let temp: any[], rain: any[], wind: any[], humi: any[];
     let obsArray = [];
-    console.log(this.w_d_service.getCurrentRangeForRequest());
     obsArray = this.w_o_service.getApiariesSelected().map(_a => {
       return [
         {
@@ -675,7 +676,8 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: _elt.sensorRef, type: "humi" }
             });
             wind = _apiRec.map(_elt => {
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "wind" }
+              //console.log(_elt.value[1].deg);
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
             });
           }
           else {
@@ -750,7 +752,7 @@ export class WeatherRecordsComponent implements OnInit {
             });
             //ADD WIND TO GRAPH
             this.getSerieByData(wind.concat(_apiRec.map(_elt => {
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "wind" }
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
             })), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
@@ -968,7 +970,7 @@ export class WeatherRecordsComponent implements OnInit {
                 t.date === _r.date
               ))
             );
-            console.log(_arr);
+            //console.log(_arr);
             temp = _arr.map(_elt => {
               return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: obsArray[i].ws.sourceId, type: "temp" }
             });
@@ -979,7 +981,7 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: obsArray[i].ws.sourceId, type: "humi" }
             });
             wind = _arr.map(_elt => {
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: obsArray[i].ws.sourceId, type: "wind" }
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: obsArray[i].ws.sourceId, type: "wind" }
             });
             //ADD TEMP TO GRAPH
             this.getSerieByData(temp, obsArray[i].name, (serieComplete: any) => {
@@ -1198,7 +1200,7 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: _elt.sensorRef, type: "humi" }
             });
             wind = _apiRec.map(_elt => {
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "wind" }
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
             });
           }
           else {
@@ -1232,7 +1234,6 @@ export class WeatherRecordsComponent implements OnInit {
             this.getSerieByData(rain.concat(_apiRec.map(_elt => {
               return { date: _elt.date, value: _elt.value[2]["1h"] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['1h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null, sensorRef: _elt.sensorRef, type: "rain" }
             })), obsArray[index].name, (serieComplete: any) => {
-              console.log(rain);
               serieComplete.type = 'bar';
               serieComplete.id = "Rain " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 4;
@@ -1281,7 +1282,7 @@ export class WeatherRecordsComponent implements OnInit {
             });
             //ADD WIND TO GRAPH
             this.getSerieByData(wind.concat(_apiRec.map(_elt => {
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "wind" }
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
             })), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5);
@@ -1493,7 +1494,7 @@ export class WeatherRecordsComponent implements OnInit {
                 t.date === _r.date
               ))
             );
-            console.log(_arr);
+            //console.log(_arr);
             temp = _arr.map(_elt => {
               return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: obsArray[i].ws.sourceId, type: "temp" }
             });
@@ -1504,7 +1505,7 @@ export class WeatherRecordsComponent implements OnInit {
               return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: obsArray[i].ws.sourceId, type: "humi" }
             });
             wind = _arr.map(_elt => {
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: obsArray[i].ws.sourceId, type: "wind" }
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: obsArray[i].ws.sourceId, type: "wind" }
             });
             //ADD TEMP TO GRAPH
             this.getSerieByData(temp, obsArray[i].name, (serieComplete: any) => {
@@ -1681,6 +1682,7 @@ export class WeatherRecordsComponent implements OnInit {
 
   getSerieByData(data: any, nameSerie: string, next: Function): void {
     let sensorRef: Array<string> = [];
+    //console.log(data);
     data.forEach(_data => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
@@ -1694,7 +1696,7 @@ export class WeatherRecordsComponent implements OnInit {
           };
         }
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-          return { name: _map.date, value: [_map.date, typeof _map.value === 'string' ? _map.value.replace(/,/, '.') : _map.value, _map.sensorRef] };
+          return { name: _map.date, value: [_map.date, typeof _map.value === 'string' ? _map.value.replace(/,/, '.') : _map.value, _map.sensorRef, _map.deg] };
         });
         next(serieTmp);
       }
