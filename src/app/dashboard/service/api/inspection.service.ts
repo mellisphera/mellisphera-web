@@ -82,17 +82,17 @@ export class InspectionService {
   }
 
   getInspectionCurrentApiary(apiaryId: string): Inspection[]{
-    let start = new Date();
-    start.setDate(start.getDate() - 180);
-    return this.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId && new Date(_insp.opsDate) > start)).sort((inspA, inspB) => {
+    // let start = new Date();
+    // start.setDate(start.getDate() - 180);
+    return this.inspectionsApiary.filter(_insp => (_insp.apiaryId === apiaryId /*&& new Date(_insp.opsDate) > start*/)).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });
   }
 
   getInspectionCurrentHive(hiveId: string): Inspection[]{
-    let start = new Date();
-    start.setDate(start.getDate() - 180);
-    return this.inspectionsHive.filter(_insp => (_insp.hiveId === hiveId && new Date(_insp.opsDate) > start )).sort((inspA, inspB) => {
+    // let start = new Date();
+    // start.setDate(start.getDate() - 180);
+    return this.inspectionsHive.filter(_insp => (_insp.hiveId === hiveId /*&& new Date(_insp.opsDate) > start*/ )).sort((inspA, inspB) => {
       return -(moment(inspA.opsDate).unix() - moment(inspB.opsDate).unix());
     });
   }

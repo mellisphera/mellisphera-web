@@ -800,7 +800,7 @@ export class EventsComponent implements OnInit {
     this.alerts.splice(index, 1);
     let rowIndex = Array.from(this.tbody.rows).findIndex(_row => _row.cells[8].innerHTML === this.alertToEdit._id);
     this.tbody.deleteRow(rowIndex);
-    this.inspService.deleteHiveInsp([this.alertToEdit._id]).subscribe(
+    this.alertService.deleteAlerts([this.alertToEdit._id]).subscribe(
       () => {},
       () => {},
       () => {

@@ -20,10 +20,8 @@ import { CurrentIndexService } from '../../service/api/current-index.service';
 import { ForecastIndexService } from '../../service/api/forecast-index.service';
 import { WSAEACCES } from 'constants';
 
-const colors: any = {
-  local: ['rgb(50,160,210)', 'rgb(0,170,0)', 'rgb(255,0,0)', 'rgb(150,0,255)', 'rgb(220,150,0)', 'rgb(0,0,220)', 'rgb(150,0,150)', 'rgb(120,80,0)', 'rgb(150,150,150)'],
-  ws: ['rgb(140,219,255)', 'rgb(122,223,134)', 'rgb(255,170,170)', 'rgb(200,130,255)', 'rgb(255,210,125)', 'rgb(130,130,255)', 'rgb(240,110,240)', 'rgb(190, 160, 90)', 'rgb(210,210,210)']
-};
+const IMG_PATH = '../../../../assets/ms-pics/';
+const colors: string[] = ["#3588d1", "#9ff973", "#7125bd", "#c9dd87", "#751718", "#34f50e", "#2e3478", "#24ffcd", "#f7306e", "#4fa075", "#801967", "#d0a8f9", "#5ab220", "#ee0d0e", "#096013", "#f75ef0", "#a3c9fe", "#466cf0"];
 
 @Component({
   selector: 'app-weather-records',
@@ -59,19 +57,19 @@ export class WeatherRecordsComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.rucherService.getApiariesByUserId(this.userService.getIdUserLoged()).subscribe(
       _apiaries => {
         this.user_apiaries = [..._apiaries].sort(this.compare);
         this.user_apiaries = this.user_apiaries.filter(apiary => apiary !== null && apiary.userId === this.userService.getIdUserLoged());
       },
-      () => {},
+      () => { },
       () => {
         this.getUserWeatherSrcs(() => {
           const elt = document.getElementsByClassName('apiaryGroup')[0];
           if (elt.classList.contains('apiary-group-weather-config')) {
             elt.classList.remove('apiary-group-weather-config');
-          } 
+          }
           elt.classList.add('apiary-group-weather-records');
           this.w_d_service.today = new Date();
 
@@ -81,7 +79,7 @@ export class WeatherRecordsComponent implements OnInit {
           this.options.xAxis = [];
           this.valueSubjectComplete = 0;
           this.gridIndex = [0, 1, 2, 3];
-          this.w_o_service.setRecordsChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-weather'),{},{height: '1400px'}));
+          this.w_o_service.setRecordsChartInstance(echarts.init(<HTMLDivElement>document.getElementById('graph-weather'), {}, { height: '1400px' }));
           this.setOptionForChart();
           this.loadAllRecords((options: any) => {
             this.w_o_service.getRecordsChartInstance().setOption(options, true);
@@ -91,33 +89,33 @@ export class WeatherRecordsComponent implements OnInit {
         })
       }
     );
-    
+
   }
 
-  compare( a:RucherModel, b:RucherModel ) {
-    if ( a.name < b.name ){
+  compare(a: RucherModel, b: RucherModel) {
+    if (a.name < b.name) {
       return -1;
     }
-    if ( a.name > b.name ){
+    if (a.name > b.name) {
       return 1;
     }
     return 0;
   }
 
-  getUserWeatherSrcs(next: Function){
+  getUserWeatherSrcs(next: Function) {
     this.w_srcs_service.requestUserWeatherSrcs(this.userService.getIdUserLoged()).subscribe(
       (_ws: WeatherSource[]) => {
         //console.log(_ws);
         this.currentWSByApiary = [..._ws];
       },
-      () => {},
+      () => { },
       () => {
         next();
       }
     )
   }
 
-  setOptionForChart(){
+  setOptionForChart() {
     this.options.title[0].text = this.translateService.instant('WEATHER.GRAPH.NECTAR');
     this.options.title[0].left = this.translateService.instant('WEATHER.GRAPH.NECTAR_LEFT');
     this.options.title[1].text = this.translateService.instant('WEATHER.GRAPH.FLIGHT');
@@ -174,21 +172,19 @@ export class WeatherRecordsComponent implements OnInit {
     let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = function (value) {
-      if(value.min < 0){
-        let nb = Math.ceil(value.min) / 5;
-        return Math.ceil(nb) * 5;
+      if (value.min < 0) {
+        return value.min - (5 + value.min % 5);
       }
-      else{
+      else {
         return 0;
       }
     };
 
     yAxisTemp.max = function (value) {
-      if(value.max > 5){
-        let nb = Math.ceil(value.max) / 5;
-        return Math.ceil(nb) * 5;
+      if (value.max > 40) {
+        return value.max;
       }
-      else{
+      else {
         return 40;
       }
     };
@@ -230,7 +226,7 @@ export class WeatherRecordsComponent implements OnInit {
     let yAxisRain = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisRain.name = this.translateService.instant('WEATHER.GRAPH.RAIN_YAXIS') + '(' + this.graphGlobal.rain.unitT + ')';
     yAxisRain.min = 0;
-    yAxisRain.max = this.unitService.getUserPref().unitSystem == "METRIC" ? 10 : 0.4;
+    yAxisRain.max = this.unitService.getUserPref().unitSystem == "METRIC" ? 5 : 0.2;
     yAxisRain.gridIndex = 4;
     yAxisRain.interval = this.unitService.getUserPref().unitSystem == "METRIC" ? 1 : 0.05;
     yAxisRain.axisLabel.margin = 5;
@@ -268,12 +264,14 @@ export class WeatherRecordsComponent implements OnInit {
 
     this.options.tooltip.formatter = (params) => {
       return params.filter(_p => _p.seriesId.split(" ")[0] === params[0].seriesId.split(" ")[0]).map((_elt, index) => {
-        let date = (index === 0 ? _elt.seriesId.split(" ")[0] === "Nectar" || _elt.seriesId.split(" ")[0] === "Flight" ? this.unitService.getHourlyDate(_elt.data.name).substr(0,10) + " 12:00" : this.unitService.getHourlyDate(_elt.data.name) : '' )
+        //console.log(_elt);
+        let date = (index === 0 ? _elt.seriesId.split(" ")[0] === "Nectar" || _elt.seriesId.split(" ")[0] === "Flight" ? this.unitService.getHourlyDate(_elt.data.name).substr(0, 10) + " 12:00" : this.unitService.getHourlyDate(_elt.data.name) : '')
         return this.getTooltipFormater(_elt.marker, date, new Array(
           {
             name: _elt.seriesName,
+            deg: _elt.data.value[3],
             value: this.unitService.getValRound(_elt.data.value[1]),
-            unit:  this.graphGlobal.getWeatherUnitBySerieName(_elt.seriesId),
+            unit: this.graphGlobal.getWeatherUnitBySerieName(_elt.seriesId),
             sensorRef: _elt.data.value[2]
           }
         ));
@@ -291,45 +289,45 @@ export class WeatherRecordsComponent implements OnInit {
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
 
     let width = (<HTMLElement>document.getElementById("graph-weather")).offsetWidth
-    if(document.body.clientWidth < 950){
-      if(width < 800 && width > 500){
+    if (document.body.clientWidth < 950) {
+      if (width < 800 && width > 500) {
         this.mobile800Graph();
       }
-      else if( width < 500 ){
+      else if (width < 500) {
         this.mobile500Graph();
       }
     }
-    else{
-      if( document.body.clientWidth < 1100){
+    else {
+      if (document.body.clientWidth < 1100) {
         this.desktop1100Graph();
       }
-      else{
+      else {
         this.desktopGraph();
       }
     }
     //if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
-      //this.insertMarklines();
+    //this.insertMarklines();
     //}
   }
 
-  insertMarklines(){
+  insertMarklines() {
     let text = this.unitService.getHourlyDate(new Date());
     this.options.series.push({
       type: 'line',
       showSymbol: false,
       data: [],
       markLine: {
-        data: [ {name: "", xAxis: new Date()} ],
-        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        data: [{ name: "", xAxis: new Date() }],
+        lineStyle: { normal: { type: 'dashed', color: 'rgb(0, 0, 150)', width: 1 } },
         symbol: ['circle', 'none'],
-        label:{
-          formatter: function(){
+        label: {
+          formatter: function () {
             return '';
           }
         },
         silent: true,
       },
-      name:"markLine",
+      name: "markLine",
       yAxisIndex: 0,
       xAxisIndex: 0
     });
@@ -338,17 +336,17 @@ export class WeatherRecordsComponent implements OnInit {
       showSymbol: false,
       data: [],
       markLine: {
-        data: [ {name: "", xAxis: new Date()} ],
-        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        data: [{ name: "", xAxis: new Date() }],
+        lineStyle: { normal: { type: 'dashed', color: 'rgb(0, 0, 150)', width: 1 } },
         symbol: ['circle', 'none'],
-        label:{
-          formatter: function(){
+        label: {
+          formatter: function () {
             return '';
           }
         },
         silent: true,
       },
-      name:"markLine",
+      name: "markLine",
       yAxisIndex: 1,
       xAxisIndex: 1
     });
@@ -357,17 +355,17 @@ export class WeatherRecordsComponent implements OnInit {
       showSymbol: false,
       data: [],
       markLine: {
-        data: [ {name: "", xAxis: new Date()} ],
-        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        data: [{ name: "", xAxis: new Date() }],
+        lineStyle: { normal: { type: 'dashed', color: 'rgb(0, 0, 150)', width: 1 } },
         symbol: ['circle', 'none'],
-        label:{
-          formatter: function(){
+        label: {
+          formatter: function () {
             return '';
           }
         },
         silent: true,
       },
-      name:"markLine",
+      name: "markLine",
       yAxisIndex: 2,
       xAxisIndex: 2
     });
@@ -376,17 +374,17 @@ export class WeatherRecordsComponent implements OnInit {
       showSymbol: false,
       data: [],
       markLine: {
-        data: [ {name: "", xAxis: new Date()} ],
-        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        data: [{ name: "", xAxis: new Date() }],
+        lineStyle: { normal: { type: 'dashed', color: 'rgb(0, 0, 150)', width: 1 } },
         symbol: ['circle', 'none'],
-        label:{
-          formatter: function(){
+        label: {
+          formatter: function () {
             return '';
           }
         },
         silent: true,
       },
-      name:"markLine",
+      name: "markLine",
       yAxisIndex: 3,
       xAxisIndex: 3
     });
@@ -395,17 +393,17 @@ export class WeatherRecordsComponent implements OnInit {
       showSymbol: false,
       data: [],
       markLine: {
-        data: [ {name: "", xAxis: new Date()} ],
-        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        data: [{ name: "", xAxis: new Date() }],
+        lineStyle: { normal: { type: 'dashed', color: 'rgb(0, 0, 150)', width: 1 } },
         symbol: ['circle', 'none'],
-        label:{
-          formatter: function(){
+        label: {
+          formatter: function () {
             return '';
           }
         },
         silent: true,
       },
-      name:"markLine",
+      name: "markLine",
       yAxisIndex: 4,
       xAxisIndex: 4
     });
@@ -414,17 +412,17 @@ export class WeatherRecordsComponent implements OnInit {
       showSymbol: false,
       data: [],
       markLine: {
-        data: [ {name: "", xAxis: new Date()} ],
-        lineStyle: {normal: { type:'dashed',color: 'rgb(0, 0, 150)', width: 1} },
+        data: [{ name: "", xAxis: new Date() }],
+        lineStyle: { normal: { type: 'dashed', color: 'rgb(0, 0, 150)', width: 1 } },
         symbol: ['circle', 'none'],
-        label:{
-          formatter: function(){
+        label: {
+          formatter: function () {
             return '';
           }
         },
         silent: true,
       },
-      name:"markLine",
+      name: "markLine",
       yAxisIndex: 5,
       xAxisIndex: 5
     });
@@ -437,30 +435,30 @@ export class WeatherRecordsComponent implements OnInit {
       height: '1400px'
     });
     let width = (<HTMLElement>document.getElementById("graph-weather")).offsetWidth
-    if(document.body.clientWidth < 950){
-      if( (this.type_graph === 'desktop' || this.type_graph === 'desktop1100' || this.type_graph === 'mobile500') && width < 800 && width > 500){
+    if (document.body.clientWidth < 950) {
+      if ((this.type_graph === 'desktop' || this.type_graph === 'desktop1100' || this.type_graph === 'mobile500') && width < 800 && width > 500) {
         this.mobile800Graph();
       }
-      else if((this.type_graph === 'mobile800' || this.type_graph === 'desktop1100' || this.type_graph === 'desktop') && width < 500){
+      else if ((this.type_graph === 'mobile800' || this.type_graph === 'desktop1100' || this.type_graph === 'desktop') && width < 500) {
         this.mobile500Graph();
       }
-      else if((this.type_graph === 'mobile800' || this.type_graph === 'mobile500') && width > 800){
-        if(width < 1100){
+      else if ((this.type_graph === 'mobile800' || this.type_graph === 'mobile500') && width > 800) {
+        if (width < 1100) {
           this.desktop1100Graph();
         }
         else this.desktopGraph();
       }
     }
-    else if((this.type_graph === 'mobile800' || this.type_graph === 'mobile500') && width < 1100){
+    else if ((this.type_graph === 'mobile800' || this.type_graph === 'mobile500') && width < 1100) {
       this.desktop1100Graph();
     }
-    else{
+    else {
       this.desktopGraph();
     }
-    
+
   }
 
-  mobile800Graph(){
+  mobile800Graph() {
     //console.log('allo800');
     this.type_graph = 'mobile800';
     this.options.legend.orient = "horizontal";
@@ -470,13 +468,13 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.legend.top = 0;
     this.options.legend.width = '100%';
     this.options.title[0].top = "3%";
-    this.options.title.forEach((_t,i) => {
-      _t.top = (3 + i*15) + '%';
+    this.options.title.forEach((_t, i) => {
+      _t.top = (3 + i * 15) + '%';
       _t.left = 'center';
     });
     this.options.grid[0].top = "5%";
-    this.options.grid.forEach((_t,i) => {
-      _t.top = (5 + i*15) + '%';
+    this.options.grid.forEach((_t, i) => {
+      _t.top = (5 + i * 15) + '%';
       _t.width = "85%";
       _t.left = "8%";
     });
@@ -485,13 +483,13 @@ export class WeatherRecordsComponent implements OnInit {
       _a.axisLabel.fontSize = 10;
       _a.nameGap = 20;
       _a.nameTextStyle = {
-        fontSize : 10
+        fontSize: 10
       }
     });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
   }
 
-  mobile500Graph(){
+  mobile500Graph() {
     //console.log('allo500');
     this.type_graph = 'mobile500';
     this.options.legend.orient = "horizontal";
@@ -501,13 +499,13 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.legend.top = 0;
     this.options.legend.width = '100%';
     this.options.title[0].top = "7%";
-    this.options.title.forEach((_t,i) => {
-      _t.top = (7 + i*15) + '%'
+    this.options.title.forEach((_t, i) => {
+      _t.top = (7 + i * 15) + '%'
       _t.left = 'center';
     });
     this.options.grid[0].top = "9%";
-    this.options.grid.forEach((_t,i) => {
-      _t.top = (9+ i*15) + '%';
+    this.options.grid.forEach((_t, i) => {
+      _t.top = (9 + i * 15) + '%';
       _t.width = "83%";
       _t.left = "10%";
     });
@@ -516,13 +514,13 @@ export class WeatherRecordsComponent implements OnInit {
       _a.axisLabel.fontSize = 8;
       _a.nameGap = 15;
       _a.nameTextStyle = {
-        fontSize : 9
+        fontSize: 9
       }
     });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
   }
 
-  desktop1100Graph(){
+  desktop1100Graph() {
     //console.log('allo1100');
     this.type_graph = 'desktop1100';
     this.options.legend.orient = "horizontal";
@@ -539,13 +537,13 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.title[5].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
 
     this.options.title[0].top = "3%";
-    this.options.title.forEach((_t,i) => {
-      _t.top = (3 + i*15) + '%';
+    this.options.title.forEach((_t, i) => {
+      _t.top = (3 + i * 15) + '%';
       _t.left = 'center';
     });
     this.options.grid[0].top = "5%";
-    this.options.grid.forEach((_t,i) => {
-      _t.top = (5 + i*15) + '%';
+    this.options.grid.forEach((_t, i) => {
+      _t.top = (5 + i * 15) + '%';
       _t.width = "85%";
       _t.left = "8%";
     });
@@ -554,20 +552,20 @@ export class WeatherRecordsComponent implements OnInit {
       _a.axisLabel.fontSize = 10;
       _a.nameGap = 20;
       _a.nameTextStyle = {
-        fontSize : 10
+        fontSize: 10
       }
     });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
   }
 
-  desktopGraph(){
+  desktopGraph() {
     //console.log('allo');
     this.type_graph = 'desktop';
     this.options.legend.orient = "horizontal";
     this.options.legend.center = 'center';
     delete this.options.legend.center;
     this.options.title[0].top = "3%";
-    this.options.title.forEach((_t,i) => _t.top = (3 + i*15) + '%');
+    this.options.title.forEach((_t, i) => _t.top = (3 + i * 15) + '%');
     this.options.title[0].left = this.translateService.instant('WEATHER.GRAPH.NECTAR_LEFT');
     this.options.title[1].left = this.translateService.instant('WEATHER.GRAPH.FLIGHT_LEFT');
     this.options.title[2].left = this.translateService.instant('WEATHER.GRAPH.TEMP_LEFT');
@@ -576,8 +574,8 @@ export class WeatherRecordsComponent implements OnInit {
     this.options.title[5].left = this.translateService.instant('WEATHER.GRAPH.WIND_LEFT');
 
     this.options.grid[0].top = "5%";
-    this.options.grid.forEach((_t,i) => {
-      _t.top = (5 + i*15) + '%';
+    this.options.grid.forEach((_t, i) => {
+      _t.top = (5 + i * 15) + '%';
       _t.width = "85%";
       _t.left = "6%";
     });
@@ -586,7 +584,7 @@ export class WeatherRecordsComponent implements OnInit {
       _a.axisLabel.fontSize = 12;
       _a.nameGap = 25;
       _a.nameTextStyle = {
-        fontSize : 12
+        fontSize: 12
       }
     });
     this.w_o_service.getRecordsChartInstance().setOption(this.options);
@@ -603,61 +601,64 @@ export class WeatherRecordsComponent implements OnInit {
    */
   getTooltipFormater(markerSerie: string, date: string, series: Array<any>): string {
     let templateHeaderTooltip = '<B>{D}</B> <br/>';
-    let templateValue = '{*} {n}: <B>{v} {u}</B> {R}';
+    let templateValue = '{*} {n}: {d}<B>{v} {u}</B> {R}';
     let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
       let sensor = _serie.name.split('|')[1] === 'WeatherS' ? 'WeatherS' : _serie.sensorRef;
-      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' + sensor);
+      const svg = '<div style="width:13px; height:13px; background-image:url(' + IMG_PATH + 'ui/up-arrow.svg); background-repeat:no-repeat; background-size:13px; background-position: center;"></div>'
+      let arrow = (_serie.deg != null ? '<span style="margin-right: 5px;transform: rotate('+_serie.deg+'deg);-ms-transform: rotate('+_serie.deg+'deg);-webkit-transform: rotate('+_serie.deg+'deg);display: inline-block;">' + svg + '</span>' : '');
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{d}/g, arrow).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' + sensor);
     }).join('');
 
     return tooltipGlobal;
   }
 
-  loadAllRecords(next: Function){
+  loadAllRecords(next: Function) {
     this.options.series = [];
-    if(this.options.series.findIndex(_s => _s.name === "markLine") === -1){
-      if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
+    if (this.options.series.findIndex(_s => _s.name === "markLine") === -1) {
+      if (new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime()) {
         this.insertMarklines();
       }
     }
     this.w_o_service.getRecordsChartInstance().showLoading();
-    this.loadAllWithWeatherSource((options:any) => {
-        //this.w_o_service.getRecordsChartInstance().setOption(options, true);
-        //this.w_o_service.getRecordsChartInstance().hideLoading();
-        
-        if(this.currentWSByApiary.length > 0){
-          this.loadAllWithChosenSource((options:any) => {
-            next(options);
-          });
-        }
-        else{
+    this.loadAllWithWeatherSource((options: any) => {
+      //this.w_o_service.getRecordsChartInstance().setOption(options, true);
+      //this.w_o_service.getRecordsChartInstance().hideLoading();
+
+      if (this.currentWSByApiary.length > 0) {
+        this.loadAllWithChosenSource((options: any) => {
           next(options);
-        }
+        });
+      }
+      else {
+        next(options);
+      }
     });
   }
 
-  loadAllWithWeatherSource(next: Function){
+  loadAllWithWeatherSource(next: Function) {
     let temp: any[], rain: any[], wind: any[], humi: any[];
     let obsArray = [];
-    console.log(this.w_d_service.getCurrentRangeForRequest());
     obsArray = this.w_o_service.getApiariesSelected().map(_a => {
       return [
-        { apiary: _a,
+        {
+          apiary: _a,
           name: _a.name,
           obs: this.weatherService.getCurrentHourlyWeather(_a._id, this.w_d_service.getCurrentRangeForRequest())
         },
-        { apiary: _a,
+        {
+          apiary: _a,
           name: _a.name,
-          obs: this.weatherService.getForecastHourlyWeather(_a._id, this.w_d_service.getForecastRangeForRequest()) 
+          obs: this.weatherService.getForecastHourlyWeather(_a._id, this.w_d_service.getForecastRangeForRequest())
         },
-      
+
       ];
     }).flat();
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _records => {
         //console.log(_records);
         _records.forEach((_apiRec: any[], index) => {
-          if(index % 2 === 0){
+          if (index % 2 === 0) {
             /*console.log(_apiRec);
             console.log(_apiRec = _apiRec.filter((_r, i, self) =>
               i === self.findIndex((t) => (
@@ -669,30 +670,31 @@ export class WeatherRecordsComponent implements OnInit {
             humi = [];
             wind = [];
             temp = _apiRec.map(_elt => {
-              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "temp" }
+              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "temp" }
             });
-            rain = _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[2]['1h'] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['1h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null , sensorRef: _elt.sensorRef, type: "rain" }
+            rain = _apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[2]['1h'] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['1h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null, sensorRef: _elt.sensorRef, type: "rain" }
             });
-            humi = _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: _elt.sensorRef, type: "humi" }
+            humi = _apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: _elt.sensorRef, type: "humi" }
             });
-            wind = _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref( _elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "wind" }
+            wind = _apiRec.map(_elt => {
+              //console.log(_elt.value[1].deg);
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
             });
           }
-          else{
+          else {
             //ADD TEMP TO GRAPH
-            this.getSerieByData(temp.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "temp" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
-              
-              serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+            this.getSerieByData(temp.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "temp" }
+            })), obsArray[index].name, (serieComplete: any) => {
+
+              serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -706,16 +708,16 @@ export class WeatherRecordsComponent implements OnInit {
               }
             });
             //ADD RAIN TO GRAPH
-            this.getSerieByData(rain.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[2]['3h'] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['3h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null , sensorRef: _elt.sensorRef, type: "rain" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
+            this.getSerieByData(rain.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[2]['3h'] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['3h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null, sensorRef: _elt.sensorRef, type: "rain" }
+            })), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.type = 'bar';
-              serieComplete.id = "Rain " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.id = "Rain " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 4;
               serieComplete.xAxisIndex = 4;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -729,16 +731,16 @@ export class WeatherRecordsComponent implements OnInit {
               }
             });
             //ADD HUMIDITY TO GRAPH
-            this.getSerieByData(humi.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: _elt.sensorRef, type: "humi" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
+            this.getSerieByData(humi.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: _elt.sensorRef, type: "humi" }
+            })), obsArray[index].name, (serieComplete: any) => {
 
-              serieComplete.id = "Humi " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.id = "Humi " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 3;
               serieComplete.xAxisIndex = 3;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -752,16 +754,16 @@ export class WeatherRecordsComponent implements OnInit {
               }
             });
             //ADD WIND TO GRAPH
-            this.getSerieByData(wind.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref( _elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "wind" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
+            this.getSerieByData(wind.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
+            })), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 5;
               serieComplete.xAxisIndex = 5;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -778,29 +780,31 @@ export class WeatherRecordsComponent implements OnInit {
           }
         });
       },
-      () => {},
+      () => { },
       () => {
         //console.log(this.options.series);
-        this.loadAllIndexesWeatherSource((options)=> {
+        this.loadAllIndexesWeatherSource((options) => {
           next(this.options);
         })
       }
     );
   }
 
-  loadAllIndexesWeatherSource(next: Function){
+  loadAllIndexesWeatherSource(next: Function) {
     let nec: any[] = [], fli: any[] = [];
     let obsArray = [];
     obsArray = this.w_o_service.getApiariesSelected().map(_a => {
       return [
-        { apiary: _a,
+        {
+          apiary: _a,
           name: _a.name,
           obs: this.currentIdx.getCurrentIndexByApiaryAndDateBetweenWS(_a._id, this.w_d_service.getCurrentRangeForRequest())
         },
-        { apiary: _a,
+        {
+          apiary: _a,
           name: _a.name,
-          obs: this.forecastIdx.getForecastIndexByApiaryAndDateBetween(_a._id, this.w_d_service.getForecastRangeForRequest()) 
-        },    
+          obs: this.forecastIdx.getForecastIndexByApiaryAndDateBetween(_a._id, this.w_d_service.getForecastRangeForRequest())
+        },
       ];
     }).flat();
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
@@ -812,29 +816,29 @@ export class WeatherRecordsComponent implements OnInit {
             _r.date = new Date(_r.date).toUTCString();
             //console.log(new Date(_r.date).toUTCString());
           });*/
-          if(index % 2 === 0){
+          if (index % 2 === 0) {
             nec = [];
             fli = [];
             nec = _apiIdx.map(_elt => {
-              return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+              return { date: _elt.date, value: _elt.nectarIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
             });
             fli = _apiIdx.map(_elt => {
-              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+              return { date: _elt.date, value: _elt.flightIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
             });
           }
-          else{
+          else {
             //ADD NECTAR TO GRAPH
-            this.getSerieByData(nec.concat( _apiIdx.map(_elt => { 
-              return { date: _elt.date, value: _elt.nectarIdx*100, sensorRef:'WeatherSource', type: "nec" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
-              
+            this.getSerieByData(nec.concat(_apiIdx.map(_elt => {
+              return { date: _elt.date, value: _elt.nectarIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
+            })), obsArray[index].name, (serieComplete: any) => {
+
               serieComplete.type = 'bar';
 
-              serieComplete.id = "Nectar " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.id = "Nectar " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 0;
               serieComplete.xAxisIndex = 0;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') ,
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource'),
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -849,16 +853,16 @@ export class WeatherRecordsComponent implements OnInit {
             });
 
             //ADD FLIGHT TO GRAPH
-            this.getSerieByData(fli.concat( _apiIdx.map(_elt => { 
-              return { date: _elt.date, value: _elt.flightIdx*100, sensorRef:'WeatherSource', type: "nec" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
-              
+            this.getSerieByData(fli.concat(_apiIdx.map(_elt => {
+              return { date: _elt.date, value: _elt.flightIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
+            })), obsArray[index].name, (serieComplete: any) => {
+
               serieComplete.type = 'bar';
-              serieComplete.id = "Flight " + obsArray[index].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.id = "Flight " + obsArray[index].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 1;
               serieComplete.xAxisIndex = 1;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') ,
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource'),
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -874,35 +878,36 @@ export class WeatherRecordsComponent implements OnInit {
           }
         });
       },
-      () => {},
+      () => { },
       () => {
         next(this.options);
       }
     )
   }
 
-  loadAllWithChosenSource(next: Function){
+  loadAllWithChosenSource(next: Function) {
     let temp: any[], rain: any[], wind: any[], humi: any[];
     let recordsArr: any[][] = [];
     let obsArray = [];
-    obsArray = this.currentWSByApiary.filter(_ws => this.w_o_service.getApiariesSelected().some(_a => _a._id === _ws.apiaryId) && !((_ws.end && new Date(_ws.start) > this.w_d_service.getCurrentRangeForRequest()[1]) || (_ws.end && new Date(_ws.end) < this.w_d_service.getCurrentRangeForRequest()[0])) ).map(_ws => {
+    obsArray = this.currentWSByApiary.filter(_ws => this.w_o_service.getApiariesSelected().some(_a => _a._id === _ws.apiaryId) && !((_ws.end && new Date(_ws.start) > this.w_d_service.getCurrentRangeForRequest()[1]) || (_ws.end && new Date(_ws.end) < this.w_d_service.getCurrentRangeForRequest()[0]))).map(_ws => {
       let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
       let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
       return [
-        { apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
+        {
+          apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
           ws: _ws,
           name: _ws.apiaryName,
-          obs: _ws.sourceType === "Station Davis" ? this.weatherService.getCurrentHourlyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end]) : this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
+          obs: _ws.sourceType === "Station Davis" ? this.weatherService.getCurrentHourlyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start, end]) : this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
         },
       ];
     }).flat();
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _sensorRecords => {
         //console.log(_sensorRecords);
-        _sensorRecords.forEach((_arr: any[],i) => {
-          if(obsArray[i].ws.sourceType !== "Station Davis"){
-             // Faire passer a 0minutes
-            _arr.forEach( (_r) => {
+        _sensorRecords.forEach((_arr: any[], i) => {
+          if (obsArray[i].ws.sourceType !== "Station Davis") {
+            // Faire passer a 0minutes
+            _arr.forEach((_r) => {
               _r.recordDate = _r.recordDate.substr(0, 14) + '00:00.000+0000';
               //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
               //console.log(_r.recordDate.substr(14, 27));
@@ -913,29 +918,29 @@ export class WeatherRecordsComponent implements OnInit {
                 t.recordDate === _r.recordDate
               ))
             )
-            temp = _arr.map(_elt =>{
-              return { date:_elt.recordDate, value: this.unitService.convertTempFromUsePref(_elt.temp_int ? _elt.temp_int : _elt.temp_ext, this.userService.getJwtReponse().userPref.unitSystem, true), sensorRef: _elt.sensorRef, type: "temp" }
+            temp = _arr.map(_elt => {
+              return { date: _elt.recordDate, value: this.unitService.convertTempFromUsePref(_elt.temp_int ? _elt.temp_int : _elt.temp_ext, this.userService.getJwtReponse().userPref.unitSystem, true), sensorRef: _elt.sensorRef, type: "temp" }
             });
             this.getSerieByData(temp, obsArray[i].name, (serieComplete) => {
-                serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
-                serieComplete.yAxisIndex = 2;
-                serieComplete.xAxisIndex = 2;
-                //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
-                serieComplete.itemStyle = {
-                  color: this.getColor(obsArray[i].apiary, 'Local') 
-                };
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 2;
+              serieComplete.xAxisIndex = 2;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local')
+              };
 
-                const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
-                if (indexSerie !== -1) {
-                  this.options.series.push(Object.assign({}, serieComplete));
-                } else {
-                  this.options.series.push(Object.assign({}, serieComplete));
-                  this.options.legend.data.push(serieComplete.name);
-                }
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
             });
-            if(obsArray[i].ws.sourceType === "TH"){
-              humi = _arr.map(_elt =>{
-                return { date: _elt.recordDate, value: _elt.humidity_int , sensorRef: _elt.sensorRef, type: "humi" }
+            if (obsArray[i].ws.sourceType === "TH") {
+              humi = _arr.map(_elt => {
+                return { date: _elt.recordDate, value: _elt.humidity_int, sensorRef: _elt.sensorRef, type: "humi" }
               });
               this.getSerieByData(humi, obsArray[i].name, (serieComplete) => {
                 serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
@@ -943,7 +948,7 @@ export class WeatherRecordsComponent implements OnInit {
                 serieComplete.xAxisIndex = 3;
                 //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
                 serieComplete.itemStyle = {
-                  color: this.getColor(obsArray[i].apiary, 'Local') 
+                  color: this.getColor(obsArray[i].apiary, 'Local')
                 };
 
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
@@ -956,8 +961,8 @@ export class WeatherRecordsComponent implements OnInit {
               });
             }
           }
-          else{
-            _arr.forEach( (_r) => {
+          else {
+            _arr.forEach((_r) => {
               _r.date = _r.date.substr(0, 14) + '00:00.000+0000';
               //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
               //console.log(_r.recordDate.substr(14, 27));
@@ -968,28 +973,28 @@ export class WeatherRecordsComponent implements OnInit {
                 t.date === _r.date
               ))
             );
-            console.log(_arr);
+            //console.log(_arr);
             temp = _arr.map(_elt => {
-              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: obsArray[i].ws.sourceId, type: "temp" }
+              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: obsArray[i].ws.sourceId, type: "temp" }
             });
-            rain = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[2] ? this.unitService.convertMilimetreToPouce(_elt.value[2], this.userService.getJwtReponse().userPref.unitSystem, false) : null , sensorRef: obsArray[i].ws.sourceId, type: "rain" }
+            rain = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.value[2] ? this.unitService.convertMilimetreToPouce(_elt.value[2], this.userService.getJwtReponse().userPref.unitSystem, false) : null, sensorRef: obsArray[i].ws.sourceId, type: "rain" }
             });
-            humi = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: obsArray[i].ws.sourceId, type: "humi" }
+            humi = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: obsArray[i].ws.sourceId, type: "humi" }
             });
-            wind = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref( _elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: obsArray[i].ws.sourceId, type: "wind" }
+            wind = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: obsArray[i].ws.sourceId, type: "wind" }
             });
             //ADD TEMP TO GRAPH
             this.getSerieByData(temp, obsArray[i].name, (serieComplete: any) => {
-              
-              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1001,13 +1006,13 @@ export class WeatherRecordsComponent implements OnInit {
             });
             //ADD HUMIDITY TO GRAPH
             this.getSerieByData(humi, obsArray[i].name, (serieComplete: any) => {
-              
-              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+
+              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 3;
               serieComplete.xAxisIndex = 3;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1021,11 +1026,11 @@ export class WeatherRecordsComponent implements OnInit {
             this.getSerieByData(rain, obsArray[i].name, (serieComplete: any) => {
 
               serieComplete.type = 'bar';
-              serieComplete.id = "Rain " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+              serieComplete.id = "Rain " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 4;
               serieComplete.xAxisIndex = 4;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1037,13 +1042,13 @@ export class WeatherRecordsComponent implements OnInit {
             });
             //ADD WIND TO GRAPH
             this.getSerieByData(wind, obsArray[i].name, (serieComplete: any) => {
-              
-              serieComplete.id = "Wind " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+
+              serieComplete.id = "Wind " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 5;
               serieComplete.xAxisIndex = 5;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1056,23 +1061,24 @@ export class WeatherRecordsComponent implements OnInit {
           }
         });
       },
-      () => {},
+      () => { },
       () => {
         this.loadAllIndexesChosenSource((options) => {
           next(this.options);
-        }) 
+        })
       }
     );
   }
 
-  loadAllIndexesChosenSource(next: Function){
+  loadAllIndexesChosenSource(next: Function) {
     let nec: any[] = [], fli: any[] = [];
     let obsArray = [];
-    obsArray = this.currentWSByApiary.filter(_ws => this.w_o_service.getApiariesSelected().some(_a => _a._id === _ws.apiaryId) && !((_ws.end && new Date(_ws.start) > this.w_d_service.getCurrentRangeForRequest()[1]) || (_ws.end && new Date(_ws.end) < this.w_d_service.getCurrentRangeForRequest()[0])) ).map(_ws => {
+    obsArray = this.currentWSByApiary.filter(_ws => this.w_o_service.getApiariesSelected().some(_a => _a._id === _ws.apiaryId) && !((_ws.end && new Date(_ws.start) > this.w_d_service.getCurrentRangeForRequest()[1]) || (_ws.end && new Date(_ws.end) < this.w_d_service.getCurrentRangeForRequest()[0]))).map(_ws => {
       let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
       let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
       return [
-        { apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
+        {
+          apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
           ws: _ws,
           name: _ws.apiaryName,
           obs: this.currentIdx.getCurrentIndexByApiaryAndSensorRefAndDateBetweenLocal(_ws.apiaryId, _ws.sourceId, [start, end])
@@ -1087,8 +1093,8 @@ export class WeatherRecordsComponent implements OnInit {
             _r.date = _r.date.substr(0, 11) + '10:00:00.000+0000';
             //console.log(_r.recordDate.substr(14, 27));
           });*/
-          nec = _arr.map( _elt => {
-            return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: _elt.sensorRef, type: "nec" }
+          nec = _arr.map(_elt => {
+            return { date: _elt.date, value: _elt.nectarIdx * 100, sensorRef: _elt.sensorRef, type: "nec" }
           });
           this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
             serieComplete.type = 'bar';
@@ -1097,7 +1103,7 @@ export class WeatherRecordsComponent implements OnInit {
             serieComplete.xAxisIndex = 0;
             //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
             serieComplete.itemStyle = {
-              color: this.getColor(obsArray[i].apiary, 'Local') 
+              color: this.getColor(obsArray[i].apiary, 'Local')
             };
 
             const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
@@ -1108,9 +1114,9 @@ export class WeatherRecordsComponent implements OnInit {
               this.options.legend.data.push(serieComplete.name);
             }
           });
-          if(obsArray[i].ws.sourceType === "Station Davis"){
-            fli = _arr.map( _elt => {
-              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: _elt.sensorRef, type: "fli" }
+          if (obsArray[i].ws.sourceType === "Station Davis") {
+            fli = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.flightIdx * 100, sensorRef: _elt.sensorRef, type: "fli" }
             });
             this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
               serieComplete.type = 'bar';
@@ -1119,9 +1125,9 @@ export class WeatherRecordsComponent implements OnInit {
               serieComplete.xAxisIndex = 1;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
-  
+
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
                 this.options.series.push(Object.assign({}, serieComplete));
@@ -1133,29 +1139,29 @@ export class WeatherRecordsComponent implements OnInit {
           }
         })
       },
-      () => {},
+      () => { },
       () => {
         next(this.options);
       }
     )
   }
 
-  loadRecords(apiary: RucherModel){
-    if(this.w_o_service.getRecordsChartInstance().getOption().series.findIndex(_s => _s.name === "markLine") === -1){
-      if(new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime() ){
+  loadRecords(apiary: RucherModel) {
+    if (this.w_o_service.getRecordsChartInstance().getOption().series.findIndex(_s => _s.name === "markLine") === -1) {
+      if (new Date().getTime() > this.w_d_service.start.getTime() && new Date().getTime() < this.w_d_service.end.getTime()) {
         this.insertMarklines();
       }
     }
     this.w_o_service.getRecordsChartInstance().showLoading();
-    let ws = this.currentWSByApiary.filter(_ws => _ws.apiaryId === apiary._id && !((_ws.end && new Date(_ws.start) > this.w_d_service.getCurrentRangeForRequest()[1]) || (_ws.end && new Date(_ws.end) < this.w_d_service.getCurrentRangeForRequest()[0])) );
-    this.loadWithWeatherSource(apiary, ws, (options:any) => {
-      if(ws.length > 0){
+    let ws = this.currentWSByApiary.filter(_ws => _ws.apiaryId === apiary._id && !((_ws.end && new Date(_ws.start) > this.w_d_service.getCurrentRangeForRequest()[1]) || (_ws.end && new Date(_ws.end) < this.w_d_service.getCurrentRangeForRequest()[0])));
+    this.loadWithWeatherSource(apiary, ws, (options: any) => {
+      if (ws.length > 0) {
         this.loadWithChosenSource(apiary, ws, (options) => {
           this.w_o_service.getRecordsChartInstance().setOption(options, true);
           this.w_o_service.getRecordsChartInstance().hideLoading();
         })
       }
-      else{
+      else {
         this.w_o_service.getRecordsChartInstance().setOption(options, true);
         this.w_o_service.getRecordsChartInstance().hideLoading();
       }
@@ -1163,59 +1169,61 @@ export class WeatherRecordsComponent implements OnInit {
   }
 
 
-  loadWithWeatherSource(apiary: RucherModel, ws:WeatherSource[], next: Function){
+  loadWithWeatherSource(apiary: RucherModel, ws: WeatherSource[], next: Function) {
     let temp: any[], rain: any[], wind: any[], humi: any[];
     let obsArray = [];
     obsArray = [
-        { apiary: apiary,
-          name: apiary.name,
-          obs: this.weatherService.getCurrentHourlyWeather(apiary._id, this.w_d_service.getRangeForRequest())
-        },
-        { apiary: apiary,
-          name: apiary.name,
-          obs: this.weatherService.getForecastHourlyWeather(apiary._id, this.w_d_service.getRangeForRequest()) 
-        },
+      {
+        apiary: apiary,
+        name: apiary.name,
+        obs: this.weatherService.getCurrentHourlyWeather(apiary._id, this.w_d_service.getRangeForRequest())
+      },
+      {
+        apiary: apiary,
+        name: apiary.name,
+        obs: this.weatherService.getForecastHourlyWeather(apiary._id, this.w_d_service.getRangeForRequest())
+      },
     ];
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _records => {
         //console.log(_records);
         _records.forEach((_apiRec: any[], index) => {
-          if(index % 2 === 0){
+          if (index % 2 === 0) {
             temp = [];
             rain = [];
             humi = [];
             wind = [];
-            temp = _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "temp" }
+            temp = _apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "temp" }
             });
-            rain = _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[2]['1h'] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['1h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null , sensorRef: _elt.sensorRef, type: "rain" }
+            rain = _apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[2]['1h'] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['1h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null, sensorRef: _elt.sensorRef, type: "rain" }
             });
-            humi = _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: _elt.sensorRef, type: "humi" }
+            humi = _apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: _elt.sensorRef, type: "humi" }
             });
-            wind = _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref( _elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "wind" }
+            wind = _apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
             });
           }
-          else{
+          else {
             //ADD TEMP TO GRAPH
-            this.getSerieByData(temp.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "temp" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
-              
+            this.getSerieByData(temp.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: _elt.sensorRef, type: "temp" }
+            })), obsArray[index].name, (serieComplete: any) => {
+
               serieComplete.id = "Temp " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
               });*/
-              if(serieComplete.data.length > 0){
+              if (serieComplete.data.length > 0) {
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
                 if (indexSerie !== -1) {
                   this.options.series[indexSerie] = Object.assign({}, serieComplete);
@@ -1223,26 +1231,25 @@ export class WeatherRecordsComponent implements OnInit {
                   this.options.series.push(Object.assign({}, serieComplete));
                 }
               }
-             
+
             });
             //ADD RAIN TO GRAPH
-            this.getSerieByData(rain.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[2]["1h"] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['1h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null , sensorRef: _elt.sensorRef, type: "rain" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
-              console.log(rain);
+            this.getSerieByData(rain.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[2]["1h"] ? this.unitService.convertMilimetreToPouce(_elt.value[2]['1h'], this.userService.getJwtReponse().userPref.unitSystem, false) : null, sensorRef: _elt.sensorRef, type: "rain" }
+            })), obsArray[index].name, (serieComplete: any) => {
               serieComplete.type = 'bar';
               serieComplete.id = "Rain " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 4;
               serieComplete.xAxisIndex = 4;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
               });*/
-              if(serieComplete.data.length > 0){
+              if (serieComplete.data.length > 0) {
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
                 if (indexSerie !== -1) {
                   this.options.series[indexSerie] = Object.assign({}, serieComplete);
@@ -1252,22 +1259,22 @@ export class WeatherRecordsComponent implements OnInit {
               }
             });
             //ADD HUMIDITY TO GRAPH
-            this.getSerieByData(humi.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: _elt.sensorRef, type: "humi" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
+            this.getSerieByData(humi.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: _elt.sensorRef, type: "humi" }
+            })), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.id = "Humi " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 3;
               serieComplete.xAxisIndex = 3;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
               });*/
-              if(serieComplete.data.length > 0){
+              if (serieComplete.data.length > 0) {
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
                 if (indexSerie !== -1) {
                   this.options.series[indexSerie] = Object.assign({}, serieComplete);
@@ -1277,22 +1284,22 @@ export class WeatherRecordsComponent implements OnInit {
               }
             });
             //ADD WIND TO GRAPH
-            this.getSerieByData(wind.concat( _apiRec.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref( _elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: _elt.sensorRef, type: "wind" }
-            }) ), obsArray[index].name, (serieComplete: any) => {
+            this.getSerieByData(wind.concat(_apiRec.map(_elt => {
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: _elt.sensorRef, type: "wind" }
+            })), obsArray[index].name, (serieComplete: any) => {
 
               serieComplete.id = "Wind " + obsArray[index].name.substr(0, 5);
               serieComplete.yAxisIndex = 5;
               serieComplete.xAxisIndex = 5;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[index].apiary, 'WeatherSource') 
+                color: this.getColor(obsArray[index].apiary, 'WeatherSource')
               };
               this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
                 _xAxe.max = this.w_d_service.getRangeForRequest()[1];
               });
-              if(serieComplete.data.length > 0){
+              if (serieComplete.data.length > 0) {
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
                 if (indexSerie !== -1) {
                   this.options.series[indexSerie] = Object.assign({}, serieComplete);
@@ -1305,7 +1312,7 @@ export class WeatherRecordsComponent implements OnInit {
           }
         });
       },
-      () => {},
+      () => { },
       () => {
         this.options.xAxis.forEach(_x => {
           _x.max = this.w_d_service.getRangeForRequest()[1];
@@ -1313,50 +1320,52 @@ export class WeatherRecordsComponent implements OnInit {
         });
         this.loadIndexWithWeatherSource(apiary, ws, (options) => {
           next(this.options);
-        }); 
+        });
       }
     );
   }
 
-  loadIndexWithWeatherSource(apiary: RucherModel, ws: WeatherSource[], next:Function){
+  loadIndexWithWeatherSource(apiary: RucherModel, ws: WeatherSource[], next: Function) {
     let nec: any[] = [], fli: any[] = [];
     let obsArray: any[] = [];
     obsArray = [
-      { apiary: apiary,
+      {
+        apiary: apiary,
         name: apiary.name,
         obs: this.currentIdx.getCurrentIndexByApiaryAndDateBetweenWS(apiary._id, this.w_d_service.getCurrentRangeForRequest())
       },
-      { apiary: apiary,
+      {
+        apiary: apiary,
         name: apiary.name,
-        obs: this.forecastIdx.getForecastIndexByApiaryAndDateBetween(apiary._id, this.w_d_service.getForecastRangeForRequest()) 
-      },    
+        obs: this.forecastIdx.getForecastIndexByApiaryAndDateBetween(apiary._id, this.w_d_service.getForecastRangeForRequest())
+      },
     ];
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _indexes => {
         _indexes.forEach((_apiIdx: any[], i) => {
-          if(i % 2 === 0){
+          if (i % 2 === 0) {
             nec = [];
             fli = [];
             nec = _apiIdx.map(_elt => {
-              return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+              return { date: _elt.date, value: _elt.nectarIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
             });
             fli = _apiIdx.map(_elt => {
-              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: 'WeatherSource', type: "nec" }
+              return { date: _elt.date, value: _elt.flightIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
             });
           }
-          else{
+          else {
             //ADD NECTAR TO GRAPH
-            this.getSerieByData(nec.concat( _apiIdx.map(_elt => { 
-              return { date: _elt.date, value: _elt.nectarIdx*100, sensorRef:'WeatherSource', type: "nec" }
-            }) ), obsArray[i].name, (serieComplete: any) => {
-              
+            this.getSerieByData(nec.concat(_apiIdx.map(_elt => {
+              return { date: _elt.date, value: _elt.nectarIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
+            })), obsArray[i].name, (serieComplete: any) => {
+
               serieComplete.type = 'bar';
 
-              serieComplete.id = "Nectar " + obsArray[i].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.id = "Nectar " + obsArray[i].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 0;
               serieComplete.xAxisIndex = 0;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'WeatherSource') ,
+                color: this.getColor(obsArray[i].apiary, 'WeatherSource'),
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -1371,16 +1380,16 @@ export class WeatherRecordsComponent implements OnInit {
             });
 
             //ADD FLIGHT TO GRAPH
-            this.getSerieByData(fli.concat( _apiIdx.map(_elt => { 
-              return { date: _elt.date, value: _elt.flightIdx*100, sensorRef:'WeatherSource', type: "nec" }
-            }) ), obsArray[i].name, (serieComplete: any) => {
-              
+            this.getSerieByData(fli.concat(_apiIdx.map(_elt => {
+              return { date: _elt.date, value: _elt.flightIdx * 100, sensorRef: 'WeatherSource', type: "nec" }
+            })), obsArray[i].name, (serieComplete: any) => {
+
               serieComplete.type = 'bar';
-              serieComplete.id = "Flight " + obsArray[i].name.substr(0, 5)  + " " + "WeatherS";
+              serieComplete.id = "Flight " + obsArray[i].name.substr(0, 5) + " " + "WeatherS";
               serieComplete.yAxisIndex = 1;
               serieComplete.xAxisIndex = 1;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'WeatherSource') ,
+                color: this.getColor(obsArray[i].apiary, 'WeatherSource'),
               };
               /*this.options.xAxis.forEach(_xAxe => {
                 _xAxe.min = this.w_d_service.getRangeForRequest()[0];
@@ -1396,33 +1405,33 @@ export class WeatherRecordsComponent implements OnInit {
           }
         })
       },
-      () => {},
+      () => { },
       () => {
         next(this.options);
       }
     )
   }
 
-  loadWithChosenSource(apiary: RucherModel, ws: WeatherSource[], next:Function){
+  loadWithChosenSource(apiary: RucherModel, ws: WeatherSource[], next: Function) {
     let temp: any[], rain: any[], wind: any[], humi: any[];
-    let obsArray = ws.map( _ws => {
+    let obsArray = ws.map(_ws => {
       let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
       let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
       return [
-        { 
+        {
           apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
           ws: _ws,
           name: _ws.apiaryName,
-          obs: _ws.sourceType === "Station Davis" ? this.weatherService.getCurrentHourlyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start,end]) : this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
+          obs: _ws.sourceType === "Station Davis" ? this.weatherService.getCurrentHourlyWeatherWithWSrcs(_ws.apiaryId, "WeatherLink", [start, end]) : this.recordService.getRecordsBySensorRefAndDateBetween(_ws.sourceId, [start, end])
         },
       ];
     }).flat();
     Observable.forkJoin(obsArray.map(_elt => _elt.obs)).subscribe(
       _records => {
         //console.log(_records);
-        _records.forEach((_arr: any[],i) => {
-          if(obsArray[i].ws.sourceType !== "Station Davis"){
-            _arr.forEach( _r => {
+        _records.forEach((_arr: any[], i) => {
+          if (obsArray[i].ws.sourceType !== "Station Davis") {
+            _arr.forEach(_r => {
               _r.recordDate = _r.recordDate.substr(0, 14) + '00:00.000+0000';
               //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
               //console.log(_r.recordDate.substr(14, 27));
@@ -1433,29 +1442,29 @@ export class WeatherRecordsComponent implements OnInit {
                 t.recordDate === _r.recordDate
               ))
             )
-            temp = _arr.map(_elt =>{
-              return { date:_elt.recordDate, value: this.unitService.convertTempFromUsePref(_elt.temp_int ? _elt.temp_int : _elt.temp_ext, this.userService.getJwtReponse().userPref.unitSystem, true) , sensorRef: _elt.sensorRef, type: "temp" }
+            temp = _arr.map(_elt => {
+              return { date: _elt.recordDate, value: this.unitService.convertTempFromUsePref(_elt.temp_int ? _elt.temp_int : _elt.temp_ext, this.userService.getJwtReponse().userPref.unitSystem, true), sensorRef: _elt.sensorRef, type: "temp" }
             });
             this.getSerieByData(temp, obsArray[i].name, (serieComplete) => {
-                serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
-                serieComplete.yAxisIndex = 2;
-                serieComplete.xAxisIndex = 2;
-                //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
-                serieComplete.itemStyle = {
-                  color: this.getColor(obsArray[i].apiary, 'Local') 
-                };
-  
-                const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
-                if (indexSerie !== -1) {
-                  this.options.series.push(Object.assign({}, serieComplete));
-                } else {
-                  this.options.series.push(Object.assign({}, serieComplete));
-                  this.options.legend.data.push(serieComplete.name);
-                }
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
+              serieComplete.yAxisIndex = 2;
+              serieComplete.xAxisIndex = 2;
+              //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
+              serieComplete.itemStyle = {
+                color: this.getColor(obsArray[i].apiary, 'Local')
+              };
+
+              const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
+              if (indexSerie !== -1) {
+                this.options.series.push(Object.assign({}, serieComplete));
+              } else {
+                this.options.series.push(Object.assign({}, serieComplete));
+                this.options.legend.data.push(serieComplete.name);
+              }
             });
-            if(obsArray[i].ws.sourceType === "TH"){
-              humi = _arr.map(_elt =>{
-                return { date: _elt.recordDate, value: _elt.humidity_int , sensorRef: _elt.sensorRef, type: "humi" }
+            if (obsArray[i].ws.sourceType === "TH") {
+              humi = _arr.map(_elt => {
+                return { date: _elt.recordDate, value: _elt.humidity_int, sensorRef: _elt.sensorRef, type: "humi" }
               });
               this.getSerieByData(humi, obsArray[i].name, (serieComplete) => {
                 serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
@@ -1463,9 +1472,9 @@ export class WeatherRecordsComponent implements OnInit {
                 serieComplete.xAxisIndex = 3;
                 //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
                 serieComplete.itemStyle = {
-                  color: this.getColor(obsArray[i].apiary, 'Local') 
+                  color: this.getColor(obsArray[i].apiary, 'Local')
                 };
-  
+
                 const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
                 if (indexSerie !== -1) {
                   this.options.series.push(Object.assign({}, serieComplete));
@@ -1476,8 +1485,8 @@ export class WeatherRecordsComponent implements OnInit {
               });
             }
           }
-          else{
-            _arr.forEach( (_r) => {
+          else {
+            _arr.forEach((_r) => {
               _r.date = _r.date.substr(0, 14) + '00:00.000+0000';
               //console.log(_r.recordDate.substr(0, 14) + '00:00.000+0000');
               //console.log(_r.recordDate.substr(14, 27));
@@ -1488,28 +1497,28 @@ export class WeatherRecordsComponent implements OnInit {
                 t.date === _r.date
               ))
             );
-            console.log(_arr);
+            //console.log(_arr);
             temp = _arr.map(_elt => {
-              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: obsArray[i].ws.sourceId, type: "temp" }
+              return { date: _elt.date, value: _elt.value[0].temp ? this.unitService.convertTempFromUsePref(_elt.value[0].temp, this.userService.getJwtReponse().userPref.unitSystem, true) : null, sensorRef: obsArray[i].ws.sourceId, type: "temp" }
             });
-            rain = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[2] ? this.unitService.convertMilimetreToPouce(_elt.value[2], this.userService.getJwtReponse().userPref.unitSystem, false) : null , sensorRef: obsArray[i].ws.sourceId, type: "rain" }
+            rain = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.value[2] ? this.unitService.convertMilimetreToPouce(_elt.value[2], this.userService.getJwtReponse().userPref.unitSystem, false) : null, sensorRef: obsArray[i].ws.sourceId, type: "rain" }
             });
-            humi = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null , sensorRef: obsArray[i].ws.sourceId, type: "humi" }
+            humi = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.value[0].humidity ? _elt.value[0].humidity : null, sensorRef: obsArray[i].ws.sourceId, type: "humi" }
             });
-            wind = _arr.map(_elt => { 
-              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref( _elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null , sensorRef: obsArray[i].ws.sourceId, type: "wind" }
+            wind = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.value[1].speed ? this.unitService.convertWindFromUserPref(_elt.value[1].speed, this.userService.getJwtReponse().userPref.unitSystem, true) : null, deg: _elt.value[1].deg, sensorRef: obsArray[i].ws.sourceId, type: "wind" }
             });
             //ADD TEMP TO GRAPH
             this.getSerieByData(temp, obsArray[i].name, (serieComplete: any) => {
-              
-              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+
+              serieComplete.id = "Temp " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 2;
               serieComplete.xAxisIndex = 2;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1521,13 +1530,13 @@ export class WeatherRecordsComponent implements OnInit {
             });
             //ADD HUMIDITY TO GRAPH
             this.getSerieByData(humi, obsArray[i].name, (serieComplete: any) => {
-              
-              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+
+              serieComplete.id = "Humi " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 3;
               serieComplete.xAxisIndex = 3;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1541,11 +1550,11 @@ export class WeatherRecordsComponent implements OnInit {
             this.getSerieByData(rain, obsArray[i].name, (serieComplete: any) => {
 
               serieComplete.type = 'bar';
-              serieComplete.id = "Rain " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+              serieComplete.id = "Rain " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 4;
               serieComplete.xAxisIndex = 4;
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1557,13 +1566,13 @@ export class WeatherRecordsComponent implements OnInit {
             });
             //ADD WIND TO GRAPH
             this.getSerieByData(wind, obsArray[i].name, (serieComplete: any) => {
-              
-              serieComplete.id = "Wind " + obsArray[i].name.substr(0, 5)  + " " + obsArray[i].ws.sourceId;
+
+              serieComplete.id = "Wind " + obsArray[i].name.substr(0, 5) + " " + obsArray[i].ws.sourceId;
               serieComplete.yAxisIndex = 5;
               serieComplete.xAxisIndex = 5;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
@@ -1576,24 +1585,25 @@ export class WeatherRecordsComponent implements OnInit {
           }
         })
       },
-      () => {},
+      () => { },
       () => {
-        this.loadIndexesWithChosenSource(apiary, ws, (options)=>{
+        this.loadIndexesWithChosenSource(apiary, ws, (options) => {
           next(this.options);
         })
-        
+
       }
     )
   }
 
-  loadIndexesWithChosenSource(apiary: RucherModel, ws: WeatherSource[], next:Function){
+  loadIndexesWithChosenSource(apiary: RucherModel, ws: WeatherSource[], next: Function) {
     let nec: any[] = [], fli: any[] = [];
     let obsArray = [];
     obsArray = ws.map(_ws => {
       let start: Date = new Date(_ws.start) < this.w_d_service.getCurrentRangeForRequest()[0] ? this.w_d_service.getCurrentRangeForRequest()[0] : new Date(_ws.start);
       let end: Date = _ws.end ? (new Date(_ws.end) > this.w_d_service.getCurrentRangeForRequest()[1] ? this.w_d_service.getCurrentRangeForRequest()[1] : new Date(_ws.end)) : this.w_d_service.getCurrentRangeForRequest()[1];
       return [
-        { apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
+        {
+          apiary: this.w_o_service.getApiariesSelected().find(_a => _a._id === _ws.apiaryId),
           ws: _ws,
           name: _ws.apiaryName,
           obs: this.currentIdx.getCurrentIndexByApiaryAndSensorRefAndDateBetweenLocal(_ws.apiaryId, _ws.sourceId, [start, end])
@@ -1607,8 +1617,8 @@ export class WeatherRecordsComponent implements OnInit {
             _r.date = _r.date.substr(0, 11) + '00:00:00.000+0000';
             //console.log(_r.recordDate.substr(14, 27));
           });*/
-          nec = _arr.map( _elt => {
-            return { date: _elt.date, value:_elt.nectarIdx*100, sensorRef: _elt.sensorRef, type: "nec" }
+          nec = _arr.map(_elt => {
+            return { date: _elt.date, value: _elt.nectarIdx * 100, sensorRef: _elt.sensorRef, type: "nec" }
           });
           this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
             serieComplete.type = 'bar';
@@ -1617,7 +1627,7 @@ export class WeatherRecordsComponent implements OnInit {
             serieComplete.xAxisIndex = 0;
             //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
             serieComplete.itemStyle = {
-              color: this.getColor(obsArray[i].apiary, 'Local') 
+              color: this.getColor(obsArray[i].apiary, 'Local')
             };
 
             const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
@@ -1628,9 +1638,9 @@ export class WeatherRecordsComponent implements OnInit {
               this.options.legend.data.push(serieComplete.name);
             }
           });
-          if(obsArray[i].ws.sourceType === "Station Davis"){
-            fli = _arr.map( _elt => {
-              return { date: _elt.date, value:_elt.flightIdx*100, sensorRef: _elt.sensorRef, type: "fli" }
+          if (obsArray[i].ws.sourceType === "Station Davis") {
+            fli = _arr.map(_elt => {
+              return { date: _elt.date, value: _elt.flightIdx * 100, sensorRef: _elt.sensorRef, type: "fli" }
             });
             this.getSerieByData(nec, obsArray[i].name, (serieComplete) => {
               serieComplete.type = 'bar';
@@ -1639,9 +1649,9 @@ export class WeatherRecordsComponent implements OnInit {
               serieComplete.xAxisIndex = 1;
               //serieComplete.lineStyle = {normal: { type:'dashed', width: 1} },
               serieComplete.itemStyle = {
-                color: this.getColor(obsArray[i].apiary, 'Local') 
+                color: this.getColor(obsArray[i].apiary, 'Local')
               };
-  
+
               const indexSerie = this.options.series.findIndex(_serie => _serie.name === serieComplete.name && _serie.yAxisIndex === serieComplete.yAxisIndex);
               if (indexSerie !== -1) {
                 this.options.series.push(Object.assign({}, serieComplete));
@@ -1653,16 +1663,16 @@ export class WeatherRecordsComponent implements OnInit {
           }
         });
       },
-      () => {},
+      () => { },
       () => {
         next(this.options);
       }
     )
   }
 
-  removeRecords(apiary: RucherModel){
+  removeRecords(apiary: RucherModel) {
     let option = this.w_o_service.getRecordsChartInstance().getOption();
-    const series = option.series.filter(_filter => _filter.name && _filter.name.includes(apiary.name.substr(0,5)));
+    const series = option.series.filter(_filter => _filter.name && _filter.name.includes(apiary.name.substr(0, 5)));
     if (series.length > 0) {
       series.forEach(element => {
         const indexSerie = option.series.map(_serie => _serie.name).indexOf(element.name);
@@ -1675,37 +1685,38 @@ export class WeatherRecordsComponent implements OnInit {
 
   getSerieByData(data: any, nameSerie: string, next: Function): void {
     let sensorRef: Array<string> = [];
+    //console.log(data);
     data.forEach(_data => {
       if (sensorRef.indexOf(_data.sensorRef) === -1) {
         sensorRef.push(_data.sensorRef);
         let serieTmp = Object.assign({}, SERIES.line);
-        serieTmp.name = nameSerie.substr(0,5) + ' | ' + (_data.sensorRef === 'WeatherSource' ? 'WeatherS' : 'Local');
+        serieTmp.name = nameSerie.substr(0, 5) + ' | ' + (_data.sensorRef === 'WeatherSource' ? 'WeatherS' : 'Local');
         if (nameSerie.indexOf('ext') !== -1 || nameSerie.indexOf('Ext') !== -1) {
           serieTmp.lineStyle = {
             normal: {
-                type: 'dashed'
+              type: 'dashed'
             }
           };
         }
         serieTmp.data = data.filter(_filter => _filter.sensorRef === _data.sensorRef).map(_map => {
-          return { name: _map.date, value: [_map.date, typeof _map.value === 'string' ? _map.value.replace(/,/ , '.') : _map.value , _map.sensorRef] };
+          return { name: _map.date, value: [_map.date, typeof _map.value === 'string' ? _map.value.replace(/,/, '.') : _map.value, _map.sensorRef, _map.deg] };
         });
         next(serieTmp);
       }
     });
   }
 
-  getColor(apiary: RucherModel, type: string): string{
+  getColor(apiary: RucherModel, type: string): string {
     let index = this.user_apiaries.findIndex(_a => _a._id === apiary._id);
-    if(type === 'Local'){
-      return colors.local[index];
+    if (type === 'Local') {
+      return colors[index];
     }
-    else{
-      return colors.ws[index];
+    else {
+      return colors[index] + '99'; // add a transparency value to the initial color
     }
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.w_o_service.recordsChartInstance.dispose();
   }
 

@@ -115,21 +115,19 @@ export class StackComponent implements OnInit {
     let yAxisTemp = JSON.parse(JSON.stringify(BASE_OPTIONS.yAxis[0]));
     yAxisTemp.name = this.graphGlobal.temp.name;
     yAxisTemp.min = function (value: any) {
-      if(value.min < -2){
-        let nb = Math.ceil(Math.abs(value.min)) / 2;
-        return Math.round(nb) * -2;
+      if(value.min < 0){
+        return value.min - (5 + value.min % 5);
       }
       else{
         return 0;
       }
     };
     yAxisTemp.max = function (value) {
-      if(value.max > 50){
-        let nb = Math.ceil(value.max) / 5;
-        return Math.ceil(nb) * 5;
+      if(value.max > 40){
+        return value.max;
       }
       else{
-        return 50;
+        return 40;
       }
     };
     yAxisTemp.gridIndex = 0;
@@ -164,6 +162,7 @@ export class StackComponent implements OnInit {
     };
     this.options.xAxis.push(xAxisHum);
 
+    // Brood zone
     let serieMarkTemp = JSON.parse(JSON.stringify(SERIES.serieMarkTemp));
     serieMarkTemp.yAxisIndex = 1;
     serieMarkTemp.xAxisIndex = 1;
