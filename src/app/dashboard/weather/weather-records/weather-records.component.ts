@@ -20,6 +20,7 @@ import { CurrentIndexService } from '../../service/api/current-index.service';
 import { ForecastIndexService } from '../../service/api/forecast-index.service';
 import { WSAEACCES } from 'constants';
 
+const IMG_PATH = '../../../../assets/ms-pics/';
 const colors: string[] = ["#3588d1", "#9ff973", "#7125bd", "#c9dd87", "#751718", "#34f50e", "#2e3478", "#24ffcd", "#f7306e", "#4fa075", "#801967", "#d0a8f9", "#5ab220", "#ee0d0e", "#096013", "#f75ef0", "#a3c9fe", "#466cf0"];
 
 @Component({
@@ -604,7 +605,9 @@ export class WeatherRecordsComponent implements OnInit {
     let tooltipGlobal = templateHeaderTooltip.replace(/{D}/g, date);
     tooltipGlobal += series.map(_serie => {
       let sensor = _serie.name.split('|')[1] === 'WeatherS' ? 'WeatherS' : _serie.sensorRef;
-      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{d}/g, (_serie.deg != null ? _serie.deg : '')).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' + sensor);
+      const svg = '<div style="width:13px; height:13px; background-image:url(' + IMG_PATH + 'ui/up-arrow.svg); background-repeat:no-repeat; background-size:13px; background-position: center;"></div>'
+      let arrow = (_serie.deg != null ? '<span style="margin-right: 5px;transform: rotate('+_serie.deg+'deg);-ms-transform: rotate('+_serie.deg+'deg);-webkit-transform: rotate('+_serie.deg+'deg);display: inline-block;">' + svg + '</span>' : '');
+      return templateValue.replace(/{\*}/g, markerSerie).replace(/{n}/g, _serie.name.split('|')[0]).replace(/{d}/g, arrow).replace(/{v}/g, _serie.value).replace(/{u}/g, _serie.unit).replace(/{R}/g, ' - ' + sensor);
     }).join('');
 
     return tooltipGlobal;
